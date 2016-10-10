@@ -1,0 +1,451 @@
+﻿@model GCNI.Models.GCNIModel
+@{
+    ViewBag.Title = "NewsManagement";
+    Layout = "~/Views/Shared/AdminMaster.cshtml";
+}
+
+@* <script src="~/jquery-ui-1.11.4.custom/external/jquery/jquery.js"></script>
+<script src="~/jquery-ui-1.11.4.custom/jquery-ui.js"></script>
+<link href="~/css/tableStyle.css" rel="stylesheet" />*@
+<style>
+    #dt {
+        text-indent: -500px;
+        height: 30px;
+        width: 200px;
+    }
+</style>
+<script type="text/javascript" src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+
+@using (Html.BeginForm("NewsManagement", "Admin", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{ 
+@*<table border="1" bgcolor="red" width="100%">
+    <tr>
+        <td align="center"><a href="~/Admin/EventManagement">Event</a></td>
+        <td align="center"><a href="~/Admin/PublicationManagement">Publication</a></td>
+        <td align="center"><a href="~/Admin/NewsManagement">News</a></td>
+        <td align="center"><a href="~/Admin/ArticleManagement">Article</a></td>
+    </tr>
+    </table>*@
+<center><h2>News Management</h2></center>
+<center><table style="width: 80%;" border="1">
+    <tr>
+        <td colspan="2" align="center" height="30"><h2 id="msg">@ViewBag.Message</h2></td>
+    </tr>
+    <tr>
+        <td>Title
+            <br/><span id="Imgsize">70 Characters Maximum</span>
+        </td>
+        <td>@Html.TextBoxFor(M =>M.objNewM.Title, new { @id="title", @Maxlength="70", @size="80",@class="tbtext", @onblur = "msgclear();RemoveClass(this);"})</td>
+    </tr>
+    <tr>
+        <td>Description
+            <br/><span id="Imgsize">500 Characters Maximum</span>
+        </td>
+        <td>@Html.TextAreaFor(M => M.objNewM.Description, new { @id="Desc", @Maxlength="500", @onblur = "msgclear();RemoveClass(this);",@class="jqte-test", @onkeyup="getchar();", @onpropertychange="getchar();" })
+           <br /><span id="overmsg"></span>
+        </td>
+    </tr>
+    <tr>
+        <td>News Link
+            <br/><span id="Imgsize">200 Characters Maximum</span>
+        </td>
+        <td>@Html.TextBoxFor(M => M.objNewM.NewsFullDetails, new { @id="Desc1", @Maxlength="200",@class="tbtext", @onblur = "msgclear();RemoveClass(this);" })</td>
+    </tr>
+    <tr>
+        <td>City</td>
+        <td>@Html.TextBoxFor(M => M.objNewM.City, new { @id="City",@Maxlength="50", @size="50",@class="tbtext2", @onblur = "msgclear();RemoveClass(this);"})</td>
+    </tr>
+    <tr>
+        <td>News Date<br />
+            <span id="Imgsize">DD/MM/YYYY</span>
+        </td>
+        <td><input type="date" id="dt" onchange="mydate1();" class="tbtextdate" />
+            @Html.TextBoxFor(M => M.objNewM.NewsDate, new { @id = "ndt", @onclick = "mydate();", @style = "display:none;", @class ="tbtextdate", @size="20", @onblur = "msgclear();RemoveClass(this);"})
+        </td>
+    
+    </tr>
+    <tr>
+        <td>News Image<br />
+            <span id="Imgsize">Image Size 218px * 250px</span>
+        </td>
+        <td><input id="upload" name="upload1" type="file" onblur = "RemoveClass(this);" class="tdtext"/><span id="Imgsize" class="imgmsg">Invalid Image Size</span></td>
+    </tr>
+    <tr>
+        <td>Display On Home Page</td>
+        <td>@Html.CheckBoxFor(M => M.objNewM.IsDisplayOnHome, new {@id="IsDisp"})</td>
+    </tr>
+    <tr >
+        <td colspan="2" align="Center">
+            <input class="btn btn-primary" id="Submit" type="submit" value="Save" name="btntype" onclick="return Validate();"/></td>
+    </tr>
+</table></center>
+    <br />
+    @*<input id="datepicker-example1" type="text">*@
+    <center><table id="tblData" class="CSSTableGenerator" width="90%">
+        <tr>
+            @*<th align="center">ID</th>*@
+            <td>Title</td>
+            <td>Description</td>
+            <td>News Link</td>
+            <td>City</td>
+            <td>News Date</td>
+            <td>News Image</td>
+            <td>Display On Home</td>
+            <td width="170">Action</td>
+        </tr>
+        @foreach (GCNI.Models.News obj in Model.objNewML)
+        {
+                <tr>
+                    @*<td align="center">
+                        <input type="hidden" value='@obj.id' data-title='@obj.Title' data-des='@obj.Description' data-city='@obj.City' data-Disp='@obj.IsDisplayOnHome'/>
+                       <span>@Html.Raw(obj.id)</span>
+                    </td>*@
+                    <td>
+                       <span>@Html.Raw(obj.Title)</span>
+                    </td>
+                    <td>
+                       <span>@Html.Raw(obj.Description)</span>
+                    </td>
+                    <td>
+                       <span>@Html.Raw(obj.NewsFullDetails)</span>
+                    </td>
+                    <td>
+                       <span>@Html.Raw(obj.City)</span>
+                    </td>
+                    <td>
+                       <span>@Html.Raw(obj.NewsDate)</span>
+                    </td>
+                    <td>
+                       <span>@Html.Raw(obj.NewsImage)</span>
+                    </td>
+                    <td>
+                       <span>@Html.Raw(obj.IsDisplayOnHome)</span>
+                    </td>
+                    <td>
+                        <input type="hidden" value='@obj.id' data-title='@obj.Title' data-des='@obj.Description' data-des1='@obj.NewsFullDetails' data-city='@obj.City' data-date='@obj.NewsDate' data-img='@obj.NewsImage' data-Disp='@obj.IsDisplayOnHome'/>
+                       <span><input id="Edit" class="testbutton1" type="Submit" value="Edit" onclick="FillEdit(@obj.id); return false;" />@*<a href="#" onclick="FillEdit(@obj.id); return false;">Edit</a>*@ / <input id="Delete" class="testbutton1" type="submit" value="Delete" name="btntype" onclick="    Deleterecord(@obj.id);"/> @*<a href="#" onclick="Deleterecord(@obj.id); return false;">Delete</a></span>*@
+                    </td>
+                </tr>
+        }
+    </table></center>
+    <input type="hidden" id="hdd" name="hdd" value="0" />
+    <input type="hidden" id="id" name="id" value="0" />
+    <input type="hidden" id="img" name="img" value="0" />
+}
+
+   
+<script>
+    function getdate()
+    {
+        debugger;
+        $("#datepicker").hide();
+        //alert(date);
+    }
+</script>
+<script>
+    function getdate2()
+    {
+        debugger;
+        $("#datepicker").show();
+        //alert(date);
+    }
+</script>
+<script>
+    function msgclear()
+    {
+        debugger;
+        $("#msg").hide();
+        alert($("#Desc").text().length());
+        
+    }
+</script>
+   <script>
+       //$(document).ready ( function(){
+       debugger;
+       $('.imgmsg').hide();
+       $('#title').val('');
+       $('#Desc1').val('');
+       $('#City').val('');
+       $('#ndt').val('');
+       $('#ndt').show();
+       $('#dt').hide();
+       $('#IsDisp').checked = false;
+       $('#Desc').jqteVal('');
+       $('#title').focus();
+      
+       //document.getElementById('title').value='';
+       //document.getElementById('Desc').value='';
+       //document.getElementById('City').value='';
+       $('input:checkbox').prop('checked', false);
+       ////document.getElementById('IsDisp').parentElement('checked',false);
+           
+       //});
+       </script>
+       <script>
+       function FillEdit(obj) {
+           debugger;
+           //alert(obj);
+           $("#hdd").val(obj);
+           //$("#upload1").removeClass("error");
+           var $ele = $("#tblData tr td input[value=" + obj + "]");
+           if ($ele != null) {
+               $('#title').val($ele.attr("data-title"));
+               $('#Desc').jqteVal($ele.attr("data-des"));
+               $('#Desc1').val($ele.attr("data-des1"));
+               $('#City').val($ele.attr("data-city"));
+               $('#ndt').val($ele.attr("data-date"));
+               $('#ndt').show();
+               $('#dt').hide();
+               $('#img').val($ele.attr("data-img"));
+               if (($ele.attr("data-disp")) == "True") {
+                   document.getElementById('IsDisp').checked = true;
+                   //$('#IsDisp').checked = true;
+               }
+               else { document.getElementById('IsDisp').checked = false; }
+               window.document.body.scrollTop = '10';
+           }
+
+       }
+    </script>
+@*<script>
+    @section Scripts {  
+  
+    @Scripts.Render("~/bundles/jqueryui")  
+    @Styles.Render("~/Content/cssjqryUi")  
+  
+    <script type="text/javascript">  
+        $(document).ready(function () {  
+            $('input[type=datetime]').datepicker({  
+                dateFormat: "dd/M/yy",  
+                changeMonth: true,  
+                changeYear: true,  
+                yearRange: "-60:+0"  
+            });  
+  
+        });  
+</script>*@
+<script>
+function mydate()
+{
+    //alert("");
+    $("#dt").show();
+    $("#ndt").hide();
+//document.getElementById("dt").hidden=false;
+//document.getElementById("ndt").hidden=true;
+
+}
+function mydate1()
+{
+ d=new Date(document.getElementById("dt").value);
+//alert(d);
+dt=d.getDate();
+dt++;
+//alert(dt);
+mn=d.getMonth();
+mn++;
+//alert(mn);
+
+yy=d.getFullYear();
+//alert(yy);
+document.getElementById("ndt").value=dt+"/"+mn+"/"+yy
+$("#dt").hide();
+$("#ndt").show();
+//document.getElementById("ndt").hidden=false;
+//document.getElementById("dt").hidden=true;
+}
+</script>
+<script type="text/javascript">
+    function Deleterecord(obj) {
+        var status = confirm('Are you sure to delete');
+        if (status) {
+            //alert(obj);
+            $("#id").val(obj);
+        }
+    }
+    </script>
+@*<script>
+    var _URL = window.URL || window.webkitURL;
+    $("#upload").change(function (e) {
+        var file, img;
+        if ((file = this.files[0])) {
+            img = new Image();
+            img.onload = function () {
+                //alert(this.width + " " + this.height);
+                if(this.width>218 || this.height>250)
+                {
+                    $('.imgmsg').show();
+                    //alert("Invalid Size of Image...!");
+                    $("#upload").val('');
+                    $("#upload").addClass("error");
+                }
+                else
+                {
+                    //alert("valid");
+                    $("#upload").removeClass("error");
+                    $('.imgmsg').hide();
+                }
+            };
+            img.src = _URL.createObjectURL(file);
+        }
+    });
+</script>*@
+<script type="text/javascript">
+    function RemoveClass(obj) {
+        $(obj).removeClass("error");
+    }
+    function Validate() {
+        debugger;
+        //alert($('#Desc').val());
+        if ((hdd).value == null || (hdd).value.length < 1 || (hdd).value == "0") {
+
+           
+
+            //var img = $("#upload")[0]; // Get my img elem
+            //var pic_real_width, pic_real_height;
+            //$("<img/>") // Make in memory copy of image to avoid css issues
+            //    .attr("src", $(img).attr("src"))
+            //    .load(function() {
+            //        pic_real_width = this.width;   // Note: $(this).width() will not
+            //        pic_real_height = this.height; // work for in memory images.
+            //    });
+
+
+
+            if ($("#title").val().length < 1 || $("#Desc").val().length < 1 || $("#Desc1").val().length < 1 || $("#City").val().length < 1 || $("#ndt").val().length < 1) {
+                //if (pic_real_width<=215 && pic_real_height<=300) {
+                //    $("#upload").addClass("error");
+                //}
+                //else { $("#upload").removeClass("error"); }
+
+                if ($("#title").val().length < 1) {
+                    $("#title").addClass("error");
+                }
+                else { $("#title").removeClass("error"); }
+                if($("#Desc").val().length<1)
+                {document.getElementById('overmsg').innerHTML="<b>Description can Not be Empty...!</b>";}
+                else{$("#overmsg").hide();}
+                if ($("#Desc1").val().length < 1) {
+                    $("#Desc1").addClass("error");
+                }
+                else { $("#Desc1").removeClass("error"); }
+                if ($("#City").val().length < 1) {
+                    $("#City").addClass("error");
+                }
+                else { $("#City").removeClass("error"); }
+                if ($("#ndt").val().length < 1) {
+                    $("#ndt").addClass("error");
+                }
+                else { $("#ndt").removeClass("error"); }
+                return false;
+            }
+            else if($("#Desc").val().length>1000)
+            {
+                document.getElementById('overmsg').innerHTML="Maximum 500 Characters Should be Insert But You Have <b><u>"+$("#Desc").val().length+"</u></b> Characters Plz Reduce <b><u>"+(($("#Desc").val().length)-500)+"</u></b> Character";$("#overmsg").show();
+                return false;
+            }
+            else{$("#overmsg").hide();
+                return true;
+            }
+
+        }
+
+    }
+     </script>
+     @*<script type="text/javascript">
+         function Deleterecord(obj) {
+             var status = confirm('Are you sure to delete');
+             if (status) {
+                 $.ajax({
+                     type: "post",
+                     url: "/Admin/NewsDelete",
+                     data: { "id": obj },
+                     success: (function (data) {
+
+                         $("#divThinktable").html(data);
+                     }),
+                     fail: (function (data) {
+                     })
+                 });
+             }
+         }
+    </script>*@
+<script>
+
+    // Custom labels for error display
+    Validation.labels = {
+        'contact_v1[email]': 'Custom label name from configuration'
+    };
+
+</script>
+<script  type="text/javascript">
+    $(function () {
+        debugger;
+        $("#datepicker").datepicker({
+            onSelect: function(dateText, inst) { 
+                debugger;
+                var dateAsString = dateText; //the first parameter of this function
+                $("#NewsDate").val(dateAsString);
+                getdate();
+                 //var dateAsObject = $(this).datepicker( 'getDate' ); //the getDate method
+                 //alert(dateAsObject);
+            }
+        });
+    });
+</script>
+<script>
+    $("#NewsDate").kendoDatePicker({
+        animation: false
+    });
+</script>
+<script>
+    document.domain = document.domain;
+
+    $("#editor").kendoEditor({
+        domain: document.domain
+    });
+</script>
+<script>
+    var container = $("#employeeForm");
+
+    kendo.init(container);
+
+    container.kendoValidator({
+        rules: {
+            maxTextLength: function (textarea) {
+                if (textarea.is("[data-maxtextlength-msg]") && textarea.val() != "") {
+                    var maxlength = textarea.attr("data-maxtextlength");
+                    var value = textarea.data("kendoEditor").value();
+                    return value.replace(/<[^>]+>/g, "").length <= maxlength;
+                }
+
+                return true;
+            },
+            maxHtmlLength: function(textarea) {
+                if (textarea.is("[data-maxhtmllength-msg]") && textarea.val() != "") {
+                    var maxlength = textarea.attr("data-maxhtmllength");
+                    var value = textarea.data("kendoEditor").value();
+                    return value.length <= maxlength;
+                }
+
+                return true;
+            }
+        }
+    });
+
+    function save(e) {
+        e.preventDefault();
+
+        var validator = $("#employeeForm").data("kendoValidator");
+        if (validator.validate()) {
+            alert("Data saved");
+        }
+    }
+
+    $("body").on("click", ".k-button", save);
+
+  </script>
+
+
+
+
+

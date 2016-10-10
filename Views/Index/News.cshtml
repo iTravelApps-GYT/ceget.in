@@ -1,0 +1,27 @@
+﻿@model GCNI.Models.GCNIModel
+@{
+    ViewBag.Title = "News";
+    Layout = "~/Views/Shared/AboutUsMaster.cshtml";
+}
+<section id="feature">
+    
+       <div class="first-row thirdrow fContent getIn"  >
+               
+           <div class="first-row thirdrow">
+                <div class="public"><div>news</div></div>
+               <div class="borderline"></div>
+                    @foreach(GCNI.Models.News obj in Model.objNewML)
+                    {
+                    <p><span class="red-txt">@Html.Raw(obj.City) , @Html.Raw(obj.NewsDate) : </span> <span class="blue-txt">@Html.Raw(obj.Title)<br />@Html.Raw(obj.Description)<br />@Html.Raw(obj.NewsFullDetails)</span></p>
+                        
+				  @*<p><span class="red-txt">Ottawa, Canada, 08/10/2015:</span> 6th Global Conference Of Parliamentarians Against Corruption<br /> GOPAC Members Call for Stronger Measures to Bring Perpetrators of Grand Corruption to Justice at International Anti-Corruption Conference...<a href="#">Read More...</a></p>*@
+                  
+                  @*<p><span class="red-txt">New Delhi, Canada, 17/09/2015:</span> Recovery of bribe money not enough to convict a babu: SC<br /> A government official cannot be convicted under corruption charges merely on the basis of recovery of bribe money and it is essential to prove that he had demanded money, the Supreme Court has ruled... <a href="#">Read More...</a></p>*@
+                    <div class="borderline"></div>
+                    }
+
+                </div>
+             
+               </div>
+      
+    </section>

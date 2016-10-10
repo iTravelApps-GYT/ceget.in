@@ -1,0 +1,657 @@
+﻿@model GCNI.Models.GCNIModel
+
+@{
+    ViewBag.Title = "KnowledgeManagement";
+    Layout = "~/Views/Shared/AdminMaster.cshtml";
+}
+<link href="~/css/tableStyle.css" rel="stylesheet" />
+<style>
+     #tblData {
+            width:90%;border:1px solid #B0B0B0;
+        }
+
+            #tblData tbody {
+                /* Kind of irrelevant unless your .css is alreadt doing something else */
+                margin: 0;
+                padding: 0;
+                border: 0;
+                outline: 0;
+                font-size: 85%;
+                vertical-align: baseline;
+                background: transparent;
+            }
+
+            #tblData thead {
+                text-align: left;
+            }
+
+                #tblData thead th {
+                    background: -moz-linear-gradient(top, #F0F0F0 0, #DBDBDB 100%);
+                    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #F0F0F0), color-stop(100%, #DBDBDB));
+                    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F0F0F0', endColorstr='#DBDBDB', GradientType=0);
+                    border: 1px solid #B0B0B0;
+                    color: #444;
+                    font-size: 16px;
+                    font-weight: bold;
+                    padding: 3px 10px;
+                }
+
+            #tblData td,th {
+                padding: 3px 10px;
+                text-align: center;
+            }
+
+            #tblData tr:nth-child(even) {
+                background: #F2F2F2;
+            }
+</style>
+<div class="container">
+  <div class="dropdown" style="width:265px;">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" style="width:310px;">Select Knowledge_Tab_Category
+    <span class="caret"></span></button>
+      
+    <ul class="dropdown-menu" id="ThinkDDL">
+        <li><a href="#" data-op="LAWS">LAWS</a></li>
+        <li><a href="#" data-op="POLICIES AND GUIDLINES">POLICIES AND GUIDLINES</a></li>
+        <li><a href="#" data-op="POLICY SOLUTIONS">POLICY SOLUTIONS</a></li>
+        <li><a href="#" data-op="PENDING BILLS AND AMENDMENTS">PENDING BILLS AND AMENDMENTS</a></li>
+    </ul>
+      
+  </div>
+</div>
+@using (Html.BeginForm("KnowledgeManagement", "Admin", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{ 
+@*<table border="1" bgcolor="red" width="100%">
+    <tr>
+        <td align="center"><a href="~/Admin/EventManagement">Event</a></td>
+        <td align="center"><a href="~/Admin/PublicationManagement">Publication</a></td>
+        <td align="center"><a href="~/Admin/NewsManagement">News</a></td>
+        <td align="center"><a href="~/Admin/ArticleManagement">Article</a></td>
+    </tr>
+    </table>
+*@<center><p>Knowledge Management</p></center>
+<center><table style="width: 80%;" border="1">
+    <tr>
+        <td colspan="2" align="center" height="30"><h2 id="msg">@ViewBag.Message</h2></td>
+    </tr>
+    <tr>
+        <td>Tab Type</td>
+        <td>@Html.TextBoxFor(M => M.objKnowledge_M.TabCat, new { @id = "TabType", @class = "tbtext3", @Maxlength = "100", @onblur = "msgclear();RemoveClass(this);" })</td>
+    </tr>
+     <tr>
+        <td>Title</td>
+        <td>@Html.TextBoxFor(M => M.objKnowledge_M.Title, new { @id = "Title", @class = "tbtext", @Maxlength = "100", @onblur = "msgclear();RemoveClass(this);" })</td>
+    </tr>
+    <tr id="Billlnk">
+        <td>Bill Link</td>
+        <td>@Html.TextBoxFor(M => M.objKnowledge_M.BillLinkUrl, new { @id = "Link", @class = "tbtext", @Maxlength = "100", @onblur = "msgclear();RemoveClass(this);" })</td>
+    </tr>
+    <tr>
+        <td>Description
+            <br/><span id="Imgsize">1000 Characters Maximum</span>
+        </td>
+        <td>@Html.TextAreaFor(M => M.objKnowledge_M.Description, new { @id = "Desc", @class = "jqte-test", @Maxlength = "1000", @onblur = "msgclear();RemoveClass(this);" })
+            <br /><span id="overmsg"></span>
+        </td>
+    </tr>
+    <tr id="pdf">
+        <td><span>Upload PDF</span></td>
+        <td><input id="upload" name="upload" type="file" onblur = "RemoveClass(this);" class="tdtext"/></td>
+    </tr>
+    <tr id="concat">
+        <td><span>Country Category</span></td>
+        <td>@Html.TextBoxFor(M => M.objKnowledge_M.CountryCat, new { @id = "CountryCat", @class = "tbtext2", @Maxlength = "100", @onblur = "msgclear();RemoveClass(this);" })
+        
+  <div class="dropdown" id="ddl2" style="width:150px;display:inline-flex;">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" style="width:150px;">Select Category
+    <span class="caret"></span></button>
+      
+    <ul class="dropdown-menu" id="ThinkDDL2">
+        <li><a href="#" data-op="International">International</a></li>
+        <li><a href="#" data-op="National">National</a></li>
+        <li><a href="#" data-op="Regional">Regional</a></li>
+    </ul>
+      
+  </div>
+
+        </td>
+    </tr>
+    <tr id="trstatus">
+        <td><span id="spstatus">Status</span></td>
+        <td>@Html.TextBoxFor(M => M.objKnowledge_M.Status, new { @id="Status",@class="tbtext", @Maxlength="100", @onblur = "msgclear();" })</td>
+    </tr>
+    <tr >
+        <td align="Center" colspan="2"><input class="btn btn-primary" id="Submit" type="submit" value="Save" name="btntype" onclick="return Validate();" /></td>
+        @*<td align="Center"><input id="Delete" type="submit" value="Delete" name="btntype" onclick="return Validate();" /></td>*@
+    </tr>
+</table></center>
+    <br />
+    <center>
+        <table id="tblData1" class="CSSTableGenerator">
+        <tr  bgcolor="lightgray">
+            <td colspan="6"><b>LAW</b></td>
+            </tr>
+        <tr>
+            <td width="8%">Tab Type</td>
+            <td width="8%">Title</td>
+            <td width="30%">Description</td>
+            <td width="8%">Country</td>
+            <td width="10%">PDf File</td>
+            <td width="8%" align="center">Action</td>
+        </tr>
+        @foreach (GCNI.Models.Knowledge obj in Model.objKnowledge_ML)
+        {
+            if(obj.TabCat=="LAWS")
+            {
+                <tr>
+                    @*<td align="center">
+                        <input type="hidden" value='@obj.id' data-title='@obj.Title' data-des='@obj.Description' data-thumbnailURL='@obj.ThumbnailURL' data-fileURL="@obj.FileURL" data-disp="@obj.IsDisplayOnHome" />
+                       <span>@Html.Raw(obj.id)</span>
+                    </td>*@
+                    <td>
+                       <span>@Html.Raw(obj.TabCat)</span>
+                    </td>
+                    <td>
+                       <span>@Html.Raw(obj.Title)</span>
+                    </td>
+                    <td>
+                       <span>@Html.Raw(obj.Description)</span>
+                    </td>
+                    <td><span>@Html.Raw(obj.CountryCat)</span>
+                    </td>
+                     <td><span>@Html.Raw(obj.Pdf_File_Link)</span>
+                    </td>
+                    <td>
+                       <input type="hidden" value='@obj.id' data-TabType='@obj.TabCat' data-title='@obj.Title' data-lnk='@obj.BillLinkUrl' data-des='@obj.Description' data-pdf='@obj.Pdf_File_Link' data-concat='@obj.CountryCat' data-status='@obj.Status' @*data-disp="@obj.IsDisplayOnHome"*@ />
+                       <span><input id="Edit" class="testbutton1" type="button" value="Edit" name="btntype" onclick="FillEdit('tblData1',@obj.id); return false;" /><br /><input id="Delete" class="testbutton1" type="submit" value="Delete" name="btntype" onclick="    Deleterecord(@obj.id);"/></span>
+                    </td>
+                </tr>
+        }
+        }
+    </table><br />
+        <table id="tblData2" class="CSSTableGenerator">
+         <tr  bgcolor="lightgray">
+            <td colspan="6"><b>POLICIES AND GUIDLINES</b></td>
+            </tr>
+        <tr>
+            <td width="8%">Tab Type</td>
+            <td width="8%">Title</td>
+            <td width="30%">Description</td>
+            <td width="8%">Country</td>
+            <td width="10%">PDf File</td>
+            <td width="8%" align="center">Action</td>
+        </tr>
+        @foreach (GCNI.Models.Knowledge obj in Model.objKnowledge_ML)
+        {
+            if(obj.TabCat=="POLICIES AND GUIDLINES")
+            {
+                <tr>
+                    @*<td align="center">
+                        <input type="hidden" value='@obj.id' data-title='@obj.Title' data-des='@obj.Description' data-thumbnailURL='@obj.ThumbnailURL' data-fileURL="@obj.FileURL" data-disp="@obj.IsDisplayOnHome" />
+                       <span>@Html.Raw(obj.id)</span>
+                    </td>*@
+                    <td>
+                       <span>@Html.Raw(obj.TabCat)</span>
+                    </td>
+                    <td>
+                       <span>@Html.Raw(obj.Title)</span>
+                    </td>
+                    <td>
+                       <span>@Html.Raw(obj.Description)</span>
+                    </td>
+                    <td><span>@Html.Raw(obj.CountryCat)</span>
+                    </td>
+                     <td><span>@Html.Raw(obj.Pdf_File_Link)</span>
+                    </td>
+                    <td>
+                       <input type="hidden" value='@obj.id' data-TabType='@obj.TabCat' data-title='@obj.Title' data-lnk='@obj.BillLinkUrl' data-des='@obj.Description' data-pdf='@obj.Pdf_File_Link' data-concat='@obj.CountryCat' data-status='@obj.Status' @*data-disp="@obj.IsDisplayOnHome"*@ />
+                       <span><input id="Edit" class="testbutton1" type="button" value="Edit" name="btntype" onclick="FillEdit('tblData2',@obj.id); return false;" /><br /><input id="Delete" class="testbutton1" type="submit" value="Delete" name="btntype" onclick="Deleterecord(@obj.id);"/></span>
+                    </td>
+                </tr>
+        }
+        }
+    </table><br />
+        <table id="tblData3" class="CSSTableGenerator">
+        <tr  bgcolor="lightgray">
+            <td colspan="6"><b>POLICY SOLUTIONS</b></td>
+            </tr>
+        <tr>
+            <td width="8%">Tab Type</td>
+            <td width="8%">Title</td>
+            <td width="30%">Description</td>
+            <td width="8%">Country</td>
+            <td width="10%">PDf File</td>
+            <td width="8%" align="center">Action</td>
+        </tr>
+        @foreach (GCNI.Models.Knowledge obj in Model.objKnowledge_ML)
+        {
+            if(obj.TabCat=="POLICY SOLUTIONS")
+            {
+                <tr>
+                    @*<td align="center">
+                        <input type="hidden" value='@obj.id' data-title='@obj.Title' data-des='@obj.Description' data-thumbnailURL='@obj.ThumbnailURL' data-fileURL="@obj.FileURL" data-disp="@obj.IsDisplayOnHome" />
+                       <span>@Html.Raw(obj.id)</span>
+                    </td>*@
+                    <td>
+                       <span>@Html.Raw(obj.TabCat)</span>
+                    </td>
+                    <td>
+                       <span>@Html.Raw(obj.Title)</span>
+                    </td>
+                    <td>
+                       <span>@Html.Raw(obj.Description)</span>
+                    </td>
+                    <td><span>@Html.Raw(obj.CountryCat)</span>
+                    </td>
+                     <td><span>@Html.Raw(obj.Pdf_File_Link)</span>
+                    </td>
+                    <td>
+                       <input type="hidden" value='@obj.id' data-TabType='@obj.TabCat' data-title='@obj.Title' data-lnk='@obj.BillLinkUrl' data-des='@obj.Description' data-pdf='@obj.Pdf_File_Link' data-concat='@obj.CountryCat' data-status='@obj.Status' @*data-disp="@obj.IsDisplayOnHome"*@ />
+                       <span><input id="Edit" class="testbutton1" type="button" value="Edit" name="btntype" onclick="FillEdit('tblData3',@obj.id); return false;" /><br /><input id="Delete" class="testbutton1" type="submit" value="Delete" name="btntype" onclick="    Deleterecord(@obj.id);"/></span>
+                    </td>
+                </tr>
+        }
+        }
+    </table><br />
+        <table id="tblData4" class="CSSTableGenerator">
+         <tr  bgcolor="lightgray">
+            <td colspan="6"><b>PENDING BILLS AND AMENDMENTS</b></td>
+            </tr>
+        <tr>
+            <td width="8%">Tab Type</td>
+            <td width="8%">Title</td>
+            <td width="8%">Link</td>
+            <td width="30%">Description</td>
+            <td width="8%">Bill Status</td>
+            <td width="8%" align="center">Action</td>
+        </tr>
+        @foreach (GCNI.Models.Knowledge obj in Model.objKnowledge_ML)
+        {
+            if(obj.TabCat=="PENDING BILLS AND AMENDMENTS")
+            {
+                <tr>
+                    <td>
+                       <span>@Html.Raw(obj.TabCat)</span>
+                    </td>
+                    <td>
+                       <span>@Html.Raw(obj.Title)</span>
+                    </td>
+                    <td>
+                       <span>@Html.Raw(obj.BillLinkUrl)</span>
+                    </td>
+                    <td>
+                       <span>@Html.Raw(obj.Description)</span>
+                    </td>
+                     <td>
+                       <span>@Html.Raw(obj.Status)</span>
+                    </td>
+                    <td>
+                       <input type="hidden" value='@obj.id' data-TabType='@obj.TabCat' data-title='@obj.Title' data-des='@obj.Description' data-lnk='@obj.BillLinkUrl' data-pdf='@obj.Pdf_File_Link' data-concat='@obj.CountryCat' data-status='@obj.Status' @*data-disp="@obj.IsDisplayOnHome"*@ />
+                       <span><input id="Edit" class="testbutton1" type="button" value="Edit" name="btntype" onclick="FillEdit('tblData4',@obj.id); return false;" /><br /><input id="Delete" class="testbutton1" type="submit" value="Delete" name="btntype" onclick="    Deleterecord(@obj.id);"/></span>
+                    </td>
+                </tr>
+        }
+        }
+    </table></center>
+    <input type="hidden" id="hdd" name="hdd" value="0" />
+    <input type="hidden" id="id" name="id" value="0" />
+    <input type="hidden" id="img" name="img" value="0" />
+    <input type="hidden" id="file" name="file" value="0" />
+}
+   @* </body>
+    </html>*@
+<script>
+    function msgclear()
+    {
+        debugger;
+        $("#msg").hide();
+    }
+</script>
+   <script type="text/javascript">
+       $(document).ready ( function(){
+           debugger;
+           //alert('ok');
+      
+           //$('#Desig').val('');
+           $('#pdf').show();
+           $('#concat').show();
+           $('#Billlnk').hide();
+           $('#trstatus').hide();
+           $('#TabType').val('');
+           $('#Title').val('');
+           $('#Desc').jqteVal('');
+           $('#CountryCat').val('');
+           $('#Status').val('');
+           $('#TabType').focus();
+           var text_box1 = document.getElementById('TabType');
+           var text_box2 = document.getElementById('CountryCat');
+           text_box1.setAttribute('readonly', 'readonly');  
+           text_box2.setAttribute('readonly', 'readonly');  
+           //$("#Aboutcat").val('');
+       //$('input:checkbox').prop('checked', false);
+       });
+       </script>
+<script>
+       function FillEdit(tbl,obj) {
+           debugger;
+           //alert(obj);
+           $("#hdd").val(obj);
+           //$("#upload1").removeClass("error");
+           var $ele = $("#"+tbl+" tr td input[value=" + obj + "]");
+           if ($ele != null) {
+               //$('#Desig').val($ele.attr("data-Desig"));
+               $('#TabType').val($ele.attr("data-TabType"));
+               $('#Title').val($ele.attr("data-title"));
+               $('#Desc').jqteVal($ele.attr("data-des"));
+               $('#file').val($ele.attr("data-pdf"));
+               $('#CountryCat').val($ele.attr("data-concat"));
+               $('#Status').val($ele.attr("data-status"));
+               if(tbl=='tblData4')
+               {
+                   $('#Link').val($ele.attr("data-lnk"));
+                   $('#Billlnk').show();
+                   $('#trstatus').show();
+                   $('#pdf').hide();
+                   $('#concat').hide();
+               }
+               else
+               {
+                   $('#pdf').show();
+                   $('#concat').show();
+                   $('#Billlnk').hide();
+                   $('#trstatus').hide();
+               }
+               window.document.body.scrollTop = '100';
+               //$('#Aboutcat').val($ele.attr("data-aboutCat"));
+               //$('#file').val($ele.attr("data-fileURL"));
+               //if (($ele.attr("data-disp")) == "True") {
+               //    document.getElementById('IsDisp').checked = true;
+               //    //$('#IsDisp').checked = true;
+               //}
+               //else { document.getElementById('IsDisp').checked = false; }
+           }
+
+       }
+    </script>
+<script type="text/javascript">
+    function Deleterecord(obj) {
+        var status = confirm('Are you sure to delete');
+        if (status) {
+            //alert(obj);
+            $("#id").val(obj);
+        }
+    }
+    </script>
+     @*<script type="text/javascript">
+         function Deleterecord(obj) {
+             var status = confirm('Are you sure to delete');
+             if (status) {
+                 $.ajax({
+                     type: "post",
+                     url: "/Admin/PublicationManagement",
+                     data: { "id": obj },
+                     success: (function (data) {
+
+                         $("#divThinktable").html(data);
+                     }),
+                     fail: (function (data) {
+                     })
+                 });
+             }
+         }
+    </script>*@
+<style type="text/css">
+    .error
+    {
+        border: solid!important;
+        border-color: red!important;
+    }
+</style>
+<script>
+    $("#ThinkDDL2 li a").click(function () {
+        debugger;
+        var el = $(this).attr("data-op");
+        $("#CountryCat").val(el);
+    });
+</script>
+<script>
+    $("#ThinkDDL li a").click(function () {
+        debugger;
+        var el = $(this).attr("data-op");
+        //alert(el);
+        if(el=="PENDING BILLS AND AMENDMENTS")
+        {
+            $("#trstatus").show();
+            $("#pdf").hide();
+            $("#concat").hide();
+            $("#TabType").val(el);
+            $('#Billlnk').show();
+        }
+        else
+        {
+            $("#trstatus").hide();
+            $("#pdf").show();
+            $("#concat").show();
+            $("#TabType").val(el);
+            $('#Billlnk').hide();
+        }
+        $("#TabType").val(el);
+        //if(el=="addNew")
+        //{
+        //    $("#tabp").show();
+        //}
+        //else
+        //{
+        //    $("#tabp").hide();
+        //}
+        //console.log('inside');
+        //if ($(this).attr("data-flag2") === "false") {
+        //    $("#ThinkDDL li a").each(function (prop, val) {
+        //        var el = $(this).attr("data-think2");
+        //        $("#" + el).hide(1000);
+        //        $(this).attr("data-flag2", "false");
+        //    });
+
+        //    var el = $(this).attr("data-think2");
+        //    $("#" + el).show(1000);
+        //    $(this).attr("data-flag2", "true");
+        //}
+        //return false;
+
+    });
+    function getCancel()
+    {
+        $("#tabp").hide();
+        $("#ADD").hide();
+        $("#Cancel").hide();
+    }
+</script>
+     <script type="text/javascript">
+         function RemoveClass(obj) {
+             $(obj).removeClass("error");
+         }
+         function Validate() 
+         {
+             debugger;
+             if ((hdd).value == null || (hdd).value.length < 1 || (hdd).value == "0") 
+             {
+                 if($("#TabType").val().length>1)
+                 {
+                     $("#TabType").removeClass("error");
+                     if($("#TabType").val()!="PENDING BILLS AND AMENDMENTS")
+                     {
+                         if ($("#Title").val().length<1 || $("#upload").val().length<1 || $("#CountryCat").val().length<1 || $("#Desc").val().length<1)
+                         {
+                             if($("#Desc").val().length<1)
+                             {document.getElementById('overmsg').innerHTML="<b>Description can Not be Empty...!</b>";}
+                             else{$("#overmsg").hide();}
+                             if ($("#Title").val().length<1)
+                             {$("#Title").addClass("error");}
+                             else
+                             {$("#Title").removeClass("error");}
+                             if ($("#upload").val().length<1)
+                             {$("#upload").addClass("error");}
+                             else
+                             {$("#upload").removeClass("error");}
+                             if ($("#CountryCat").val().length<1)
+                             {$("#CountryCat").addClass("error");}
+                             else
+                             {$("#CountryCat").removeClass("error");}
+                             return false;
+                         }
+                         else if($("#Desc").val().length>1500)
+                         {
+                             document.getElementById('overmsg').innerHTML="Maximum 1000 Characters Should be Insert But You Have <b><u>"+$("#Desc").val().length+"</u></b> Characters Plz Reduce <b><u>"+(($("#Desc").val().length)-1000)+"</u></b> Characters";$("#overmsg").show();
+                             return false;
+                         }
+                         else{
+                             return true;   
+                         } 
+                     }
+                     else
+                     {
+                         if ($("#Title").val().length<1 || $("#Status").val().length<1 || $("#Desc").val().length<1)
+                         {
+                             if($("#Desc").val().length<1)
+                             {document.getElementById('overmsg').innerHTML="<b>Description can Not be Empty...!</b>";}
+                             else{$("#overmsg").hide();}
+                             if ($("#Title").val().length<1)
+                             {$("#Title").addClass("error");}
+                             else
+                             {$("#Title").removeClass("error");}
+                             if ($("#Status").val().length<1)
+                             {$("#Status").addClass("error");}
+                             else
+                             {$("#Status").removeClass("error");}
+                             return false;
+                         }
+                         else if($("#Desc").val().length>1500)
+                         {
+                             document.getElementById('overmsg').innerHTML="Maximum 1000 Characters Should be Insert But You Have <b><u>"+$("#Desc").val().length+"</u></b> Characters Plz Reduce <b><u>"+(($("#Desc").val().length)-1000)+"</u></b> Characters";$("#overmsg").show();
+                             return false;
+                         }
+                         else{
+                             return true;   
+                         } 
+                     }
+                 }
+                 else
+                 {
+                     $("#TabType").addClass("error");
+                     return false;
+                 }
+             }
+             else
+             {
+                     return true;
+             }
+        }
+     </script>
+<script>
+    var nowTemp = new Date();
+    var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+    var files;
+    var storedFiles = [];
+    var upc = 0;
+
+   
+
+    $(function () {
+        debugger;
+        $(":file").attr('title', '  ');
+        var $loading = $('#loadingDiv').hide();
+
+        $("input[id^='fileToUpload']").change(function (e) {
+            doReCreate(e);
+        });
+
+        selDiv = $("#selectedFiles");
+    });
+
+
+    function doReCreate(e) {
+        debugger;
+        upc = upc + 1;
+        handleFileSelect(e);
+
+        $("input[id^='fileToUpload']").hide();
+
+        $('<input>').attr({
+            type: 'file',
+            multiple: 'multiple',
+            id: 'fileToUpload' + upc,
+            class: 'fUpload',
+            name: 'fileUpload',
+            style: 'float: left',
+            title: '  ',
+            onchange: "doReCreate(event)"
+
+        }).appendTo('#uploaders');
+    }
+
+
+    function handleFileSelect(e) {
+        debugger;
+        //selDiv.innerHTML = ""; storedFiles = []; 
+        selDiv = document.querySelector("#selectedFiles");
+
+        if (!e.target.files) return;
+
+        //selDiv.innerHTML = "";
+        files = e.target.files;
+
+        for (var i = 0; i < files.length; i++) {
+            //if (i == 0) { selDiv.innerHTML = ""; storedFiles = []; }
+            var f = files[i];
+            selDiv.innerHTML += "<div>" + f.name + "<a onclick='removeAtt(this)'> X </a></div>";
+            storedFiles.push(f.name);
+        }
+       @* $('#@Html.IdFor(i =>i.FilesToBeUploaded)').val(storedFiles);*@
+    }
+
+    function removeAtt(t) {
+        debugger;
+        var serEle = $(t).parent().text().slice(0, -3);
+        var index = storedFiles.indexOf(serEle);
+        if (index !== -1) {
+            storedFiles.splice(index, 1);
+        }
+        $(t).parent().remove();
+
+       @* $('#@Html.IdFor(i => i.FilesToBeUploaded)').val(storedFiles);*@
+
+    }
+</script>
+<script>
+    window.onload = function() { 
+        debugger;
+        var txts = document.getElementsByTagName('TEXTAREA'); 
+        //alert(txts);
+        for(var i = 0, l = txts.length; i < l; i++) {
+            if(/^[0-9]+$/.test(txts[i].getAttribute("maxlength"))) { 
+                var func = function() { 
+                    var len = parseInt(this.getAttribute("maxlength"), 10); 
+
+                    if(this.value.length > len) { 
+                        alert('Maximum length exceeded: ' + len); 
+                        this.value = this.value.substr(0, len); 
+                        return false; 
+                    } 
+                }
+
+                txts[i].onkeyup = func;
+                txts[i].onblur = func;
+            } 
+        };
+
+    }
+</script>
+<script>
+function changeText(){
+    var text_box = document.getElementById('CountryCat');
+          
+        text_box.value = "This text box is read only.";
+        text_box.setAttribute('readonly', 'readonly');   
+   
+}
+</script>

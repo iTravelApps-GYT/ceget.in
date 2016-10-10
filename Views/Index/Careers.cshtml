@@ -1,0 +1,70 @@
+﻿@model GCNI.Models.GCNIModel
+@{
+    ViewBag.Title = "Careers";
+    Layout = "~/Views/Shared/AboutUsMaster.cshtml";
+}
+<section id="feature">
+    
+      <div class="row getIn WebCnt">
+      
+       <ul class="CarrersUl">
+           @foreach(GCNI.Models.Carrers obj in Model.objCarrers_ML)
+           {
+               if (obj.Category == "Heading")
+               {
+        <li><p style="margin-left:0px;">@Html.Raw(obj.Heading)</p></li><br /><br />
+           }
+           }
+        <li> Job Opportunities at CEGET</li><br /><br />
+        <li >
+            <table class="table table-bordered" >
+                <thead>
+                    <th>Job Title</th>
+                    <th>Duration</th>
+                    <th>Job Description</th>
+                    <th>Apply</th>
+                </thead>
+                <tbody>
+                     @foreach(GCNI.Models.Carrers obj in Model.objCarrers_ML)
+           {
+               if (obj.Category == "Job opportunities")
+               {
+                <tr>
+                    <td>@Html.Raw(obj.JobTitle)</td>
+                    <td>@Html.Raw(obj.Duration)</td>
+                    <td>@Html.Raw(obj.JobDescription)</td>
+                    <td>@Html.Raw(obj.ApplyEmail)</td>
+                </tr>
+                     }
+                     }
+                @*<tr>
+                    <td>Data Analyst</td>
+                    <td>6 months</td>
+                    <td>Applying Statstical Resoning</td>
+                    <td>Write To gcnindia@globalimpact.in</td>
+                </tr>
+                 <tr>
+                    <td>Data Analyst</td>
+                    <td>6 months</td>
+                    <td>Applying Statstical Resoning</td>
+                    <td>Write To gcnindia@globalimpact.in</td>
+                </tr>*@
+                </tbody>
+            </table>
+            <li>
+            <div class=" borderline bline"></div><br /><br />
+            </li>
+            <li>Opportunities with our Partners</li><br />
+             @foreach(GCNI.Models.Carrers obj in Model.objCarrers_ML)
+           {
+               if (obj.Category == "opportunities With Our Partners")
+               {
+            <li><a href="@Html.Raw(obj.LinkEmail)">@Html.Raw(obj.LinkEmail)</a></li>
+             }
+             }
+        </li>
+       </ul>
+           
+      </div>
+      
+    </section>

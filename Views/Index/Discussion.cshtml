@@ -1,0 +1,19 @@
+﻿@model GCNI.Models.GCNIModel
+@{
+    ViewBag.Title = "Discussion";
+    Layout = "~/Views/Shared/AboutUsMaster.cshtml";
+}
+
+<section id="feature">
+      <div class="row getIn WebCnt" style=" padding-top:4%; padding-right:4%; padding-left:2%; text-align:justify;line-height: 7px;">
+        @foreach(GCNI.Models.ResourcesWebinars obj in Model.objResourcesWebinars_ML)
+          {
+         <div class="inner">
+           <span>@Html.Raw(obj.Description)</span><br />
+             <span>@Html.Raw(obj.TradeDate)&nbsp;@Html.Raw(obj.Time)</span>
+                <p class="pull-right"><input type="button" class=" btn Dbutn form-control" value ="Join Discussion" /></p>
+         </div>
+            <p class="borderline  bline"></p>
+        }
+      </div>
+</section>

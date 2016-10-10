@@ -1,0 +1,24 @@
+﻿@model GCNI.Models.GCNIModel
+@{
+    ViewBag.Title = "GCNI_UNGC";
+    Layout = "~/Views/Shared/AboutUsMaster.cshtml";
+}
+<section id="feature">
+    
+      <div class="row GCNI_Div WebCnt">
+       
+           <ul style="list-style-type:none; padding:2%">
+                @foreach (GCNI.Models.GovCouncilingANDSecretariat obj in Model.objGovCounAndSec_ML)
+                   {
+                       if (obj.Cat == "UNGC")
+                       {
+             <li class="mrgnBottom3">
+                    	<p>@Html.Raw(obj.Description)</p>   
+                </li>
+               <p>Find more details About The GCNI Click Here <a href="@Html.Raw(obj.Link)">@Html.Raw(obj.Link)</a> </p>
+                }
+                }
+           </ul>
+      </div>
+      
+    </section>

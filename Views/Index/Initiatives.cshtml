@@ -1,0 +1,54 @@
+﻿@model GCNI.Models.GCNIModel
+@{
+    ViewBag.Title = "Initiatives";
+    Layout = "~/Views/Shared/AboutUsMaster.cshtml";
+}
+<style>
+    p {
+        margin-top:-15px;
+        margin-left:0px;
+    }
+</style>
+
+<section id="feature">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="first-row thirdrow body-wrap">
+                   @foreach (GCNI.Models.ActivitiesInitiative obj in Model.objActivitiesIni_ML)
+                   {
+                            <div class="body-container">
+                                <div>
+                                    <img src="@Url.Content(String.Format("~/Uploads/Activities/Initiatives/{0}",obj.Image))" height="250px" width="200px" />
+                                </div>
+                                <div class="block-info" style="vertical-align: baseline;">
+                                    <p class="title red-txt"><b>@Html.Raw(obj.Title)</b></p>
+                                    @*<p>@Html.Raw(obj.Name)</p>*@
+                                    <p>@Html.Raw(obj.Description)</p>
+                                </div>
+                            </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@*<section id="feature">
+    
+      <div class="IssuesDiv WebCnt" >
+         
+            <div class="row">
+                <div class="col-lg-2" style="margin-top:4%; margin-left:4%;  margin-bottom:1%">
+               <img src="@Url.Content(String.Format("~/Uploads/Activities/Initiatives/{0}",obj.Image))"  height="250px" width="200px"/>
+                </div>
+                <div class="col-lg-9" style="margin:1%; margin-top:10%">
+                    <ul style="list-style-type:none;">
+                        <li class="red-txt"><b>@Html.Raw(obj.Title)</b></li><br />
+                        <p style="margin-left:0px;">@Html.Raw(obj.Description)</p>   
+                    </ul>
+                </div>
+            </div> 
+          }           
+       </div>
+    </section>*@

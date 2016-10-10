@@ -1,0 +1,764 @@
+﻿@model GCNI.Models.GCNIModel
+@using System.Data;
+@{
+    ViewBag.Title = "Knowledge";
+                    //Layout = "~/Views/Shared/AboutUsMaster.cshtml";
+}
+
+<!DOCTYPE html>
+<html class="csstransforms no-csstransforms3d csstransitions" lang="en">
+    <head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>GCNI</title>
+	
+	<!-- core CSS -->
+    <link href="~/css/tableStyle.css" rel="stylesheet" />
+    <link href="~/css/bootstrap.css" rel="stylesheet">
+    <link href="~/css/font-awesome.css" rel="stylesheet">
+    <link href="~/css/animate.css" rel="stylesheet">
+    <link href="~/css/prettyPhoto.css" rel="stylesheet">
+    <link href="~/css/main.css" rel="stylesheet">
+    <link href="~/css/responsive.css" rel="stylesheet">
+	<link href='http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+    <script src="~/Scripts/jquery-1.7.1.js"></script>
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->       
+    <!--<link rel="shortcut icon" href="http://shapebootstrap.net/demo/html/corlate/images/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://shapebootstrap.net/demo/html/corlate/images/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://shapebootstrap.net/demo/html/corlate/images/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://shapebootstrap.net/demo/html/corlate/images/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="http://shapebootstrap.net/demo/html/corlate/images/ico/apple-touch-icon-57-precomposed.png">-->
+   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <style type="text/css">
+    .error
+    {
+        border: solid!important;
+        border-color: red!important;
+    }
+     #Lmenu, #Rmenu {color:white;
+        }    
+</style>
+
+    <link type="text/css" rel="stylesheet" href="~/JEditor/jquery-te-1.4.0.css">
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="~/JEditor/jquery-te-1.4.0.min.js" charset="utf-8"></script>
+
+    @*Kendo Editor Links*@
+    @*<link rel="stylesheet" href="http://kendo.cdn.telerik.com/2015.3.1111/styles/kendo.common.min.css"/>
+    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2015.3.1111/styles/kendo.rtl.min.css"/>
+    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2015.3.1111/styles/kendo.silver.min.css"/>
+    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2015.3.1111/styles/kendo.mobile.all.min.css"/>
+
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="http://kendo.cdn.telerik.com/2015.3.1111/js/kendo.all.min.js"></script>*@
+    @*End of Kendo Links*@
+
+
+<link href="~/css/tableStyle.css" rel="stylesheet" />
+
+    <script type="text/javascript">
+        function myFunction(obj) {
+            $("#popuppdf").show();
+            var x = document.getElementById(obj).value;
+
+            $.ajax({
+                type: "post",
+                url: "/Index/Knowledge",
+                data: { "sort": x },
+                success: (function (data) {
+                    $("#popuppdf").hide();
+                    $("#bd").html(data);
+
+                }),
+                fail: (function (data) {
+                    $("#popuppdf").hide();
+                })
+            });
+        }
+</script>
+    <script type="text/javascript">
+        function SwapDivsWithClick(div1, div2) {
+            d1 = document.getElementById(div1);
+            d2 = document.getElementById(div2);
+            if (d2.style.display == "none") {
+                d1.style.display = "none";
+                d2.style.display = "block";
+            }
+            else {
+                d1.style.display = "block";
+                d2.style.display = "none";
+            }
+        }
+</script>
+     
+
+</head>
+
+<body class="homepage" id="bd">
+    @{
+
+        DataTable dt = new DataTable();
+        DataColumn ID = new DataColumn("ID", typeof(System.String));
+        DataColumn Title = new DataColumn("Title", typeof(System.String));
+        DataColumn Description = new DataColumn("Description", typeof(System.String));
+        DataColumn Pdf_File_Link = new DataColumn("Pdf_File_Link", typeof(System.String));
+        DataColumn CountryCat = new DataColumn("CountryCat", typeof(System.String));
+        DataColumn TabCat = new DataColumn("TabCat", typeof(System.String));
+        DataColumn Status = new DataColumn("Status", typeof(System.String));
+        DataColumn BillLinkUrl = new DataColumn("BillLinkUrl", typeof(System.String));
+        DataColumn CreatedOn = new DataColumn("CreatedOn", typeof(System.String));
+        dt.Columns.AddRange(new DataColumn[] { ID, Title, Description, Pdf_File_Link, CountryCat, TabCat, Status, BillLinkUrl, CreatedOn });
+        foreach (GCNI.Models.Knowledge obj in Model.objKnowledge_ML)
+        {
+            dt.Rows.Add(obj.id, obj.Title, obj.Description, obj.Pdf_File_Link,obj.CountryCat,obj.TabCat,obj.Status,obj.BillLinkUrl, obj.CreatedOn);
+        }
+    }
+    <header id="header">
+        <div class="top-bar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-xs-12">  
+                    </div>
+                    <div class="col-sm-6 col-xs-12">
+                    @*<div class="search">
+                                <form role="form">
+                                    <input class="search-form" autocomplete="off" placeholder="Search" type="text">
+                                    <i class="fa fa-search"></i>
+                                </form>
+					</div>*@
+					<div class="social">
+						<ul class="social-share">
+                            <li style="width:300px;margin-top: 12px;display:none;" id="search">
+                                <script>
+                                    (function () {
+                                        var cx = '005855697794264765607:1orfyayp5sk';
+                                        var gcse = document.createElement('script');
+                                        gcse.type = 'text/javascript';
+                                        gcse.async = true;
+                                        gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+                                            '//cse.google.com/cse.js?cx=' + cx;
+                                        var s = document.getElementsByTagName('script')[0];
+                                        s.parentNode.insertBefore(gcse, s);
+                                    })();
+                                </script>
+                                <gcse:searchbox-only></gcse:searchbox-only>
+                                @*<script>
+            (function() {
+              var cx = '005855697794264765607:1orfyayp5sk';
+              var gcse = document.createElement('script');
+              gcse.type = 'text/javascript';
+              gcse.async = true;
+              gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+                  '//cse.google.com/cse.js?cx=' + cx;
+              var s = document.getElementsByTagName('script')[0];
+              s.parentNode.insertBefore(gcse, s);
+            })();
+                                      </script>
+                                      <gcse:searchbox-only></gcse:searchbox-only>*@
+
+                            </li>
+                            <li><a href="#" onclick="getsearch();" id="meg"><i class="fa fa-search"></i></a></li>
+                            <li><a href="~/Index/GetInvolved">| Get Involved</a> |</li>
+							<li><a href="~/Index/media">Media</a> |</li>
+							<li><a href="~/Index/Careers"> Careers </a>|</li> 
+							<li><a href="~/Index/FAQS">FAQ</a>|</li>
+							<li><a href="~/Index/ContactUS">Contact Us</a></li>
+						</ul>
+					</div>
+                    </div>
+                </div>
+            </div><!--/.container-->
+        </div><!--/.top-bar-->
+
+        <nav class="navbar navbar-inverse" role="banner">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="index.html"><img src="../images/logo.png" alt="logo"></a>
+                </div>
+				
+                <div class="logo_right">
+					<a class="navbar-brand" href="index.html"><img src="../images/logo1.png" alt="logo"></a>
+                </div>
+            </div><!--/.container-->
+        </nav><!--/nav-->
+        <div class="main-nav collapse navbar-collapse">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="~/Index">HOME</a>|</li>
+				<li class="Menu"><a href="#">GCNI</a>|
+                    <ul class="subMenu" style="list-style-type:none;">
+                        <li><a href="~/Index/GCNI_UNGC">UNGC</a></li>
+                      
+                         <li><a href="~/Index/GCNI_10Principles">10 Principles</a></li>
+                          <li><a href="~/Index/GCNI_Governing">Governing Council</a></li>
+                           <li><a href="~/Index/GCNI_Secretariat">Secretariat</a></li>
+                            @*<li><a href="#">GCNI Membership</a></li>*@
+                    </ul>
+                </li>
+				<li class="Menu"><a href="#">ABOUT US</a>|
+                    <ul class="subMenu" style="list-style-type:none;">
+                          <li><a href="~/Index/AboutUs_JCOE">Journey of COE</a></li>
+                          <li><a href="~/Index/About_UsCommittee">Advisory Commttiee</a></li>
+                           <li><a href="~/Index/AboutUS_RCOE">Role of COE</a></li>
+                            <li><a href="~/Index/About_UsTeam">Team</a></li>
+                    </ul>
+                </li>
+				<li><a href="~/Index/Knowledge">KNOWLEDGE HUB</a>|</li>
+				<li class="Menu"><a href="#">RESOURCES</a>|
+                    <ul class="subMenu" style="list-style-type:none;">
+                                             
+                        <li><a href="~/Index/COEReports">CEGET Reports</a></li>
+                          <li><a href="~/Index/Tranings">Training</a></li>
+                          <li><a href="~/Index/ResourcesPastViewWebinars">Webinars</a></li>
+                            <li><a href="~/Index/Discussion">Discussion</a></li>
+                    </ul>
+                </li>
+				<li class="Menu"><a href="#">ACTIVITIES</a>|
+                    <ul class="subMenu" style="list-style-type:none;">
+                        <li><a href="~/Index/Initiatives">Initiatives</a></li>
+                        <li><a href="~/Index/Issues">Issues</a></li>
+                         
+                    </ul>
+                </li> 
+				<li><a href="~/Index/OurPartners">OUR PARTNERS</a></li>                        
+			</ul>
+		</div>
+		    </header><!--/header-->
+
+    <section id="main-slider" class="no-margin">
+        <div class="carousel slide">
+            <div class="carousel-inner">
+                <div class="item active" style="height: 175px;">
+                    <div class="container">
+                        <div class="row slide-margin">
+                            <div class="col-sm-12">
+                                <div class="slider-img">
+                                    <img src="../images/img2.png" class="img-responsive">
+                                </div>
+								<div style="color: rgb(255, 255, 255); font-family: Californian FB; font-size: 19px; text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.6); margin-top: 135px;">
+									<div class=" law_Div">
+                                        <div class="col-sm-4"><a href="~/Index/Knowledge"><span id="Lmenu">Laws</span></a></div>
+									    <div class="col-sm-8" style="text-align:right;"><a href="~/Index"><span id="Rmenu"> Home > Knowledge Hub @*> Laws*@</span></a></div>
+                                    </div>
+                                    <div class="Policies_div" style="display:none">
+                                        <div class="col-sm-4"><a href="~/Index/Knowledge"><span id="Lmenu">Policies and Guidlines</span></a></div>
+									    <div class="col-sm-8" style="text-align:right;"><a href="~/Index"><span id="Rmenu"> Home > Knowledge Hub @*> Policies and Guidlines*@</span></a></div>
+                                    </div>
+                                    <div class="PolicySolution_div" style="display:none">
+                                        <div class="col-sm-4"><a href="~/Index/Knowledge"><span id="Lmenu">Policy Solutions</span></a></div>
+									    <div class="col-sm-8" style="text-align:right;"><a href="~/Index"><span id="Rmenu"> Home > Knowledge Hub @*> Policy Solutions*@</span></a></div>
+                                    </div>
+                                    <div class="pending_Div"  style="display:none">
+                                        <div class="col-sm-4"><a href="~/Index/Knowledge"><span id="Lmenu">Pending Bills and Amendments</span></a></div>
+									    <div class="col-sm-8" style="text-align:right;"><a href="~/Index"><span id="Rmenu"> Home > Knowledge Hub @*> Pending Bills and amendments*@</span></a></div>
+                                    </div>
+								</div>
+							
+                            </div>
+
+                        </div>
+                    </div>
+                </div><!--/.item-->	
+            </div><!--/.carousel-inner-->
+        </div><!--/.carousel-->
+    </section><!--/#main-slider-->
+
+    <section id="feature">
+    <div class="row" style="margin:3%;margin-top: 20px;" >
+    <ul style="float:left; list-style-type:none; width:100%;margin-left: -30px;">
+    <li style="float:left;">
+         <div class="Kno" style="margin-left:3%; float:left;">
+         <div>
+         <a href="javascript:void(0);" onclick="javascript:$('.law_Div').show();$('.Bill').hide();  $('.Policies_div').hide();$('.PolicySolution_div').hide();$('.pending_Div').hide();">Laws</a>
+         </div></div>
+       
+
+    </li>
+    <li style="float:left;">
+        <div class="Know" style="margin-left:2%;float:left;"><div><a href="javascript:void(0);" onclick="javascript:$('.law_Div').hide();$('.Bill').hide();  $('.Policies_div').show();$('.PolicySolution_div').hide();$('.pending_Div').hide();">Policies and Guidlines</a></div></div>
+     </li>
+       <li style="float:left;">
+        <div class="Know" style="margin-left:2%;float:left;"><div><a href="javascript:void(0);" onclick="javascript:$('.law_Div').hide();$('.Bill').hide();  $('.Policies_div').hide();$('.PolicySolution_div').show();$('.pending_Div').hide();">Policy Solutions</a></div></div>
+     </li>
+       <li style="float:left;">
+        <div class="PendingKnow" style="margin-left:2%;float:left;"><div><a href="javascript:void(0);" onclick="javascript:$('.law_Div').hide();$('.Bill').show();  $('.Policies_div').hide();$('.PolicySolution_div').hide();$('.pending_Div').show();">Pending Bills and amendments</a></div></div>
+     </li><br /><br />
+      <li> 
+          <div class="law_Div" id="LAWS" >
+         
+            <table class="table lawTable " >
+   
+        <tbody>
+          <tr>
+            <td class="red-txt col-lg-2">International</td>
+            <td class="col-lg-9"></td>
+            <td style="border:none;" class="col-lg-1">
+            <a href="javascript:void(0);" onclick="javascript:$('#knUprDiv').hide();  $('#LawUprMinus').hide();$('#LawUprPlus').show();"><img src="../images/minus_sign.png" id="LawUprMinus" class="minusSign" /></a>
+            <a href="javascript:void(0);" onclick="javascript:$('#knUprDiv').show();  $('#LawUprMinus').show();$('#LawUprPlus').hide();"><img style=" display:none;" src="../images/plus_sign.png"  class="minusSign " id="LawUprPlus" /></a>
+            </td>
+           
+            </tr>
+            </tbody>
+            </table>
+        
+          <!--  <span class="red-txt">International</span></div>-->
+            <div class="row kn WebCnt" id="knUprDiv">
+            <div class="pull-right">
+            <select class="form-control" id="mySelect1" onchange="myFunction('mySelect1');">
+                 <option>Sort By</option>
+                 <option value="ATOZ">Title (A-Z)</option>
+                 <option value="ZTOA">Title (Z-A)</option>
+                 </select>
+            </div>
+            <div style="margin-top:4%">
+            <ul style="list-style-type:none;" id="DDDigital">
+                @for(int i=0;i<dt.Rows.Count;i++)
+                { 
+                @*@foreach (GCNI.Models.Knowledge obj in Model.objKnowledge_ML)
+                {*@
+                  
+                    if (dt.Rows[i]["TabCat"].ToString() == "LAWS" && dt.Rows[i]["CountryCat"].ToString() == "International")
+                    {
+                        @*<a href="#" data-id="@Html.Raw("popup" + obj.id)" data-think1="@Html.Raw("Digital" + obj.id)">ghghfgh</a>*@
+                        <li style="width:80%"><p>@Html.Raw(dt.Rows[i]["Title"].ToString())</p></li>
+                <li style="width:80%"><p>@Html.Raw(dt.Rows[i]["Description"].ToString())</p></li>    
+                    <li class="red-txt" style="margin-left:80%; "><a href="#" data-id="@Html.Raw("popup" + dt.Rows[i]["id"].ToString())" data-think1="@Html.Raw("Digital" + dt.Rows[i]["id"].ToString())">Read More...<img src="../images/adobe_icon.jpg" class="adobeIcon"/></a></li>
+                <li class="bline_know"></li>
+                
+                    }
+                }
+            </ul>
+            </div>
+            </div>
+            <div class="ndiv" >
+            <span class="red-txt" >National</span>
+             <a href="javascript:void(0);" onclick="javascript:$('#LawNation').hide();  $('#lawDwnMinus').hide();$('#lawDwnPlus').show();"><img src="../images/minus_sign.png" class="pull-right plusSign " id="lawDwnMinus"  /></a>
+           <a href="javascript:void(0);" onclick="javascript:$('#LawNation').show();  $('#lawDwnPlus').hide();$('#lawDwnMinus').show();"> <img style=" display:none;" src="../images/plus_sign.png"  class="pull-right plusSign " id="lawDwnPlus" /></a>
+            </div>
+            <div class="row knBottomDiv WebCnt" id="LawNation">
+                <div style="margin-top:3%">
+            <ul style="list-style-type:none;" id="DDDigital">
+                @foreach (GCNI.Models.Knowledge obj in Model.objKnowledge_ML)
+                {
+                    if (obj.TabCat == "LAWS" && obj.CountryCat == "National")
+                    {
+                        
+                <li style="width:80%"><p>@Html.Raw(obj.Title)</p></li>
+                <li style="width:80%"><p>@Html.Raw(obj.Description)</p></li>
+                <li class="red-txt" style="margin-left:80%;margin-top:-15px;"><a href="#" data-id="@Html.Raw("popup" + obj.id)" data-think1="@Html.Raw("Digital" + obj.id)" >Read More...</a><img src="../images/adobe_icon.jpg" class="adobeIcon" /></li>
+                <li class="bline_know"></li>
+                    }
+                }
+                 
+            </ul>
+            </div>
+            </div>
+        </div> 
+            <div class="Policies_div" style="display:none">
+               <table class="table lawTable " >
+   
+        <tbody>
+          <tr>
+            <td class="red-txt col-lg-2">National</td>
+            <td class="col-lg-9"></td>
+            <td style="border:none;" class="col-lg-1">
+            <a href="javascript:void(0);" onclick="javascript:$('#pDiv').hide();  $('#pUprMinus').hide();$('#pUprPlus').show();">
+            <img src="../images/minus_sign.png" class="minusSign" id="pUprMinus" /></a>
+            <a href="javascript:void(0);" onclick="javascript:$('#pDiv').show();  $('#pUprMinus').show();$('#pUprPlus').hide();">
+            <img src="../images/plus_sign.png" id="pUprPlus" style="display:none"  class=" minusSign" />
+            </a>
+           </td>
+            </tr>
+            </tbody>
+            </table>
+        
+          <!--  <span class="red-txt">International</span></div>-->
+            <div class="row kn WebCnt" id="pDiv">
+            <div class="pull-right">
+                 <select class="form-control" id="mySelect2" onchange="myFunction('mySelect2');">
+                 <option>Sort By</option>
+                 <option value="ATOZ">Title (A-Z)</option>
+                 <option value="ZTOA">Title (Z-A)</option>
+                 </select>
+
+            @*<select class="form-control">
+               <option>Sort By</option>
+                 <option>xyz</option>
+                 <option>ABC</option>
+            </select>*@
+            </div>
+            <div style="margin-top:0%;height:500px;" >
+            <ul style="list-style-type:none;" id="DDDigital">
+                 @foreach (GCNI.Models.Knowledge obj in Model.objKnowledge_ML)
+                 {
+                     if (obj.TabCat == "POLICIES AND GUIDLINES" && obj.CountryCat == "National")
+                     {
+                <li style="width:80%"><p>@Html.Raw(obj.Title)</p></li>
+                <br />
+                 
+              
+                <li style="width:80%"><p>@Html.Raw(obj.Description)</p>
+                </li>
+                <li class="red-txt" style="margin-left:80%;margin-top:-26px;"><a href="#" data-id="@Html.Raw("popup" + obj.id)" data-think1="@Html.Raw("Digital" + obj.id)">Read More...<img src="../images/adobe_icon.jpg" class="adobeIcon"/></a></li>
+                <li class="bline_know" style="margin-bottom: 45px;"></li>
+                     }
+                 }
+               <!--<li style="width:80%"><p> Do you consider that going for  risk reduction on the investments </p></li>
+                 <li style="width:80%"><p> consider that going step towards Do you consider that going for integrity due diligence is a smart step towards risk reduction Do you consider that going for integrity due diligence is a smart....</p>
+                </li>
+                <li style="margin-left:80%; color:Green;">Read More...<img src="../images/adobe_icon.jpg" class="adobeIcon"/></li>
+                <li class="pull-right">
+                <div class="col-lg-7">
+                </div>
+                <div class="col-lg-5 WebCnt" style="background-color:#f5f5f0;border: 1px solid #ddd; overflow-y:scroll; height:400px;">
+                consider that going step towards Do you consider that going for integrity dueconsider that going step towards Do you consider that going for integrity due
+                consider that going step towards Do you consider that going for integrity dueconsider that going step towards Do you consider that going for integrity due
+                consider that going step towards Do you consider that going for integrity dueconsider that going step towards Do you consider that going for integrity due
+                consider that going step towards Do you consider that going for integrity dueconsider that going step towards Do you consider that going for integrity due
+               consider that going step towards Do you consider that going for integrity dueconsider that going step towards Do you consider that going for integrity due
+                consider that going step towards Do you consider that going for 
+                consider that going step towards Do you consider that going for integrity dueconsider that going step towards Do you consider that going for integrity due
+consider that going step towards Do you consider that going for integrity dueconsider that going step towards Do you consider that going for integrity due
+consider that going step towards Do you consider that going for integrity dueconsider that going step towards Do you consider that going for integrity due
+consider that going step towards Do you consider that going for integrity dueconsider that going step towards Do you consider that going for integrity due
+consider that going step towards Do you consider that going for integrity dueconsider that going step towards Do you consider that going for integrity due
+                consider that going step towards Do you consider that going for consider that going step towards Do you consider that going for integrity dueconsider that going step towards Do you consider that going for integrity due
+                consider that going step towards Do you consider that going for consider that going step towards Do you consider that going for integrity dueconsider that going step towards Do you consider that going for integrity due
+                consider that going step towards Do you consider that going for consider that going step towards Do you consider that going for integrity dueconsider that going step towards Do you consider that going for integrity due
+                consider that going step towards Do you consider that going for consider that going step towards Do you consider that going for integrity dueconsider that going step towards Do you consider that going for integrity due
+                consider that going step towards Do you consider that going for consider that going step towards Do you consider that going for integrity dueconsider that going step towards Do you consider that going for integrity due
+                consider that going step towards Do you consider that going for 
+                consider that going step towards Do you consider that going for 
+                consider that going step towards Do you consider that going for 
+                consider that going step towards Do you consider that going for 
+                consider that going step towards Do you consider that going for 
+                consider that going step towards Do you consider that going for integrity dueconsider that going step towards Do you consider that going for integrity due
+                consider that going step towards Do you consider that going for integrity dueconsider that going step towards Do you consider that going for integrity due
+                </div>
+                </li>-->
+                
+               
+               
+            </ul>
+            </div>
+            </div>
+            <div class="ndiv">
+            <span class="red-txt">International</span>
+             
+               <a href="javascript:void(0);" onclick="javascript:$('#pBtmDiv').hide();  $('#pBtmMinus').hide();$('#pBtmPlus').show();">
+             <img src="../images/minus_sign.png"  class="pull-right plusSign"  id="pBtmMinus" style="display:none"/>
+             </a>
+            <a href="javascript:void(0);" onclick="javascript:$('#pBtmDiv').show();  $('#pBtmMinus').show();$('#pBtmPlus').hide();">
+             <img src="../images/plus_sign.png"  class="pull-right plusSign"  id="pBtmPlus"/>
+             </a>
+            </div>
+             <div class=" row knBottomDiv WebCnt" style="display:none;height:500px;" id="pBtmDiv" >
+                 <ul style="list-style-type:none;" id="DDDigital">
+                 @foreach (GCNI.Models.Knowledge obj in Model.objKnowledge_ML)
+                 {
+                     if (obj.TabCat == "POLICIES AND GUIDLINES" && obj.CountryCat == "International")
+                     {
+                <li style="width:80%"><p>@Html.Raw(obj.Title)</p></li>
+                <br />
+                 
+              
+                <li style="width:80%"><p>@Html.Raw(obj.Description)</p>
+                </li>
+                <li class="red-txt" style="margin-left:80%;margin-top:-26px;"><a href="#" data-id="@Html.Raw("popup" + obj.id)" data-think1="@Html.Raw("Digital" + obj.id)">Read More...<img src="../images/adobe_icon.jpg" class="adobeIcon"/></a></li>
+                <li class="bline_know" style="margin-bottom: 45px;"></li>
+                     }
+                 }</ul>
+            </div>
+            </div>
+            <div class="PolicySolution_div knDivs" >
+           <table class="table  lawTable " >
+   
+        <tbody>
+          <tr>
+            <td class="red-txt col-lg-2">National</td>
+            <td class="col-lg-9"></td>
+            <td style="border:none;" class="col-lg-1">
+            <a href="javascript:void(0);" onclick="javascript:$('#PlcySlnDiv').hide();  $('#plcySlnUprMinus').hide();$('#plcySlnUprPlus').show();">
+            <img src="../images/minus_sign.png" class="minusSign" id="plcySlnUprMinus" /></a>
+            <a href="javascript:void(0);" onclick="javascript:$('#PlcySlnDiv').show();  $('#plcySlnUprMinus').show();$('#plcySlnUprPlus').hide();">
+            <img src="../images/plus_sign.png" class="minusSign" id="plcySlnUprPlus"  style="display:none;"/>
+            </a>
+            </td>
+           
+            </tr>
+            </tbody>
+            </table>
+        
+          <!--  <span class="red-txt">International</span></div>-->
+            <div class="row kn WebCnt" id="PlcySlnDiv" >
+           <div class="pull-right">
+                 <select class="form-control" id="mySelect3" onchange="myFunction('mySelect3');">
+                 <option>Sort By</option>
+                 <option value="ATOZ">Title (A-Z)</option>
+                 <option value="ZTOA">Title (Z-A)</option>
+                 </select>
+               </div> 
+            <div style="margin-top:0%; class=" row knBottomDiv WebCnt">
+            <ul style="list-style-type:none;" id="DDDigital">
+                 @foreach (GCNI.Models.Knowledge obj in Model.objKnowledge_ML)
+                 {
+                     if (obj.TabCat == "POLICY SOLUTIONS" && obj.CountryCat == "National")
+                     {
+                <li style="width:80%"><p>@Html.Raw(obj.Title)</p></li>
+                <br />
+                <li style="width:80%"><p>@Html.Raw(obj.Description)</p>
+                </li>
+                <li class="red-txt" style="margin-left:80%; "><a href="#" data-id="@Html.Raw("popup" + obj.id)" data-think1="@Html.Raw("Digital" + obj.id)">Read More...<img src="../images/adobe_icon.jpg" class="adobeIcon"/></a></li>
+                <li class="bline_know"></li><br />
+                     }
+                 }
+                
+                
+               
+               
+            </ul>
+            </div>
+            </div>
+            <div class="ndiv">
+            <span class="red-txt">International</span>
+             
+               <a href="javascript:void(0);" onclick="javascript:$('#plcyBtmDiv').hide();  $('#plcyBtmMinus').hide();$('#plcyBtmPlus').show();">
+             <img src="../images/minus_sign.png"  class="pull-right plusSign"  id="plcyBtmMinus" style="display:none"/>
+             </a>
+            <a href="javascript:void(0);" onclick="javascript:$('#plcyBtmDiv').show();  $('#plcyBtmMinus').show();$('#plcyBtmPlus').hide();">
+             <img src="../images/plus_sign.png"  class="pull-right plusSign"  id="plcyBtmPlus"/>
+             </a>
+            </div>
+             <div class=" row knBottomDiv WebCnt" style="display:none;" id="plcyBtmDiv">
+                <div style="margin-top:3%">
+            <ul style="list-style-type:none;" id="DDDigital">
+                @foreach (GCNI.Models.Knowledge obj in Model.objKnowledge_ML)
+                {
+                    if (obj.TabCat == "POLICY SOLUTIONS" && obj.CountryCat == "International")
+                    {
+                <li style="width:80%"><p>@Html.Raw(obj.Title)</p></li>
+                <li style="width:80%"><p>@Html.Raw(obj.Description)</p></li>
+                <li class="red-txt" style="margin-left:80%;margin-top:-15px;"><a href="#" data-id="@Html.Raw("popup" + obj.id)" data-think1="@Html.Raw("Digital" + obj.id)" >Read More...</a><img src="../images/adobe_icon.jpg" class="adobeIcon" /></li>
+                <li class="bline_know"></li>
+                    }
+                }
+                 
+            </ul>
+            </div>
+            </div>
+            </div>
+            <div class="Bill" style="display:none;">
+                <table class="table lawTable ">
+                    <thead>
+                    <tr class="red-txt" style="font-weight:normal;">
+                    <th class="col-lg-6 center rytBorder" >Bills</th>
+                    <th class="col-lg-5 center">Status</th>
+                 <td  style=" border-bottom:1px solid #b2b3b3;" class="col-lg-1">
+                 <a href="javascript:void(0);" onclick="javascript:$('#tbldata').hide();  $('#PndMinus').hide();$('#pndPlus').show();">
+                 <img src="../images/minus_sign.png" class="minusSign" id="PndMinus" /></a>
+                 <a href="javascript:void(0);" onclick="javascript:$('#tbldata').show();  $('#PndMinus').show();$('#pndPlus').hide();">
+                  <img src="../images/plus_sign.png" class="minusSign" id="pndPlus" style="display:none;" /></a>
+                
+                 </td>
+                       
+                    </tr>
+                   
+               </thead>
+                </table>
+          <div class="pending_Div knDivs" id="tbldata" style="overflow-Y: scroll;height:500px;width: 1238px;">
+           <table class="table lawTable ">
+            <tbody class="WebCnt tblbdy" style="border-bottom-style:none; padding-bottom:10%;">
+            
+                
+                     @foreach (GCNI.Models.Knowledge obj in Model.objKnowledge_ML)
+                     {
+                         if (obj.TabCat == "PENDING BILLS AND AMENDMENTS")
+                         {
+                        <tr style="border-bottom-style:none;">
+              <td class="rytBorder" style="border-bottom-style:none;text-align: center;padding-top:28px;line-height:25px;">
+              <b><u><a class="twitter_icon" onClick="window.open('http://@obj.BillLinkUrl', '_blank')" id="popup" target="" href="#" target="_blank">@Html.Raw(obj.Title)</a></u></b><br />@Html.Raw(obj.Description)
+              <br /><br />
+              </td>
+              <td class="center" style="border-bottom-style:none;width:590px;" >
+              <br />
+              @Html.Raw(obj.Status)
+              <br /><br />
+              </td>                       
+         <td style="border-bottom-style:none;"></td>
+
+                        </tr>
+                         }
+
+                     }
+           @*
+            <tr style="border-bottom-style:none;">
+              <td class="rytBorder" style="border-bottom-style:none;">
+              Risk reduction on the investments of a company? Three 
+              Risk reduction on the investments of a company? Three Reasonsof a company? Three Reasons TTIP Needs
+              <br /><br />
+              </td>
+              <td class="center" style="border-bottom-style:none;" >
+              <br />
+              Pending
+              <br /><br />
+              </td>                       
+         <td style="border-bottom-style:none;"></td>
+            </tr>
+            <tr style="border-bottom-style:none;" >
+              <td class="rytBorder" style="border-bottom-style:none;">
+              Risk reduction on the investments of a company? Three 
+              Risk reduction on the investments of a company? Three Reasonsof a company? Three Reasons TTIP Needs
+              <br /><br />
+              </td>
+              <td class="center" style="border-bottom-style:none;" >
+              <br />
+              Pending
+              <br /><br />
+              </td> 
+              <td style="border-bottom-style:none;"></td>                      
+            </tr>
+            <tr style="border-bottom-style:none;">
+              <td class="rytBorder" style="border-bottom-style:none;">
+              Risk reduction on the investments of a company? Three 
+              Risk reduction on the investments of a company? Three Reasonsof a company? Three Reasons TTIP Needs
+              <br /><br />
+              </td>
+              <td class="center" style="border-bottom-style:none;" >
+              <br />
+              Pending
+              <br /><br />
+              </td>                       
+                <td style="border-bottom-style:none;"></td>
+                
+            </tr>
+        
+          *@<tr></tr>
+            <tr></tr>
+
+            </tbody>
+            </table>
+        
+            </div>
+                </div>
+        </li>
+         </ul>
+      </div>
+
+        <div style="width:100%; display:none;margin-left: 200px;margin-top: -20px;" align="center" id="popuppdf">
+
+            <div style="position: fixed;left: 50%;top: 50%;transform: translate(-50%, -50%); height: 200px; width: 500px; z-index: 1000; background-color: #586778;border:solid;">
+                <a href="#" onclick="$('#popuppdf').hide(); return false;"><span style="float: right; color: white; font-weight: normal; font-size: larger; margin-right: 5px;"></span></a>
+                <div style="background-color: white; height: 160px; margin: 20px;">
+                    <img src="~/images/loading.gif" />
+                </div>
+            </div>
+        </div>
+
+       @{ int idigital2 = 1;
+          foreach (GCNI.Models.Knowledge obj in Model.objKnowledge_ML)
+          {
+                              
+                            <div style="width:100%; display:none;margin-left: 200px;margin-top: -20px;" align="center" id="@Html.Raw("popup" + obj.id)">
+                                
+                                <div style="position: fixed;left: 50%;top: 50%;transform: translate(-50%, -50%); height: 600px; width: 800px; z-index: 1000; background-color: #586778;border:solid;">
+                                    <a href="#" onclick=" $('#@Html.Raw("popup" + obj.id)').hide();  return false;"><span style="float: right; color: white; font-weight: normal; font-size: larger; margin-right: 5px;">X</span></a>
+                                    <div style="background-color: white; height: 560px; margin: 20px;">
+                                        <object data=@Url.Content("~/Uploads/Knowledge/" + obj.Pdf_File_Link) type="application/pdf" width="760" height="560">
+                                        alt : <a href=@Url.Content("~/Uploads/Knowledge/" + obj.Pdf_File_Link)>test.pdf</a>
+                                        </object>
+                                       @* <p>@obj.PopupBody </p>*@
+                                       @* <object data=@Url.Content(String.Format("~/Uploads/{0}",obj.PopupBody)) type="application/pdf" width="760" height="460">
+                                            alt : <a href=@Url.Content(String.Format("~/Uploads/{0}",obj.PopupBody))>test.pdf</a>
+                                        </object>*@
+                                    </div>
+                                </div>
+                            </div>
+                               
+              idigital2++;
+          }
+                        }
+      
+      
+    </section>
+
+    
+
+    <footer id="footer" class="midnight-blue">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="social-sahre-links">
+                        <a href="@Model.objHomeMaster.FBLink" target="_blank"><i class="fa fa-facebook"></i></a>
+                        <a href="@Model.objHomeMaster.TWLink" target="_blank"><i class="fa fa-twitter"></i></a>
+                        <a href="@Model.objHomeMaster.YouTubeLink" target="_blank"><i class="fa fa-youtube"></i></a>
+                        <a href="@Model.objHomeMaster.INLink" target="_blank"><i class="fa fa-linkedin"></i></a>
+                        <a href="@Model.objHomeMaster.MsgIconLink" target="_blank"><i class="fa fa-envelope"></i></a>
+                    </div>
+                    <div>Privacy Policy &nbsp;&nbsp;&nbsp;&nbsp;Copyright</div>
+                </div>
+                <div class="col-sm-4">
+                    <div style="margin-bottom: 7px;">Subscribe to our newsletter</div>
+                    <div>
+                        <input type="text" id="Mailid" placeholder="Email address" style="width: 285px;padding: 5px 10px;font-weight: bold;font-size: 13px;" />
+                        <button onclick="mail();"><span>Go</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer><!--/#footer-->
+    <script>
+        $("#DDDigital a").click(function () {
+            debugger;
+            //alert("Hello");
+            $("#DDDigital li a").each(function (prop, val) {
+                // var el = $(this).attr("data-think1");
+                var el2 = $(this).attr("data-id");
+                // $("#" + el).hide(1000);
+                $("#" + el2).hide();
+                // $(this).attr("data-flag1", "false");
+            });
+            var el2 = $(this).attr("data-id");
+            $("#" + el2).show();
+            return false;
+        });
+    </script>
+    <script src="js/jquery_002.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery_003.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/wow.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+        debugger;
+        $("#search").hide();
+        $("#meg").show();
+    });
+    </script>
+    <script>
+        function getsearch()
+        {
+            $("#search").show();
+            $("#meg").hide();
+        }
+    </script>
+    <script>
+        function searchclose()
+        {
+            $("#search").hide();
+            $("#meg").show();
+        }
+    </script>
+</body>
+</html>

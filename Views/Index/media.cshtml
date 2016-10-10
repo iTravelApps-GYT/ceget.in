@@ -1,0 +1,21 @@
+﻿@model GCNI.Models.GCNIModel
+@{
+    ViewBag.Title = "media";
+    Layout = "~/Views/Shared/AboutUsMaster.cshtml";
+}
+
+<section id="feature">
+    
+      <div class="row getIn WebCnt">
+       
+           <ul style="list-style-type:none; padding:5%">
+@foreach (GCNI.Models.Media obj in Model.objMedia_ML)
+{
+           <li><strong>@Html.Raw(obj.Heading)</strong></li>
+            <li>@Html.Raw(obj.Description)</li><br /><br />
+}
+        
+           </ul>
+      </div>
+      
+    </section>

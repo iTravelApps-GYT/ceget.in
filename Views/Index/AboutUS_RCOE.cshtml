@@ -1,0 +1,97 @@
+﻿@model GCNI.Models.GCNIModel
+@{
+    ViewBag.Title = "AboutUS_RCOE";
+    Layout = "~/Views/Shared/AboutUsMaster.cshtml";
+}
+<style>
+    #ConTable {width:100%;
+               height:100%;
+    }
+</style>
+<link href="~/css/main.css" rel="stylesheet" />
+@*<link href="~/css/tableStyle.css" rel="stylesheet" />*@
+@*<section id="main-slider" class="no-margin">
+        <div class="carousel slide">
+            <div class="carousel-inner">
+                <div class="item active" style="height: 175px;">
+                    <div class="container">
+                        <div class="row slide-margin">
+                            <div class="col-sm-12">
+                                <div class="slider-img">
+                                    <img src="../images/img2.png" class="img-responsive">
+                                </div>
+								<div style="color: rgb(255, 255, 255); font-weight: bold; font-family: Gotham; font-size: 18px; text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.6); margin-top: 135px;">
+									<div class="col-sm-4">About_Us Team</div>
+									<div class="col-sm-8" style="text-align:right;"> Home > About Us</div>
+								</div>
+							
+                            </div>
+
+                        </div>
+                    </div>
+                </div><!--/.item-->	
+            </div><!--/.carousel-inner-->
+        </div><!--/.carousel-->
+    </section><!--/#main-slider-->*@
+
+ 
+
+    <section id="feature">
+    <div class="row" style="margin:2%;">
+        @foreach(GCNI.Models.About_US_RoleCOE obj in Model.objAbout_Us_RCOE_ML)
+        {
+            if (obj.TabType == "Upload Image")
+            {
+                string var = obj.ImageURL;
+                string[] arr = var.Split(',');
+                for (int i = 0; i < arr.Length; i++)
+                {
+                        if (i > 0)
+                        {
+    <div class="col-lg-3 "><img src="@Url.Content(String.Format("~/Uploads/About_US_RCOE/{0}", arr[i]))"  height="231px" width="233px"/>
+    </div>
+                        }
+                }
+            }
+        }
+    @*<div class="col-lg-3"><img src="../images/item2.png" class="img-thumbnail" />
+    </div>
+    <div class="col-lg-3"><img src="../images/item3.png" class="img-thumbnail"/>
+    </div>
+    <div class="col-lg-3"><img src="../images/item4.png" class="img-thumbnail" />
+    </div>*@
+    </div>
+       <div class="first-row thirdrow fContent" >
+                <div class="RCEO"><div>Neutral Facilitator for Compliance</div></div>
+               <div class="borderline"></div>
+            @foreach(GCNI.Models.About_US_RoleCOE obj in Model.objAbout_Us_RCOE_ML)
+        {
+            if (obj.TabType == "NEUTRAL FACILITATOR FOR COMPLIANCE")
+            {
+				<p>@Html.Raw(obj.Description)</p>  
+            } 
+            }
+                @*<p> Do you consider that going for integrity due diligence is a smart step towards risk reduction on the investments of a company? Three Reasons TTIP Needs Transparency.
+                 A gigantic trade deal uniting over 800 million consumers across the United States and the European Union, and yet all. Do you consider that going for integrity due diligence is a smart step towards risk reduction on the investments of a company? Three Reasons TTIP Needs Transparency.
+                 A gigantic trade deal uniting over 800 million consumers across the United States and the European Union, and yet all.
+
+				</p>   
+                <p> Do you consider that going for integrity due diligence is a smart step towards risk reduction on the investments of a company? Three Reasons TTIP Needs Transparency.
+                 A gigantic trade deal uniting over 800 million consumers across the United States and the European Union, and yet all. Do you consider that going for integrity due diligence is a smart step towards risk reduction on the investments of a company? Three Reasons TTIP Needs Transparency.
+                 A gigantic trade deal uniting over 800 million consumers across the United States and the European Union, and yet all.
+
+				</p>   
+                <p> Do you consider that going for integrity due diligence is a smart step towards risk reduction on the investments of a company? Three Reasons TTIP Needs Transparency.
+                 A gigantic trade deal uniting over 800 million consumers across the United States and the European Union, and yet all. Do you consider that going for integrity due diligence is a smart step towards risk reduction on the investments of a company? Three Reasons TTIP Needs Transparency.
+                 A gigantic trade deal uniting over 800 million consumers across the United States and the European Union, and yet all.
+
+				</p>   
+                <p> Do you consider that going for integrity due diligence is a smart step towards risk reduction on the investments of a company? Three Reasons TTIP Needs Transparency.
+                 A gigantic trade deal uniting over 800 million consumers across the United States and the European Union, and yet all. Do you consider that going for integrity due diligence is a smart step towards risk reduction on the investments of a company? Three Reasons TTIP Needs Transparency.
+                 A gigantic trade deal uniting over 800 million consumers across the United States and the European Union, and yet all.
+
+				</p>           *@     
+               </div>
+    </section>
+
+

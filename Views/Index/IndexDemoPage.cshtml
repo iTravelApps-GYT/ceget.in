@@ -1,0 +1,336 @@
+﻿@model GCNI.Models.GCNIModel
+@{
+    ViewBag.Title = "Index";
+}
+<!DOCTYPE html>
+<html class="csstransforms no-csstransforms3d csstransitions" lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Home | Corlate</title>
+	
+	<!-- core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/font-awesome.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/prettyPhoto.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <link href="css/responsive.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->       
+    <link rel="shortcut icon" href="http://shapebootstrap.net/demo/html/corlate/images/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://shapebootstrap.net/demo/html/corlate/images/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://shapebootstrap.net/demo/html/corlate/images/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://shapebootstrap.net/demo/html/corlate/images/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="http://shapebootstrap.net/demo/html/corlate/images/ico/apple-touch-icon-57-precomposed.png">
+</head><!--/head-->
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    
+   <script type="text/javascript">
+       //var sb = new StringBuilder();
+
+       //// append some text
+       //sb.append("Lorem ipsum dolor sit amet, consectetuer adipiscing elit, ");
+       //sb.append("sed diem nonummy nibh euismod tincidunt ut lacreet dolore ");
+       //sb.append("magna aliguam erat volutpat.");
+
+       //// get the full string value
+       //var s = sb.toString();
+
+
+
+       var markers = [
+      @foreach(GCNI.Models.EventMaster obj in Model.objEventML)
+      {
+               <text> { "title":</text>obj.Title
+               <text>,"lat": </text>obj.Lat
+               <text>,"lng": obj.Lng,"description": obj.Description }
+      }
+       ];
+
+
+    </script>
+    <script type="text/javascript">
+       window.onload = function () {
+           var mapOptions = {
+               center: new google.maps.LatLng(18.964700,72.825800),
+               zoom: 8,
+               mapTypeId: google.maps.MapTypeId.ROADMAP
+           };
+           debugger;
+           var infoWindow = new google.maps.InfoWindow();
+           var map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
+
+           //var markers=JSON.toString(
+           @* @foreach(GCNI.Models.EventMaster obj in Model.objEventML)
+           { 
+               var lt=obj.Lat;
+               var lg=obj.Lng;
+               var tit=obj.Title;
+               <text>
+           markers = { "lat": lt, "lng": lg, "title": tit };
+           </text>
+           }*@
+          
+            @foreach(GCNI.Models.EventMaster obj in Model.objEventML)
+           { 
+           var markers = [{ "lat": "18.964700", "lng": "72.825800", "title": "pune" }, { "lat": "18.641400", "lng": "72.872200", "title": "pune2" }];
+            }
+           
+           
+           
+           
+
+           for (i = 0; i < markers.length; i++) {
+               var data = markers[i]
+               var myLatlng = new google.maps.LatLng(data.lat, data.lng);
+               var marker = new google.maps.Marker({
+                   position: myLatlng,
+                   map: map,
+                   title: data.title
+               });
+               (function (marker, data) {
+                   google.maps.event.addListener(marker, "click", function (e) {
+                       infoWindow.setContent(data.description);
+                       infoWindow.open(map, marker);
+                   });
+               })(marker, data);
+           }
+           }
+      
+    </script>
+<body class="homepage">
+
+    <header id="header">
+        <div class="top-bar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-xs-4">
+                        <div class="top-number"><p><i class="fa fa-phone-square"></i>  +0123 456 70 90</p></div>
+                    </div>
+                    <div class="col-sm-6 col-xs-8">
+                    <div class="search">
+                                <form role="form">
+                                    <input class="search-form" autocomplete="off" placeholder="Search" type="text">
+                                    <i class="fa fa-search"></i>
+                                </form>
+                           </div>
+                       <div class="social">
+                            <ul class="social-share">
+                                                          
+                                <li><a href="#"> Get Involved</a></li>
+                                <li><a href="#">Media</a></li>
+                                <li><a href="#"> Careers </a></li> 
+                                <li><a href="#">FAQ</a></li>
+                                <li><a href="#">Contact Us</a></li>
+                            </ul>
+                           </div>
+                    </div>
+                </div>
+            </div><!--/.container-->
+        </div><!--/.top-bar-->
+
+        <nav class="navbar navbar-inverse" role="banner">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="index.html"><img src="images/logo.png" alt="logo"></a>
+                </div>
+				
+                <div class="collapse navbar-collapse navbar-right">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="index.html">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Services</a></li>
+                        <li><a href="#">Portfolio</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pages <i class="fa fa-angle-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Blog Single</a></li>
+                                <li><a href="#">Pricing</a></li>
+                                <li><a href="#">404</a></li>
+                                <li><a href="#">Shortcodes</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Blog</a></li> 
+                        <li><a href="#">Contact</a></li>                        
+                    </ul>
+                </div>
+            </div><!--/.container-->
+        </nav><!--/nav-->
+		
+    </header><!--/header-->
+
+    <section id="main-slider" class="no-margin">
+        <div class="carousel slide">
+            <ol class="carousel-indicators">
+                <li data-target="#main-slider" data-slide-to="0" class=""></li>
+                <li class="active" data-target="#main-slider" data-slide-to="1"></li>
+                <li class="" data-target="#main-slider" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+
+                <div class="item" style="background-image: url(images/slider/bg1.jpg)">
+                    <div class="container">
+                        <div class="row slide-margin">
+                            <div class="col-sm-6">
+                                <div class="carousel-content">
+                                    <h1 class="animation animated-item-1">Lorem ipsum dolor sit amet consectetur adipisicing elit</h1>
+                                    <h2 class="animation animated-item-2">Accusantium doloremque laudantium totam rem aperiam, eaque ipsa...</h2>
+                                    <a class="btn-slide animation animated-item-3" href="#">Read More</a>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 hidden-xs animation animated-item-4">
+                                <div class="slider-img">
+                                    <img src="images/img1.png" class="img-responsive">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div><!--/.item-->
+
+                <div class="item active" style="background-image: url(images/slider/bg2.jpg)">
+                    <div class="container">
+                        <div class="row slide-margin">
+                            <div class="col-sm-6">
+                                <div class="carousel-content">
+                                    <h1 class="animation animated-item-1">Lorem ipsum dolor sit amet consectetur adipisicing elit</h1>
+                                    <h2 class="animation animated-item-2">Accusantium doloremque laudantium totam rem aperiam, eaque ipsa...</h2>
+                                    <a class="btn-slide animation animated-item-3" href="#">Read More</a>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 hidden-xs animation animated-item-4">
+                                <div class="slider-img">
+                                    <img src="images/img2.png" class="img-responsive">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div><!--/.item-->
+
+                <div class="item" style="background-image: url(images/slider/bg3.jpg)">
+                    <div class="container">
+                        <div class="row slide-margin">
+                            <div class="col-sm-6">
+                                <div class="carousel-content">
+                                    <h1 class="animation animated-item-1">Lorem ipsum dolor sit amet consectetur adipisicing elit</h1>
+                                    <h2 class="animation animated-item-2">Accusantium doloremque laudantium totam rem aperiam, eaque ipsa...</h2>
+                                    <a class="btn-slide animation animated-item-3" href="#">Read More</a>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 hidden-xs animation animated-item-4">
+                                <div class="slider-img">
+                                    <img src="images/img3.png" class="img-responsive">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--/.item-->
+            </div><!--/.carousel-inner-->
+        </div><!--/.carousel-->
+        <a class="prev hidden-xs" href="#main-slider" data-slide="prev">
+            <i class="fa fa-chevron-left"></i>
+        </a>
+        <a class="next hidden-xs" href="#main-slider" data-slide="next">
+            <i class="fa fa-chevron-right"></i>
+        </a>
+    </section><!--/#main-slider-->
+
+    <section id="feature">
+        <div class="container">
+            <div class="row">
+               <div class="col-sm-6">
+               <div class="first-row">
+               <div class="public"></div>
+               <div class="borderline"></div>
+               <img src="images/001.png">
+                <img src="images/02.jpg">
+                <img src="images/03.jpg">
+               <p class="text-right"> <a href="#" class="danger">More Publication</a></p>
+               
+               </div>
+              
+               <div class="secondrow">
+                <div class="public"></div>
+               <div class="borderline"></div>
+               <p>GFI to Launch Myanmar Report with Panel Including Dev Kar, Vikram Nehru, Aaretti Siitonen: There have been few studies on capital flight and illicit financial flows...<a href="#">Read More...</a></p>
+                  
+                  <p>Three Reasons TTIP Needs Transparency: A gigantic trade deal uniting over 800 million consumers across the United States and the European Union, and yet all...<a href="#">Read More...</a></p>
+                  
+               </div>
+               
+                <div class="first-row thirdrow">
+                <div class="public"></div>
+               <div class="borderline"></div>
+               <p><span>Ottawa, Canada, 08/10/2015:</span> 6th Global Conference Of Parliamentarians Against Corruption</p>
+               <p> GOPAC Members Call for Stronger Measures to Bring Perpetrators of Grand Corruption to Justice at International Anti-Corruption Conference...<a href="#">Read More...</a></p>
+                  
+                  <p>New Delhi, Canada, 17/09/2015: Recovery of bribe money not enough to convict a babu: SC</p>
+                  <p>A government official cannot be convicted under corruption charges merely on the basis of recovery of bribe money and it is essential to prove that he had demanded money, the Supreme Court has ruled... <a href="#">Read More...</a></p></div>
+               
+                <div class="secondrow">
+                <div class="public"></div>
+               <div class="borderline"></div>
+               <p>GFI to Launch Myanmar Report with Panel Including Dev Kar, Vikram Nehru, Aaretti Siitonen: There have been few studies on capital flight and illicit financial flows...<a href="#">Read More...</a></p>
+                  
+                  <p>Three Reasons TTIP Needs Transparency: A gigantic trade deal uniting over 800 million consumers across the United States and the European Union, and yet all...<a href="#">Read More...</a></p>
+                  
+               </div>
+                
+                </div>
+                
+                  
+                   <div class="col-sm-6"></div>
+                   
+                    <div class="col-sm-6"></div>
+                
+            
+                   @*<div id="test1" class="col-sm-6 map"></div>*@
+               <div id="dvMap" class="col-sm-6 map" style="width: 580px; height: 574px">
+              
+               </div>
+            </div><!--/.row-->    
+        </div><!--/.container-->
+    </section><!--/#feature-->
+
+    
+
+    <footer id="footer" class="midnight-blue">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    © 2013 <a target="_blank" href="http://shapebootstrap.net/" title="Free Twitter Bootstrap WordPress Themes and HTML templates">ShapeBootstrap</a>. All Rights Reserved.
+                </div>
+                <div class="col-sm-6">
+                    <ul class="pull-right">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Faq</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer><!--/#footer-->
+
+    <script src="js/jquery_002.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery_003.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/wow.js"></script>
+
+</body></html>

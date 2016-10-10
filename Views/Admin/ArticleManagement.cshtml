@@ -1,0 +1,246 @@
+﻿@model GCNI.Models.GCNIModel
+@{
+    ViewBag.Title = "ArticleManagement";
+    Layout = "~/Views/Shared/AdminMaster.cshtml";
+}
+@*<!DOCTYPE HTML>
+<html>
+<head>
+      <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>ArticleManagement</title>
+
+<link type="text/css" rel="stylesheet" href="~/css/demo.css">
+<link type="text/css" rel="stylesheet" href="~/css/jquery-te-1.4.0.css">
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="~/js/jquery-te-1.4.0.min.js" charset="utf-8"></script>
+</head> 
+<body>*@
+<link href="~/css/tableStyle.css" rel="stylesheet" />
+<style>
+     .tbtext {
+	border:2px solid #456879;
+	border-radius:10px;
+	height: 30px;
+	width: 500px;
+    padding: 7px
+}
+.tbeditor {
+	border:2px solid #456879;
+	border-radius:10px;
+	height: 100px;
+	width: 500px;
+    padding: 7px
+}
+</style>
+@using (Html.BeginForm("ArticleManagement", "Admin", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{ 
+    @*<table border="1" bgcolor="red" width="100%">
+    <tr>
+        <td align="center"><a href="~/Admin/EventManagement">Event</a></td>
+        <td align="center"><a href="~/Admin/PublicationManagement">Publication</a></td>
+        <td align="center"><a href="~/Admin/NewsManagement">News</a></td>
+        <td align="center"><a href="~/Admin/ArticleManagement">Article</a></td>
+    </tr>
+    </table>*@
+<center><h2>Article Management</h2></center>
+<center><table style="width: 80%;" border="1">
+    <tr>
+        <td colspan="2" align="center" height="30"><h2 id="msg">@ViewBag.Message</h2></td>
+    </tr>
+    <tr>
+        <td>Title</td>
+        <td>@Html.TextBoxFor(M => M.objArticleM.Title, new { @id="title", @Maxlength="150", @size="50",@class="tbtext", @onblur = "msgclear();RemoveClass(this);"})</td>
+    </tr>
+    <tr>
+        <td>Description
+            <br/><span id="Imgsize">500 Characters Maximum</span>
+        </td>
+        <td>@Html.TextAreaFor(M => M.objArticleM.Description, new { @id="Desc", @Maxlength="500",@class="jqte-test", @onblur = "msgclear();RemoveClass(this);"})
+            <br /><span id="overmsg"></span>
+        </td>
+    </tr>
+            <tr>
+                <td>
+                    Upload PDF File
+                </td>
+                <td>
+                    <input id="upload" name="upload" type="file" onblur="RemoveClass(this);" class="tdtext" />
+            </td>
+        </tr>
+    <tr>
+        <td>Display On Home Page</td>
+        <td>@Html.CheckBoxFor(M => M.objArticleM.IsDisplayOnHome, new { @id="IsDisp"})</td>
+    </tr>
+    <tr >
+        <td colspan="2" align="Center">
+            <input class="btn btn-primary" id="Submit" type="submit" value="Save" name="btntype" onclick="return Validate();"/></td>
+    </tr>
+</table></center>
+    <br />
+    <center><table id="tblData" class="CSSTableGenerator">
+        <tr>
+            @*<th align="center">ID</th>*@
+            <th align="center">Title</th>
+            <th align="center">Description</th>
+            <th align="center">Display on Home</th>
+            <th align="center" width="170">Action</th>
+        </tr>
+        @foreach (GCNI.Models.Article obj in Model.objArticleML)
+               {
+                <tr>
+                    @*<td align="center">
+                        <input type="hidden" value='@obj.id' data-title='@obj.Title' data-des='@obj.Description' data-Disp='@obj.IsDisplayOnHome'/>
+                       <span>@Html.Raw(obj.id)</span>
+                    </td>*@
+                    <td>
+                       <span>@Html.Raw(obj.Title)</span>
+                    </td>
+                    <td>
+                       <span>@Html.Raw(obj.Description)</span>
+                    </td>
+                    <td>
+                        <span>@Html.Raw(obj.PDF)</span>
+                    </td>
+                    <td>
+                       <span>@Html.Raw(obj.IsDisplayOnHome)</span>
+                    </td>
+                    <td>
+                        <input type="hidden" value='@obj.id' data-title='@obj.Title' data-des='@obj.Description' data-PDF='@obj.PDF' data-Disp='@obj.IsDisplayOnHome'/>
+                       <span><input id="Edit" class="testbutton1" type="Submit" value="Edit" name="btntype" onclick="FillEdit(@obj.id); return false;" />@*<a href="#" onclick="FillEdit(@obj.id); return false;">Edit</a>*@ / <input id="Delete" type="submit" class="testbutton1" value="Delete" name="btntype" onclick="    Deleterecord(@obj.id);"/> @*<a href="#" onclick="Deleterecord(@obj.id); return false;">Delete</a></span>*@
+                    </td>
+                </tr>
+               }
+    </table></center>
+   
+     <input type="hidden" id="hdd" name="hdd" value="0" />
+    <input type="hidden" id="id" name="id" value="0" />
+    <input type="hidden" id="img" name="img" value="0" />
+    <input type="hidden" id="file" name="file" value="0" />
+}
+   @* </body>
+    </html>*@
+<script>
+    $(document).ready(function(){
+        debugger;
+        //alert('ok');
+        $('#Desc').text().substring(0,4);
+        $('#title').val('');
+        $('#Desc').jqteVal('');
+
+        $('input:checkbox').prop('checked', false);
+        $('#title').focus();
+    });
+</script>
+<script>
+    function msgclear()
+    {
+        debugger;
+        $("#msg").hide();
+    }
+</script>
+<script>
+    $(".jqte_editor").keypress(function (e) {
+        if (e.which == 13) {
+            alert('You pressed enter!');
+        } 
+    });
+</script>
+   <script type="text/javascript">
+       $(document).ready(function(){
+           debugger;
+           //alert('ok');
+      
+           //$('#title').val('');
+           //$('#Desc').val('');
+           //$('#IsDisp').checked=false;
+       });
+       function FillEdit(obj) {
+           debugger;
+           //alert(obj);
+           $("#hdd").val(obj);
+           //$("#upload1").removeClass("error");
+           var $ele = $("#tblData tr td input[value=" + obj + "]");
+           if ($ele != null) {
+               $('#title').val($ele.attr("data-title"));
+               $('#Desc').jqteVal($ele.attr("data-des"));
+               $('#file').val($ele.attr("data-PDF"));
+               if (($ele.attr("data-disp")) == "True") {
+                   document.getElementById('IsDisp').checked = true;
+                   //$('#IsDisp').checked = true;
+               }
+               else { document.getElementById('IsDisp').checked = false; }
+               window.document.body.scrollTop = '10';
+           }
+
+       }
+    </script>
+<script type="text/javascript">
+    function Deleterecord(obj) {
+        var status = confirm('Are you sure to delete');
+        if (status) {
+            //alert(obj);
+            $("#id").val(obj);
+        }
+    }
+    </script>
+<script type="text/javascript">
+    function RemoveClass(obj) {
+        $(obj).removeClass("error");
+    }
+    function Validate() {
+        debugger;
+        if ((hdd).value == null || (hdd).value.length < 1 || (hdd).value == "0") {
+            if ($("#title").val().length < 1 || $("#Desc").val().length < 1 || $("#upload").val().length < 2) {
+
+                if ($("#title").val().length < 1) {
+                    $("#title").addClass("error");
+                }
+                else { $("#title").removeClass("error"); }
+                if ($("#upload").val().length < 2) {
+                    $("#upload").addClass("error");
+                }
+                else { $("#upload").removeClass("error"); }
+                if($("#Desc").val().length<1)
+                {document.getElementById('overmsg').innerHTML="<b>Description can Not be Empty...!</b>";}
+                else{$("#overmsg").hide();}
+                return false;
+            }
+            else if($("#Desc").val().length>1500)
+            {
+                document.getElementById('overmsg').innerHTML="Maximum 500 Characters Should be Insert But You Have <b><u>"+$("#Desc").val().length+"</u></b> Characters Plz Reduce <b><u>"+(($("#Desc").val().length)-500)+"</u></b> Characters";$("#overmsg").show();
+                return false;
+            }
+            else{return true;}
+
+        }
+
+    }
+     </script>
+    @* <script type="text/javascript">
+         function Deleterecord(obj) {
+             var status = confirm('Are you sure to delete');
+             if (status) {
+                 $.ajax({
+                     type: "post",
+                     url: "/Admin/ArticleDelete",
+                     data: { "id": obj },
+                     success: (function (data) {
+
+                         $("#divThinktable").html(data);
+                     }),
+                     fail: (function (data) {
+                     })
+                 });
+             }
+         }
+    </script>*@
+<script>
+
+    // Custom labels for error display
+    Validation.labels = {
+        'contact_v1[email]': 'Custom label name from configuration'
+    };
+
+</script>

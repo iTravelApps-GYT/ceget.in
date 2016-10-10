@@ -1,0 +1,441 @@
+﻿@model GCNI.Models.GCNIModel
+
+@{
+    ViewBag.Title = "ActivitiesIssues";
+    Layout = "~/Views/Shared/AdminMaster.cshtml";
+}
+<link href="~/css/tableStyle.css" rel="stylesheet" />
+<style>
+     .tbtext {
+	border:2px solid #456879;
+	border-radius:10px;
+	height: 30px;
+	width: 500px;
+    padding: 7px
+}
+.tbeditor {
+	border:2px solid #456879;
+	border-radius:10px;
+	height: 100px;
+	width: 500px;
+    padding: 7px
+}
+
+</style>
+  <div class="container">
+  <div class="dropdown" style="width:265px;">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" style="width:200px;">Select Issues Category
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu" id="ThinkDDL">
+      <li><a href="#" data-op="PROCUREMENT">PROCUREMENT</a></li>
+      <li><a href="#" data-op="SMART CITIES">SMART CITIES</a></li>
+    </ul>
+  </div>
+</div>
+@using (Html.BeginForm("ActivitiesIssues", "Admin", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{ 
+<center><p>Issues Management</p></center>
+<center><table style="width: 80%;" border="1">
+    <tr>
+        <td colspan="2" align="center" height="30"><h2 id="msg">@ViewBag.Message</h2></td>
+    </tr>
+            <tr>
+                <td>Tab Type</td>
+                <td>@Html.TextBoxFor(M => M.objIssues_M.Category, new { @id = "cat", @class = "tbtext", @Maxlength = "250", @onblur = "msgclear();RemoveClass(this);" })</td>
+            </tr>
+            <tr>
+                <td>
+                    First Image
+                    <br /><span id="Imgsize">Image Size 231px * 233px</span>
+                </td>
+                <td><input id="upload1" name="upload1" type="file" onblur="RemoveClass(this);" class="tdtext" onclick="hide('Img1');" /><span id="Img1"></span></td>
+            </tr>
+            <tr>
+                <td>
+                    Second Image
+                    <br /><span id="Imgsize">Image Size 231px * 233px</span>
+                </td>
+                <td><input id="upload2" name="upload2" type="file" onblur="RemoveClass(this);" class="tdtext" onclick="hide('Img2');"/><span id="Img2"></span></td>
+            </tr>
+            <tr>
+                <td>
+                    Third Image
+                    <br /><span id="Imgsize">Image Size 231px * 233px</span>
+                </td>
+                <td><input id="upload3" name="upload3" type="file" onblur="RemoveClass(this);" class="tdtext" onclick="hide('Img3');"/><span id="Img3"></span></td>
+            </tr>
+            <tr>
+                <td>
+                    Firth Image
+                    <br /><span id="Imgsize">Image Size 231px * 233px</span>
+                </td>
+                <td><input id="upload4" name="upload4" type="file" onblur="RemoveClass(this);" class="tdtext" onclick="hide('Img4');"/><span id="Img4"></span></td>
+            </tr>
+
+    <tr>
+        <td>Heading</td>
+        <td>@Html.TextBoxFor(M => M.objIssues_M.Heading, new { @id="Heading",@class="tbtext", @Maxlength="250", @onblur = "msgclear();RemoveClass(this);" })</td>
+    </tr>
+    <tr>
+        <td>Description
+            <br/><span id="Imgsize">2500 Characters Maximum</span>
+        </td>
+        <td>@Html.TextAreaFor(M => M.objIssues_M.Description, new { @id="Desc",@class="jqte-test", @Maxlength="2500", @onblur = "msgclear();RemoveClass(this);" })
+            <br /><span id="overmsg"></span>
+        </td>
+    </tr>
+            <tr>
+                <td>Upload Outcome Report
+                <br /><span id="Imgsize">Must Be in PDF Format</span>
+                </td>
+                <td><input id="upload" name="upload" type="file" onblur="RemoveClass(this);" /></td>
+            </tr>
+            @*<tr>
+                <td>Upload Images<br />
+<span id="Imgsize">Image Size 218px * 250px</span></td>
+                <td>
+                    <div id="uploaders">
+                        <input type="file" id="fileToUpload" name="fileUpload" multiple="multiple" style="float: left;" />
+                        <br />
+                        <span id="spnFile" style="float: left; color: #FF0000"></span>
+                        @Html.ValidationMessage("File")
+                        @Html.Hidden("hdnFileUpload")
+                    </div>
+                    <br />
+                    <div class="control-section" style="padding: 0px;">
+                        <div id="selectedFiles"></div>
+                    </div>
+                </td>
+            </tr>*@
+    <tr >
+        <td align="Center" colspan="2"><input class="btn btn-primary" id="Submit" type="submit" value="Save" name="btntype" onclick="return Validate();" /></td>
+    </tr>
+</table></center>
+    <br />
+    <center>
+    <table id="tblData1" class="CSSTableGenerator">
+        <tr bgcolor="lightgray">
+            <td colspan="6"><b>PROCUREMENT</b></td>
+        </tr>
+        <tr>
+            <th>Tab Type</th>
+            <th>Heading</th>
+            <th>Description</th>
+            <th>OutCum PDF</th>
+            <th>Images</th>
+            <th width="170" align="center">Action</th>
+        </tr>
+        @foreach (GCNI.Models.Issues obj in Model.objIssues_ML)
+        {
+            if (obj.Category == "PROCUREMENT")
+            {
+                <tr>
+                    <td>
+                        <span>@Html.Raw(obj.Category)</span>
+                    </td>
+
+                    <td>
+                       <span>@Html.Raw(obj.Heading)</span>
+                    </td>
+                    <td>
+                       <span>@Html.Raw(obj.Description)</span>
+                    </td>
+                    <td>
+                        <span>@Html.Raw(obj.OutcumPdfURL)</span>
+                    </td>
+                    <td>
+                        <span><img src="@Url.Content(String.Format("~/Uploads/Activities/Issues/{0}",obj.Img1URL))" alt="" width="100px" heigth="100px" />
+                            <img src="@Url.Content(String.Format("~/Uploads/Activities/Issues/{0}",obj.Img2URL))" alt="" width="100px" heigth="100px" />
+                            <img src="@Url.Content(String.Format("~/Uploads/Activities/Issues/{0}",obj.Img3URL))" alt="" width="100px" heigth="100px" />
+                            <img src="@Url.Content(String.Format("~/Uploads/Activities/Issues/{0}",obj.Img4URL))" alt="" width="100px" heigth="100px" />
+                        </span>
+                    </td>
+                    <td>
+                       <input type="hidden" value='@obj.id' data-cat="@obj.Category" data-Heading='@obj.Heading' data-des='@obj.Description' data-outcum='@obj.OutcumPdfURL' data-img1='@obj.Img1URL' data-img2='@obj.Img2URL' data-img3='@obj.Img3URL' data-img4='@obj.Img4URL' />
+                       <span><input id="Edit" class="testbutton1" type="Submit" value="Edit" name="btntype" onclick="FillEdit('tblData1',@obj.id); return false;" />@*<a href="#" onclick="FillEdit(@obj.id); return false;">Edit</a>*@ / <input id="Delete" class="testbutton1" type="submit" value="Delete" name="btntype" onclick="Deleterecord(@obj.id);"/>@*<a href="#" onclick="Deleterecord(@obj.id); return false;">Delete</a></span>*@
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+        <table id="tblData2" class="CSSTableGenerator">
+            <tr bgcolor="lightgray">
+                <td colspan="6"><b>SMART CITIES</b></td>
+            </tr>
+            <tr>
+                <th>Tab Type</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>OutCum PDF</th>
+                <th>Images</th>
+                <th width="170" align="center">Action</th>
+            </tr>
+            @foreach (GCNI.Models.Issues obj in Model.objIssues_ML)
+            {
+                if (obj.Category == "SMART CITIES")
+                {
+                    <tr>
+                        <td>
+                            <span>@Html.Raw(obj.Category)</span>
+                        </td>
+
+                        <td>
+                            <span>@Html.Raw(obj.Heading)</span>
+                        </td>
+                        <td>
+                            <span>@Html.Raw(obj.Description)</span>
+                        </td>
+                        <td>
+                            <span>@Html.Raw(obj.OutcumPdfURL)</span>
+                        </td>
+                        <td>
+                            <span>
+                                <img src="@Url.Content(String.Format("~/Uploads/Activities/Issues/{0}",obj.Img1URL))" alt="" width="100px" heigth="100px" />
+                                <img src="@Url.Content(String.Format("~/Uploads/Activities/Issues/{0}",obj.Img2URL))" alt="" width="100px" heigth="100px" />
+                                <img src="@Url.Content(String.Format("~/Uploads/Activities/Issues/{0}",obj.Img3URL))" alt="" width="100px" heigth="100px" />
+                                <img src="@Url.Content(String.Format("~/Uploads/Activities/Issues/{0}",obj.Img4URL))" alt="" width="100px" heigth="100px" />
+                            </span>
+                        </td>
+                        <td>
+                            <input type="hidden" value='@obj.id' data-cat="@obj.Category" data-Heading='@obj.Heading' data-des='@obj.Description' data-outcum='@obj.OutcumPdfURL' data-img1='@obj.Img1URL' data-img2='@obj.Img2URL' data-img3='@obj.Img3URL' data-img4='@obj.Img4URL' />
+                            <span><input id="Edit" class="testbutton1" type="Submit" value="Edit" name="btntype" onclick="FillEdit('tblData2',@obj.id); return false;" />@*<a href="#" onclick="FillEdit(@obj.id); return false;">Edit</a>*@ / <input id="Delete" class="testbutton1" type="submit" value="Delete" name="btntype" onclick="Deleterecord(@obj.id);" />@*<a href="#" onclick="Deleterecord(@obj.id); return false;">Delete</a></span>*@
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
+    </center>
+    <input type="hidden" id="MImg1" name="MImg1" value="0" />
+    <input type="hidden" id="MImg2" name="MImg2" value="0" />
+    <input type="hidden" id="MImg3" name="MImg3" value="0" />
+    <input type="hidden" id="MImg4" name="MImg4" value="0" />
+    <input type="hidden" id="hdd" name="hdd" value="0" />
+    <input type="hidden" id="id" name="id" value="0" />
+    <input type="hidden" id="file" name="file" value="0" />
+    <input type="hidden" id="PDF" name="PDF" value="0" />
+}
+<script>
+    function msgclear()
+    {
+        debugger;
+        $("#msg").hide();
+    }
+    function hide(obj) {
+        $('#' + obj).hide();
+    }
+</script>
+   <script type="text/javascript">
+       $(document).ready ( function(){
+           debugger;
+           //alert('ok');
+           $('#MImg1').val('');
+           $('#MImg2').val('');
+           $('#MImg3').val('');
+           $('#MImg4').val('');
+           $('#cat').val('');
+           $('#Heading').val('');
+           $('#Desc').jqteVal('');
+           $('#Heading').focus();
+           var text_box1 = document.getElementById('cat');
+           text_box1.setAttribute('readonly', 'readonly');
+       //$('input:checkbox').prop('checked', false);
+ });
+       function FillEdit(tbl, obj) {
+           debugger;
+           //alert(obj);
+           $("#hdd").val(obj);
+           //$("#upload1").removeClass("error");
+           var $ele = $("#" + tbl + " tr td input[value=" + obj + "]");
+           if ($ele != null) {
+               $('#MImg1').val($ele.attr("data-img1"));
+               $('#Img1').text($ele.attr("data-img1"));
+               $('#MImg2').val($ele.attr("data-img2"));
+               $('#Img2').text($ele.attr("data-img2"));
+               $('#MImg3').val($ele.attr("data-img3"));
+               $('#Img3').text($ele.attr("data-img3"));
+               $('#MImg4').val($ele.attr("data-img4"));
+               $('#Img4').text($ele.attr("data-img4"));
+               $('#cat').val($ele.attr("data-cat"));
+               $('#Heading').val($ele.attr("data-Heading"));
+               $('#Desc').jqteVal($ele.attr("data-des"));
+               //$('#img').val($ele.attr("data-imgs"));
+               $('#PDF').val($ele.attr("data-outcum"));
+               window.document.body.scrollTop = '10';
+               //if (($ele.attr("data-disp")) == "True") {
+               //    document.getElementById('IsDisp').checked = true;
+               //    //$('#IsDisp').checked = true;
+               //}
+               //else { document.getElementById('IsDisp').checked = false; }
+           }
+
+       }
+    </script>
+<script type="text/javascript">
+    function Deleterecord(obj) {
+        var status = confirm('Are you sure to delete');
+        if (status) {
+            //alert(obj);
+            $("#id").val(obj);
+        }
+    }
+    </script>
+<style type="text/css">
+    .error
+    {
+        border: solid!important;
+        border-color: red!important;
+    }
+</style>
+<script>
+    $("#ThinkDDL li a").click(function () {
+        debugger;
+        var el = $(this).attr("data-op");
+        //alert(el);
+        $("#cat").val(el);
+        //console.log('inside');
+        //if ($(this).attr("data-flag2") === "false") {
+        //    $("#ThinkDDL li a").each(function (prop, val) {
+        //        var el = $(this).attr("data-think2");
+        //        $("#" + el).hide(1000);
+        //        $(this).attr("data-flag2", "false");
+        //    });
+
+        //    var el = $(this).attr("data-think2");
+        //    $("#" + el).show(1000);
+        //    $(this).attr("data-flag2", "true");
+        //}
+        //return false;
+
+    });
+</script>
+     <script type="text/javascript">
+         function RemoveClass(obj) {
+             $(obj).removeClass("error");
+         }
+         function Validate() 
+         {
+             debugger;
+             if ((hdd).value == null || (hdd).value.length < 1 || (hdd).value == "0") 
+             {
+                 if ($("#upload1").val().length < 1 || $("#upload2").val().length < 1 || $("#upload3").val().length < 1 || $("#upload4").val().length < 1 || $("#upload").val().length < 1 || $("#Heading").val().length < 1 || $("#Desc").val().length < 1)
+                 {
+                     if($("#Desc").val().length<1)
+                     {document.getElementById('overmsg').innerHTML="<b>Description can Not be Empty...!</b>";}
+                     else{$("#overmsg").hide();}
+                     if($("#upload1").val().length<1)
+                     {$("#upload1").addClass("error");}
+                     else
+                     { $("#upload1").removeClass("error"); }
+                     if ($("#upload2").val().length < 1)
+                     { $("#upload2").addClass("error"); }
+                     else
+                     { $("#upload2").removeClass("error"); }
+                     if ($("#upload3").val().length < 1)
+                     { $("#upload3").addClass("error"); }
+                     else
+                     { $("#upload3").removeClass("error"); }
+                     if ($("#upload4").val().length < 1)
+                     { $("#upload4").addClass("error"); }
+                     else
+                     { $("#upload4").removeClass("error"); }
+                     if ($("#upload").val().length < 1)
+                     { $("#upload").addClass("error"); }
+                     else
+                     { $("#upload").removeClass("error"); }
+                     if ($("#Heading").val().length < 1)
+                     { $("#Heading").addClass("error"); }
+                     else
+                     {$("#Heading").removeClass("error");}
+                     return false;
+                 }
+                 else if($("#Desc").val().length>4500)
+                 {
+                     document.getElementById('overmsg').innerHTML="Maximum 2500 Characters Should be Insert But You Have <b><u>"+$("#Desc").val().length+"</u></b> Characters Plz Reduce <b><u>"+(($("#Desc").val().length)-2500)+"</u></b> Characters";$("#overmsg").show();
+                     return false;
+                 }
+                 else{
+                     return true;   
+                 }
+             }
+             else
+             {
+                 return true;
+             }
+        }
+     </script>
+
+@*<script>
+    var nowTemp = new Date();
+    var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+    var files;
+    var storedFiles = [];
+    var upc = 0;
+
+
+
+    $(function () {
+        debugger;
+        $(":file").attr('title', '  ');
+        var $loading = $('#loadingDiv').hide();
+
+        $("input[id^='fileToUpload']").change(function (e) {
+            doReCreate(e);
+        });
+
+        selDiv = $("#selectedFiles");
+    });
+
+
+    function doReCreate(e) {
+        debugger;
+        upc = upc + 1;
+        handleFileSelect(e);
+
+        $("input[id^='fileToUpload']").hide();
+
+        $('<input>').attr({
+            type: 'file',
+            multiple: 'multiple',
+            id: 'fileToUpload' + upc,
+            class: 'fUpload',
+            name: 'fileUpload',
+            style: 'float: left',
+            title: '  ',
+            onchange: "doReCreate(event)"
+
+        }).appendTo('#uploaders');
+    }
+
+
+    function handleFileSelect(e) {
+        debugger;
+        //selDiv.innerHTML = ""; storedFiles = [];
+        selDiv = document.querySelector("#selectedFiles");
+
+        if (!e.target.files) return;
+
+        //selDiv.innerHTML = "";
+        files = e.target.files;
+
+        for (var i = 0; i < files.length; i++) {
+            //if (i == 0) { selDiv.innerHTML = ""; storedFiles = []; }
+            var f = files[i];
+            selDiv.innerHTML += "<div>" + f.name + "<a onclick='removeAtt(this)'> X </a></div>";
+            storedFiles.push(f.name);
+        }
+       @* $('#@Html.IdFor(i =>i.FilesToBeUploaded)').val(storedFiles);*@
+    @*}
+
+    function removeAtt(t) {
+        debugger;
+        var serEle = $(t).parent().text().slice(0, -3);
+        var index = storedFiles.indexOf(serEle);
+        if (index !== -1) {
+            storedFiles.splice(index, 1);
+        }
+        $(t).parent().remove();
+
+        $('#@Html.IdFor(i => i.FilesToBeUploaded)').val(storedFiles);
+
+    }
+</script>*@

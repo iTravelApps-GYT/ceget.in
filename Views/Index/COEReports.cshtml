@@ -1,0 +1,94 @@
+﻿@model GCNI.Models.GCNIModel
+@{
+    ViewBag.Title = "COEReports";
+    Layout = "~/Views/Shared/AboutUsMaster.cshtml";
+}
+
+<section id="feature">
+    
+      <div class="COEDiv WebCnt" style="overflow-y:scroll" id="DDDigital">
+          @foreach(GCNI.Models.ResourcesCOE obj in Model.objResourcesCOE_ML)
+          {
+            @*<div class="row">*@
+                <div class="col-lg-2" style="margin-top:4%; margin-left:4%;  margin-bottom:1%">
+               <img src="@Url.Content(String.Format("~/Uploads/Resources/ResourceCOE/{0}",obj.Image))"  height="253px" width="182px"/>
+                </div>
+                <div class="col-lg-9" style="margin:1%; margin-top:4%">
+                    <ul style="list-style-type:none;">
+                    <li>@Html.Raw(obj.Title)</li><br />
+                        <li>Author: @Html.Raw(obj.Author)</li>
+                        <li class="red-txt" style="margin-left:80%;margin-top: 21%;"><a href="#" data-id="@Html.Raw("popup" + obj.id)" data-think1="@Html.Raw("COEReports" + obj.id)">Read More...<img src="../images/adobe_icon.jpg" height="50px" width="40px" style="margin-left:2%" /></a></li>
+</ul>
+                </div>
+            @*</div>*@ 
+          }
+            @*<div class="bline_Activ"></div>            
+            <div class="row">
+               <div class="col-lg-2" style="margin-top:4%; margin-left:4%;  margin-bottom:1%">
+               <img src="images/img1.png"  height="290px" width="200px"/>
+                </div>
+                <div class="col-lg-9" style="margin:1%; margin-top:13%">
+                    <ul style="list-style-type:none;">
+                      <li>Global Corporate Sustainablity Report 2013</li><br />
+                        <li>Author: WC Turner</li>
+                        <li class="red-txt" style="margin-left:80%; ">Read More...<img src="images/adobe_icon.jpg" height="50px" width="40px" style="margin-left:2%"/></li>
+                        
+                    </ul>
+                </div>
+            </div>  
+            <div class="bline_Activ"></div>          
+            <div class="row">
+                <div class="col-lg-2" style="margin-top:4%; margin-left:4%;  margin-bottom:1%">
+               <img src="images/img1.png"  height="290px" width="200px"/>
+                </div>
+                <div class="col-lg-9" style="margin:1%; margin-top:13%">
+                    <ul style="list-style-type:none;">
+                        <li>Global Corporate Sustainablity Report 2013</li><br />
+                        <li>Author: WC Turner</li>
+                        <li class="red-txt" style="margin-left:80%; ">Read More...<img src="images/adobe_icon.jpg" height="50px" width="40px" style="margin-left:2%"/></li> 
+                       
+                    </ul>
+                </div>
+            </div>            
+             <div class="bline_Activ"></div>*@
+       </div>
+       
+    @{ int idigital2 = 1;
+        foreach (GCNI.Models.ResourcesCOE obj in Model.objResourcesCOE_ML)
+        {
+            <div style="width:100%; display:none;margin-left: 200px;margin-top: -20px;" align="center" id="@Html.Raw("popup" + obj.id)">
+
+                <div style="position: fixed;left: 50%;top: 50%;transform: translate(-50%, -50%); height: 600px; width: 800px; z-index: 1000; background-color: #586778;border:solid;">
+                    <a href="#" onclick="$('#@Html.Raw("popup" + obj.id)').hide(); return false;"><span style="float: right; color: white; font-weight: normal; font-size: larger; margin-right: 5px;">X</span></a>
+                    <div style="background-color: white; height: 560px; margin: 20px;">
+                        <object data=@Url.Content("~/Uploads/Resources/ResourceCOE/" + obj.pdfFileURL) type="application/pdf" width="760" height="560">
+                            alt : <a href=@Url.Content("~/Uploads/Resources/ResourceCOE/" + obj.pdfFileURL)>test.pdf</a>
+                        </object>
+                        @* <p>@obj.PopupBody </p>*@
+                        @* <object data=@Url.Content(String.Format("~/Uploads/{0}",obj.PopupBody)) type="application/pdf" width="760" height="460">
+                                alt : <a href=@Url.Content(String.Format("~/Uploads/{0}",obj.PopupBody))>test.pdf</a>
+                            </object>*@
+                    </div>
+                </div>
+            </div>
+
+            idigital2++;
+        }
+    }
+    </section>
+<script>
+        $("#DDDigital a").click(function () {
+            debugger;
+            //alert("Hello");
+            $("#DDDigital li a").each(function (prop, val) {
+                // var el = $(this).attr("data-think1");
+                var el2 = $(this).attr("data-id");
+                // $("#" + el).hide(1000);
+                $("#" + el2).hide();
+                // $(this).attr("data-flag1", "false");
+            });
+            var el2 = $(this).attr("data-id");
+            $("#" + el2).show();
+            return false;
+        });
+</script>

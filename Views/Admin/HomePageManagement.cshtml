@@ -1,0 +1,330 @@
+﻿@model GCNI.Models.GCNIModel
+@{
+    ViewBag.Title = "HomePageManagement";
+    Layout = "~/Views/Shared/AdminMaster.cshtml";
+}
+@*<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>PublicationManagement</title>
+
+<link type="text/css" rel="stylesheet" href="~/css/demo.css">
+<link type="text/css" rel="stylesheet" href="~/css/jquery-te-1.4.0.css">
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="~/js/jquery-te-1.4.0.min.js" charset="utf-8"></script>
+</head> 
+    <body>*@
+<link href="~/css/tableStyle.css" rel="stylesheet" />
+<style>
+     .tbtext {
+	border:2px solid #456879;
+	border-radius:10px;
+	height: 30px;
+	width: 500px;
+    padding: 7px
+}
+.tbeditor {
+	border:2px solid #456879;
+	border-radius:10px;
+	height: 100px;
+	width: 500px;
+    padding: 7px
+}
+    
+</style>
+@using (Html.BeginForm("HomePageManagement", "Admin", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{ 
+<center><h2>HomePage Management</h2></center>
+<center><table style="width: 80%;" border="1">
+    <tr>
+        <td colspan="2" align="center" height="30"><h2 id="msg">@ViewBag.Message</h2></td>
+    </tr>
+    <tr>
+        <td>Upload Logo1<span id="Imgsize"><br />Image Should Be 986px * 154px</span></td>
+        <td><input id="upload" name="upload" type="file" onclick="hide('1');" onblur = "RemoveClass(this);" class="tdtext"/><span id="lg1"></span></td>
+    </tr>
+    <tr>
+        <td>Upload Logo2<span id="Imgsize"><br />Image Should Be 145px * 50px</span></td>
+        <td><input id="upload1" name="upload1" type="file" onclick="hide('2');" onblur = "RemoveClass(this);" class="tdtext"/><span id="lg2"></span></td>
+    </tr>
+    <tr>
+        <td>Upload Banner 1 Image<span id="Imgsize"><br />Image Should Be 1350px * 620px</span></td>
+        <td><input id="upload11" name="upload11" type="file" onclick="hide('11');" onblur = "RemoveClass(this);" class="tdtext"/><span id="MB1"></span></td>
+    </tr>
+            <tr>
+                <td>Upload Banner 2 Image<span id="Imgsize"><br />Image Should Be 1350px * 620px</span></td>
+                <td><input id="upload22" name="upload22" type="file" onclick="hide('22');" onblur="RemoveClass(this);" class="tdtext" /><span id="MB2"></span></td>
+            </tr>
+            <tr>
+                <td>Upload Banner 3 Image<span id="Imgsize"><br />Image Should Be 1350px * 620px</span></td>
+                <td><input id="upload33" name="upload33" type="file" onclick="hide('33');" onblur="RemoveClass(this);" class="tdtext" /><span id="MB3"></span></td>
+            </tr>
+            <tr>
+                <td>Upload Banner 4 Image<span id="Imgsize"><br />Image Should Be 1350px * 620px</span></td>
+                <td><input id="upload44" name="upload44" type="file" onclick="hide('44');" onblur="RemoveClass(this);" class="tdtext" /><span id="MB4"></span></td>
+            </tr>
+            <tr>
+                <td>Upload Banner 5 Image<span id="Imgsize"><br />Image Should Be 1350px * 620px</span></td>
+                <td><input id="upload55" name="upload55" type="file" onclick="hide('55');" onblur="RemoveClass(this);" class="tdtext" /><span id="MB5"></span></td>
+            </tr>        
+    <tr>
+        <td>Upload Sub Banner Image<span id="Imgsize"><br />Image Should Be 1350px * 620px</span></td>
+        <td><input id="upload3" name="upload3" type="file" onclick="hide('4');" onblur = "RemoveClass(this);" class="tdtext"/><span id="SB"></span></td>
+    </tr>
+    <tr>
+        <td>Face Book Link</td>
+        <td>@Html.TextBoxFor(M => M.objHomeMaster.FBLink, new { @id="FBLink", @Maxlength="200", @size="50",@class="tbtext", @onblur = "msgclear();"})</td>
+    </tr>
+    <tr>
+        <td>Twiter Link</td>
+        <td>@Html.TextBoxFor(M => M.objHomeMaster.TWLink, new { @id="TWLink", @Maxlength="200", @size="50",@class="tbtext", @onblur = "msgclear();"})</td>
+    </tr>
+    <tr>
+        <td>YouTube Link</td>
+        <td>@Html.TextBoxFor(M => M.objHomeMaster.YouTubeLink, new { @id="YTLink", @Maxlength="200", @size="50",@class="tbtext", @onblur = "msgclear();"})</td>
+    </tr>
+    <tr>
+        <td>In Link</td>
+        <td>@Html.TextBoxFor(M => M.objHomeMaster.INLink, new { @id="INLink", @Maxlength="200", @size="50",@class="tbtext", @onblur = "msgclear();"})</td>
+    </tr>
+    <tr>
+        <td>MsgIcon Link</td>
+        <td>@Html.TextBoxFor(M => M.objHomeMaster.MsgIconLink, new { @id="MSGICONLink", @Maxlength="200", @size="50",@class="tbtext", @onblur = "msgclear();"})</td>
+    </tr>
+    <tr>
+        <td>Subscriber Email ID</td>
+        <td>@Html.TextBoxFor(M => M.objHomeMaster.SubscribEmailLink, new { @id="SubEmailLink", @Maxlength="200", @size="50",@class="tbtext", @onblur = "msgclear();"})</td>
+    </tr>
+    <tr >
+        <td align="Center" colspan="2"><input class="btn btn-primary" id="Submit" type="submit" value="Save" name="btntype" onclick="return Validate();" /></td>
+        @*<td align="Center"><input id="Delete" type="submit" value="Delete" name="btntype" onclick="return Validate();" /></td>*@
+    </tr>
+</table></center>
+    <br />
+    <center><table id="tblData" class="CSSTableGenerator">
+        <tr>
+            @*<th align="center">ID</th>*@
+            <td>Logo1</td>
+            <td>Logo2</td>
+            <td>Main Banner</td>
+            <td>Sub Banner</td>
+            <td>FB Link</td>
+            <td>TW Link</td>
+            <td>YouTube Link</td>
+            <td>In Link</td>
+            <td>MsgIcon Link</td>
+            <td>Subscribing Email</td>
+            <td>Action</td>
+        </tr>
+                <tr>
+                    <td>
+                       <span><img src="@Url.Content(String.Format("~/Uploads/HomeMaster/{0}",Model.objHomeMaster.Logo1))" alt="" width="100px" heigth="100px" /></span>
+                    </td>
+                    <td>
+                       <span><img src="@Url.Content(String.Format("~/Uploads/HomeMaster/{0}",Model.objHomeMaster.Logo2))" alt="" width="100px" heigth="100px" /></span>
+                    </td>
+                    <td>
+                       <span><img src="@Url.Content(String.Format("~/Uploads/HomeMaster/{0}",Model.objHomeMaster.MainBannerImage1))" alt="" width="100px" heigth="100px" />
+                           <img src="@Url.Content(String.Format("~/Uploads/HomeMaster/{0}",Model.objHomeMaster.MainBannerImage2))" alt="" width="100px" heigth="100px" />
+                           <img src="@Url.Content(String.Format("~/Uploads/HomeMaster/{0}",Model.objHomeMaster.MainBannerImage3))" alt="" width="100px" heigth="100px" />
+                           <img src="@Url.Content(String.Format("~/Uploads/HomeMaster/{0}",Model.objHomeMaster.MainBannerImage4))" alt="" width="100px" heigth="100px" />
+                           <img src="@Url.Content(String.Format("~/Uploads/HomeMaster/{0}",Model.objHomeMaster.MainBannerImage5))" alt="" width="100px" heigth="100px" /></span>
+                    </td>
+                    <td>
+                       <span><img src="@Url.Content(String.Format("~/Uploads/HomeMaster/{0}",Model.objHomeMaster.SubBannerImage))" alt="" width="100px" heigth="100px" /></span>
+                    </td>
+                     <td>
+                       <span>@Html.Raw(Model.objHomeMaster.FBLink)</span>
+                    </td>
+                    <td>
+                       <span>@Html.Raw(Model.objHomeMaster.TWLink)</span>
+                    </td>
+                    <td>
+                       <span>@Html.Raw(Model.objHomeMaster.YouTubeLink)</span>
+                    </td>
+                    <td>
+                       <span>@Html.Raw(Model.objHomeMaster.INLink)</span>
+                    </td>
+                    <td>
+                       <span>@Html.Raw(Model.objHomeMaster.MsgIconLink)</span>
+                    </td>
+                    <td>
+                       <span>@Html.Raw(Model.objHomeMaster.SubscribEmailLink)</span>
+                    </td>
+                    <td>
+                       <input type="hidden" value='@Model.objHomeMaster.id' data-Logo1='@Model.objHomeMaster.Logo1' data-Logo2='@Model.objHomeMaster.Logo2' data-MBanner1='@Model.objHomeMaster.MainBannerImage1' data-MBanner2='@Model.objHomeMaster.MainBannerImage2' data-MBanner3='@Model.objHomeMaster.MainBannerImage3' data-MBanner4='@Model.objHomeMaster.MainBannerImage4' data-MBanner5='@Model.objHomeMaster.MainBannerImage5' data-SBanner='@Model.objHomeMaster.SubBannerImage' data-FBLink='@Model.objHomeMaster.FBLink' data-TWLink='@Model.objHomeMaster.TWLink' data-YTLink='@Model.objHomeMaster.YouTubeLink' data-INLink='@Model.objHomeMaster.INLink' data-MsgIconLink='@Model.objHomeMaster.MsgIconLink' data-SubscribEmailLink='@Model.objHomeMaster.SubscribEmailLink'/>
+                       <span><input id="Edit" class="testbutton1" type="button" value="Edit" name="btntype" onclick="getdata(@Model.objHomeMaster.id);" />
+                    </td>
+                </tr>
+    </table></center>
+    <input type="hidden" id="MBanner1" name="MBanner1" value="0" />
+    <input type="hidden" id="MBanner2" name="MBanner2" value="0" />
+    <input type="hidden" id="MBanner3" name="MBanner3" value="0" />
+    <input type="hidden" id="MBanner4" name="MBanner4" value="0" />
+    <input type="hidden" id="MBanner5" name="MBanner5" value="0" />
+    <input type="hidden" id="SBanner" name="SBanner" value="0" />
+    <input type="hidden" id="Log1" name="Log1" value="0" />
+    <input type="hidden" id="Log2" name="Log2" value="0" />
+}
+   @* </body>
+    </html>*@
+<script>
+    function hide(obj)
+    {
+        if(obj=="1")
+        {
+            $('#lg1').text('')
+        }
+        else if(obj=="2")
+        {
+            $('#lg2').text('');
+        }
+        else if(obj=="11")
+        {
+            $('#MB1').text('');
+        }
+        else if (obj == "22") {
+            $('#MB2').text('');
+        }
+        else if (obj == "33") {
+            $('#MB3').text('');
+        }
+        else if (obj == "44") {
+            $('#MB4').text('');
+        }
+        else if (obj == "55") {
+            $('#MB5').text('');
+        }
+        else if(obj=="4")
+        {
+            $('#SB').text('');
+        }
+    }
+</script>
+<script>
+
+    function call()
+    {
+        //alert("Hello");
+        $('#Log1').val(@Model.objHomeMaster.Logo1);
+        $('#Log2').val(@Model.objHomeMaster.Logo2);
+        $('#MBanner1').val(@Model.objHomeMaster.MainBannerImage1);
+        $('#MBanner2').val(@Model.objHomeMaster.MainBannerImage2);
+        $('#MBanner3').val(@Model.objHomeMaster.MainBannerImage3);
+        $('#MBanner4').val(@Model.objHomeMaster.MainBannerImage4);
+        $('#MBanner5').val(@Model.objHomeMaster.MainBannerImage5);
+        $('#SBanner').val(@Model.objHomeMaster.SubBannerImage);
+        $('#FBLink').val(@Model.objHomeMaster.FBLink);
+        $('#TWLink').val(@Model.objHomeMaster.TWLink);
+        $('#YTLink').val(@Model.objHomeMaster.YouTubeLink);
+        $('#INLink').val(@Model.objHomeMaster.INLink);
+        $('#MSGICONLink').val(@Model.objHomeMaster.MsgIconLink);
+        $('#SubEmailLink').val(@Model.objHomeMaster.SubscribEmailLink);
+    }
+</script>
+<script>
+    function msgclear()
+    {
+        debugger;
+        $("#msg").hide();
+    }
+</script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        debugger;
+        //alert('ok');
+        $('#lg1').text('')
+        $('#lg2').text('');
+        $('#MB').text('');
+        $('#SB').text('');
+        $('#Log1').val('');
+        $('#Log2').val('');
+        $('#MBanner1').val('');
+        $('#MBanner2').val('');
+        $('#MBanner3').val('');
+        $('#MBanner4').val('');
+        $('#MBanner5').val('');
+        $('#SBanner').val('');
+        $('#FBLink').val('');
+        $('#TWLink').val('');
+        $('#YTLink').val('');
+        $('#INLink').val('');
+        $('#MSGICONLink').val('');
+        $('#SubEmailLink').val('');
+    });
+</script>
+<script type="text/javascript">
+       function getdata(obj) {
+           debugger;
+           //alert(obj);
+           $("#hdd").val(obj);
+           //$("#upload1").removeClass("error");
+           var $ele = $("#tblData tr td input[value=" + obj + "]");
+           if ($ele != null) {
+               $('#Log1').val($ele.attr("data-Logo1"));
+               $('#Log2').val($ele.attr("data-Logo2"));
+               $('#MBanner1').val($ele.attr("data-MBanner1"));
+               $('#MBanner2').val($ele.attr("data-MBanner2"));
+               $('#MBanner3').val($ele.attr("data-MBanner3"));
+               $('#MBanner4').val($ele.attr("data-MBanner4"));
+               $('#MBanner5').val($ele.attr("data-MBanner5"));
+               $('#SBanner').val($ele.attr("data-SBanner"));
+               $('#lg1').text($ele.attr("data-Logo1"));
+               $('#lg2').text($ele.attr("data-Logo2"));
+               $('#MB1').text($ele.attr("data-MBanner1"));
+               $('#MB2').text($ele.attr("data-MBanner2"));
+               $('#MB3').text($ele.attr("data-MBanner3"));
+               $('#MB4').text($ele.attr("data-MBanner4"));
+               $('#MB5').text($ele.attr("data-MBanner5"));
+               $('#SB').text($ele.attr("data-SBanner"));
+               $('#FBLink').val($ele.attr("data-FBLink"));
+               $('#TWLink').val($ele.attr("data-TWLink"));
+               $('#YTLink').val($ele.attr("data-YTLink"));
+               $('#INLink').val($ele.attr("data-INLink"));
+               $('#MSGICONLink').val($ele.attr("data-MsgIconLink"));
+               $('#SubEmailLink').val($ele.attr("data-SubscribEmailLink"));
+               window.document.body.scrollTop = '10';
+           }
+       }
+    </script>
+<style type="text/css">
+    .error
+    {
+        border: solid!important;
+        border-color: red!important;
+    }
+</style>
+   @*  <script type="text/javascript">
+         function RemoveClass(obj) {
+             $(obj).removeClass("error");
+         }
+         function Validate() {
+             debugger;
+                 if ($("#upload").val().length < 2 || $("#upload1").val().length < 2 || $("#upload2").val().length < 2 || $("#upload3").val().length < 2) {
+
+                     if ($("#upload").val().length < 2) {
+                         $("#upload").addClass("error");
+                     }
+                     else { $("#upload").removeClass("error"); }
+                     if ($("#upload1").val().length < 2) {
+                         $("#upload1").addClass("error");
+                     }
+                     else { $("#upload1").removeClass("error"); }
+                     if ($("#upload2").val().length < 2) {
+                         $("#upload2").addClass("error");
+                     }
+                     else { $("#upload2").removeClass("error"); }
+                     if ($("#upload3").val().length < 2) {
+                         $("#upload3").addClass("error");
+                     }
+                     else { $("#upload3").removeClass("error"); }
+                     return false;
+                 }
+                 else {
+                     return true;
+                 }
+             }
+     </script>*@

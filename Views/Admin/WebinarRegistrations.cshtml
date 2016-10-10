@@ -1,0 +1,129 @@
+﻿@model GCNI.Models.GCNIModel
+
+@{
+    ViewBag.Title = "WebinarRegistrations";
+    Layout = "~/Views/Shared/AdminMaster.cshtml";
+}
+<link href="~/css/tableStyle.css" rel="stylesheet" />
+<style>
+     .tbtext {
+	border:2px solid #456879;
+	border-radius:10px;
+	height: 30px;
+	width: 500px;
+    padding: 7px
+}
+.tbeditor {
+	border:2px solid #456879;
+	border-radius:10px;
+	height: 100px;
+	width: 500px;
+    padding: 7px
+}
+
+</style>
+<style>
+    #dt {
+        text-indent: -500px;
+        height: 30px;
+        width: 200px;
+    }
+</style>
+@using (Html.BeginForm("WebinarRegistrations", "Admin", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{ 
+<center><p>Webinar Registrations Management</p></center>
+    <br />
+    <center><table id="tblData" class="CSSTableGenerator">
+        <tr>
+            <td>Full Name</td>
+            <td>Email ID</td>
+            <td>Regitration Date</td>
+            <td>Webinar Title</td>
+            <td>Webinar Date</td>
+            <td>Webinar Time</td>
+            <td width="170" align="center">Action</td>
+        </tr>
+        @foreach (GCNI.Models.Registration obj in Model.objRegistration_ML)
+               {
+                <tr>
+                    <td>
+                       <span>@Html.Raw(obj.FullName)</span>
+                    </td>
+                    <td>
+                       <span>@Html.Raw(obj.EmailID)</span>
+                    </td>
+                    <td>
+                       <span>@Html.Raw(obj.RegistrationDate)</span>
+                    </td>
+                    <td>
+                        <span>@Html.Raw(obj.WebinarTitle)</span>
+                    </td>
+                    <td>
+                        <span>@Html.Raw(obj.WebinarDate)</span>
+                    </td>
+                    <td>
+                        <span>@Html.Raw(obj.WebinarTime)</span>
+                    </td>
+                    <td>
+                       <span><input id="Delete" class="testbutton1" type="submit" value="Delete" name="btntype" onclick="Deleterecord(@obj.id);"/></span>
+                    </td>
+                </tr>
+               }
+    </table></center><br /><br /><br /><br /><br />
+    <input type="hidden" id="hdd" name="hdd" value="0" />
+    <input type="hidden" id="id" name="id" value="0" />
+    <input type="hidden" id="Vlnk" name="Vlnk" value="0" />
+    <input type="hidden" id="file" name="file" value="0" />
+}
+<script>
+    function msgclear()
+    {
+        debugger;
+        $("#msg").hide();
+    }
+</script>
+<script type="text/javascript">
+    function Deleterecord(obj) {
+        var status = confirm('Are you sure to delete');
+        if (status) {
+            //alert(obj);
+            $("#id").val(obj);
+        }
+    }
+    </script>
+<style type="text/css">
+    .error
+    {
+        border: solid!important;
+        border-color: red!important;
+    }
+</style>
+<script>
+    $("#ThinkDDL li a").click(function () {
+        debugger;
+        var el = $(this).attr("data-op");
+        //alert(el);
+        $("#Aboutcat").val(el);
+        //console.log('inside');
+        //if ($(this).attr("data-flag2") === "false") {
+        //    $("#ThinkDDL li a").each(function (prop, val) {
+        //        var el = $(this).attr("data-think2");
+        //        $("#" + el).hide(1000);
+        //        $(this).attr("data-flag2", "false");
+        //    });
+
+        //    var el = $(this).attr("data-think2");
+        //    $("#" + el).show(1000);
+        //    $(this).attr("data-flag2", "true");
+        //}
+        //return false;
+
+    });
+</script>
+     <script type="text/javascript">
+         function RemoveClass(obj) {
+             $(obj).removeClass("error");
+         }
+     </script>
+
+

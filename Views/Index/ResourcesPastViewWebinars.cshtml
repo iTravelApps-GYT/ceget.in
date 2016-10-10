@@ -1,0 +1,203 @@
+﻿@model GCNI.Models.GCNIModel
+@{
+    ViewBag.Title = "ResourcesPastViewWebinars";
+    Layout = "~/Views/Shared/AboutUsMaster.cshtml";
+}
+<section id="feature">
+       <div class="first-row thirdrow fContent getIn" id="div1web" style="height:1000px;">
+                <div class="RCEO2" onclick="Pastdata('P'); return false;"><div><a href="#" style="color:white;">Past Webinars</a></div></div>
+              @*<div class="row" style="margin-top:5%">
+                <div class="col-lg-1"></div>
+                <div class="col-lg-1 upcoming">
+                   <center> <span class="red-txt">Date</span></center>
+                </div>
+                <div class="col-lg-2"></div>
+                <div class="col-lg-6 upcoming" >
+                    <span class="red-txt">Upcoming Live Webinars</span>
+                </div>
+                <div class="col-lg-2"></div>
+              </div>*@
+             <div class="row txtFormat VfRow" >
+             <span style="color:#1b75bc;"><b>Register to attend Broadcast and ask questions from CEGET</b></span>
+             </div>
+             <div class="row txtFormat Vcontent">
+                  @foreach (GCNI.Models.ResourcesWebinars obj in Model.objResourcesWebinars_ML)
+                  {
+                      //if ((Convert.ToDateTime(@obj.TradeDate))>=System.DateTime.Now)
+                      //{
+                <ul style="list-style-type:none;">
+                    <li>
+                    <span class="col-lg-1" style="margin-left:-4%;width: 200px;">@Html.Raw(obj.TradeDate)</span>
+                    <span class="col-lg-2"></span>
+                    <span class="col-lg-6">@Html.Raw(obj.TradeTitle)</span>
+                    
+                    </li><br /><br />
+                    <li style="margin-left:-9px">@Html.Raw(obj.Time)</li>
+                    <li style="margin-left:-3.5%"><p>@Html.Raw(obj.Description)</p>     </li><br />
+                <li> <a href="#" onclick="$('#popuppdf').hide(); getwebID('@obj.id'); return false" class="btn  btn-sm pull-right Vbutn">Register Here</a></li>
+                <li class="borderline  bline" style="margin-left:-2.5%"></li>
+                </ul>@*
+                      }*@
+                  }
+             </div>
+               </div>
+    <div class="first-row thirdrow fContent getIn" id="div2web" style="display:none;height:1000px;">
+        <div class="RCEO2" onclick="Comingdata('U'); return false;"><div><a href="#" style="color:white;">Upcoming Webinars</a></div></div>
+        <div class="row txtFormat VfRow">
+            <span style="color:#1b75bc;"><b>&nbsp;</b></span>
+        </div>
+        <div class="row txtFormat Vcontent">
+            @foreach (GCNI.Models.ResourcesWebinars obj in Model.objResourcesWebinars_ML)
+            {
+                //if ((Convert.ToDateTime(@obj.TradeDate)) < System.DateTime.Now)
+                //{
+                <ul style="list-style-type:none;">
+                    <li>
+                        <span class="col-lg-1" style="margin-left:-4%;width: 200px;">@Html.Raw(obj.TradeDate)</span>
+                        <span class="col-lg-2"></span>
+                        <span class="col-lg-6">@Html.Raw(obj.TradeTitle)</span>
+
+                    </li>
+                    <br />
+                    <br />
+                    <li style="margin-left:-9px">@Html.Raw(obj.Time)</li>
+                    <li style="margin-left:-3.5%"><p>@Html.Raw(obj.Description)</p>     </li>
+                    <br />
+                    <li> <a href="@Html.Raw(obj.VideoLink)" target="_blank" class="btn  btn-sm pull-right Vbutn">View</a></li>
+                    <li class="borderline  bline" style="margin-left:-2.5%"></li>
+                </ul>@*
+                }*@
+            }
+        </div>
+    </div>
+
+    <div style="width:100%; display:none;margin-left: 200px;margin-top: -20px;" align="center" id="Registration">
+
+        <div style="position: fixed;left: 50%;top: 50%;transform: translate(-50%, -50%); height: 250px;color:black; width: 500px; z-index: 1000; background-color: #586778;border:solid;">
+            <a href="#" onclick="$('#Registration').hide(); return false;"><span style="float: right; color: white; font-weight: normal; font-size: larger; margin-right: 5px;">X</span></a>
+            <div style="background-color: white; height: 205px; margin: 20px;padding: 1px;">
+                <div class="register-box">
+                    <div class="register-box-body">
+                        <p class="login-box-msg" style="margin-left: 10px;"><b>Registration</b></p>
+                        @using (Html.BeginForm("Registration", "Index", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+                        {
+                            <div class="form-group has-feedback">
+                                @Html.TextBoxFor(M => M.objRegistration_M.FullName, new { @id = "FullName", @type="text" , @class = "form-control", @placeholder = "Full name", @Maxlength = "50", @onblur = "msgclear();RemoveClass(this);" })
+                                @*<input type="text" class="form-control" placeholder="Full name">*@
+                                @*<span class="glyphicon glyphicon-user form-control-feedback"></span>*@
+                            </div>
+                            <div class="form-group has-feedback">
+                                @Html.TextBoxFor(M => M.objRegistration_M.EmailID, new { @id = "EmailID", @type = "email" , @class = "form-control", @placeholder = "Email", @Maxlength = "50", @onblur = "msgclear();RemoveClass(this);" })
+                                @*<input type="email" class="form-control" placeholder="Email">*@
+                                @*<span class="glyphicon glyphicon-envelope form-control-feedback"></span>*@
+                            </div>
+                            <div class="row">
+                                @*<div class="col-xs-8">
+                                </div>*@<!-- /.col -->
+                                <div class="col-xs-4">
+                                    <button type="submit" id="regbtn" name="regbtn" value="0" class="btn btn-primary btn-block btn-flat">Register</button>
+                                </div><!-- /.col -->
+                            </div>
+                        }
+                    </div><!-- /.form-box -->
+                </div><!-- /.register-box -->
+            </div>
+        </div>
+    </div>
+    <div style="width:100%; display:none;margin-left: 200px;margin-top: -20px;" align="center" id="REG">
+
+        <div style="position: fixed;left: 50%;top: 50%;transform: translate(-50%, -50%); height: 117px;color:black; width: 500px; z-index: 1000; background-color: #586778;border:solid;">
+            <a href="#" onclick="$('#REG').hide(); return false;"><span style="float: right; color: white; font-weight: normal; font-size: larger; margin-right: 5px;">X</span></a>
+            <div style="background-color: white; height: 72px; margin: 20px;padding: 1px;">
+                <h1 style="color: blue;font-size:24px;">Thank You For Your Registration</h1>
+            </div>
+        </div>
+    </div>
+    <div style="width:100%; display:none;margin-left: 200px;margin-top: -20px;" align="center" id="NREG">
+
+        <div style="position: fixed;left: 50%;top: 50%;transform: translate(-50%, -50%); height: 140px;color:black; width: 500px; z-index: 1000; background-color: #586778;border:solid;">
+            <a href="#" onclick="$('#NREG').hide(); return false;"><span style="float: right; color: white; font-weight: normal; font-size: larger; margin-right: 5px;">X</span></a>
+            <div style="background-color: white; height: 95px; margin: 20px;padding: 1px;">
+                <h1 style="color: blue;font-size:24px;">You have already registered for this webinar</h1>
+            </div>
+        </div>
+    </div>
+    <div style="width:100%; display:none;margin-left: 200px;margin-top: -20px;" align="center" id="popuppdf">
+
+        <div style="position: fixed;left: 50%;top: 50%;transform: translate(-50%, -50%); height: 200px; width: 500px; z-index: 1000; background-color: #586778;border:solid;">
+            <a href="#" onclick="$('#popuppdf').hide(); return false;"><span style="float: right; color: white; font-weight: normal; font-size: larger; margin-right: 5px;"></span></a>
+            <div style="background-color: white; height: 160px; margin: 20px;">
+                <img src="~/images/loading.gif" />
+            </div>
+        </div>
+    </div>
+    </section>
+<script type="text/javascript">
+    $(document).ready(function () {
+        debugger;
+        var myJsVariable = '@ViewBag.RegValue'
+        //alert(myJsVariable);
+        if (myJsVariable.length > 0 && myJsVariable == "Done") {
+            $("#REG").show();
+            $("#NREG").hide();
+        }
+        else if (myJsVariable.length > 0 && myJsVariable == "Not Done") {
+            $("#REG").hide();
+            $("#NREG").show();
+        }
+        else {
+            $("#REG").hide();
+            $("#NREG").hide();
+        }
+    });
+</script>
+<script>
+    function Pastdata(obj)
+    {
+        //alert(obj);
+        $('#div1web').hide(); $('#div2web').show();
+        //$("#popuppdf").show();
+        //$.ajax({
+        //    type: "post",
+        //    url: "/Index/ResourcesPastViewWebinars",
+        //    data: { "obj": obj },
+        //    success: (function (data) {
+        //        $("#bd").html(data);
+        //        $('#div1web').hide(); $('#div2web').show();
+        //        $("#popuppdf").hide();
+        //    }),
+        //    fail: (function (data) {
+        //        $("#popuppdf").hide();
+        //    })
+        //});
+    }
+</script>
+<script>
+    function getwebID(obj)
+    {
+        //alert(obj);
+        $('#regbtn').val(obj);
+        $('#Registration').show();
+    }
+</script>
+<script>
+    function Comingdata(obj)
+    {
+        //alert(obj);
+        $('#div1web').show(); $('#div2web').hide();
+        //$("#popuppdf").show();
+        //$.ajax({
+        //    type: "post",
+        //    url: "/Index/ResourcesPastViewWebinars",
+        //    data: { "obj": obj },
+        //    success: (function (data) {
+        //        $("#bd").html(data);
+        //        $('#div1web').show(); $('#div2web').hide();
+        //        $("#popuppdf").hide();
+        //    }),
+        //    fail: (function (data) {
+        //        $("#popuppdf").hide();
+        //    })
+        //});
+    }
+</script>

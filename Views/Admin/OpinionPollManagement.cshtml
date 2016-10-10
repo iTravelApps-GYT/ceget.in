@@ -1,0 +1,238 @@
+﻿@model GCNI.Models.GCNIModel
+@{
+    ViewBag.Title = "OpinionPollManagement";
+    Layout = "~/Views/Shared/AdminMaster.cshtml";
+}
+@*<!DOCTYPE HTML>
+<html>
+<head>
+      <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>ArticleManagement</title>
+
+<link type="text/css" rel="stylesheet" href="~/css/demo.css">
+<link type="text/css" rel="stylesheet" href="~/css/jquery-te-1.4.0.css">
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="~/js/jquery-te-1.4.0.min.js" charset="utf-8"></script>
+</head> 
+<body>*@
+<link href="~/css/tableStyle.css" rel="stylesheet" />
+<style>
+     .tbtext {
+	border:2px solid #456879;
+	border-radius:10px;
+	height: 30px;
+	width: 500px;
+    padding: 7px
+}
+.tbeditor {
+	border:2px solid #456879;
+	border-radius:10px;
+	height: 100px;
+	width: 500px;
+    padding: 7px
+}
+</style>
+@using (Html.BeginForm("OpinionPollManagement", "Admin", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{ 
+    @*<table border="1" bgcolor="red" width="100%">
+    <tr>
+        <td align="center"><a href="~/Admin/EventManagement">Event</a></td>
+        <td align="center"><a href="~/Admin/PublicationManagement">Publication</a></td>
+        <td align="center"><a href="~/Admin/NewsManagement">News</a></td>
+        <td align="center"><a href="~/Admin/ArticleManagement">Article</a></td>
+    </tr>
+    </table>*@
+<center><h2>Opinion Poll Management</h2></center>
+<center><table style="width: 80%;" border="1">
+    <tr>
+        <td colspan="2" align="center" height="30"><h2 id="msg">@ViewBag.Message</h2></td>
+    </tr>
+    <tr>
+        <td>Question</td>
+        <td>@Html.TextBoxFor(M => M.objOpinionPoll_M.Question, new { @id="Ques", @Maxlength="200", @size="50",@class="tbtext", @onblur = "msgclear();"})</td>
+    </tr>
+   @* <tr>
+        <td>Option Yes</td>
+        <td>@Html.TextBoxFor(M => M.objOpinionPoll_M.OptionYes, new { @id="OpYes", @Maxlength="50",@class="tbtext" , @onblur = "msgclear();"})</td>
+    </tr>
+    <tr>
+        <td>Option No</td>
+        <td>@Html.TextBoxFor(M => M.objOpinionPoll_M.OptionNo, new { @id="OpNo", @Maxlength="50",@class="tbtext" , @onblur = "msgclear();"})</td>
+    </tr>
+    <tr>
+        <td>Ans</td>
+        <td>@Html.TextBoxFor(M => M.objOpinionPoll_M.Ans, new { @id="Ans", @Maxlength="50",@class="tbtext" , @onblur = "msgclear();"})</td>
+    </tr>*@
+    <tr>
+        <td>Display On Home Page</td>
+        <td>@Html.CheckBoxFor(M => M.objOpinionPoll_M.IsDisplayOnHome, new { @id="IsDisp"})</td>
+    </tr>
+    <tr >
+        <td colspan="2" align="Center">
+            <input class="btn btn-primary" id="Submit" type="submit" value="Save" name="btntype" onclick="return Validate();"/></td>
+    </tr>
+</table></center>
+    <br />
+    <center><table id="tblData" class="CSSTableGenerator">
+        <tr>
+            @*<th align="center">ID</th>*@
+            <td align="center">Question</td>
+             <td align="center">No. Of Yes Voting</td>
+            <td align="center">No. Of No Voting</td>
+            <td align="center">Display on Home</td>
+            <td align="center" width="170">Action</td>
+        </tr>
+        @foreach (GCNI.Models.OpinionPoll obj in Model.objOpinionPoll_ML)
+               {
+                <tr>
+                    @*<td align="center">
+                        <input type="hidden" value='@obj.id' data-title='@obj.Title' data-des='@obj.Description' data-Disp='@obj.IsDisplayOnHome'/>
+                       <span>@Html.Raw(obj.id)</span>
+                    </td>*@
+                    <td>
+                       <span>@Html.Raw(obj.Question)</span>
+                    </td>
+                    <td>
+                       <span>@Html.Raw(obj.OptionYes)</span>
+                    </td>
+                    <td>
+                       <span>@Html.Raw(obj.OptionNo)</span>
+                    </td>
+                    <td>
+                       <span>@Html.Raw(obj.IsDisplayOnHome)</span>
+                    </td>
+                    <td>
+                        <input type="hidden" value='@obj.id' data-Ques='@obj.Question' data-disp='@obj.IsDisplayOnHome'/>
+                       <span><input id="Edit" class="testbutton1" type="Submit" value="Edit" name="btntype" onclick="FillEdit(@obj.id); return false;" />@*<a href="#" onclick="FillEdit(@obj.id); return false;">Edit</a>*@ / <input id="Delete" type="submit" class="testbutton1" value="Delete" name="btntype" onclick="    Deleterecord(@obj.id);"/> @*<a href="#" onclick="Deleterecord(@obj.id); return false;">Delete</a></span>*@
+                    </td>
+                </tr>
+               }
+    </table></center>
+     <input type="hidden" id="hdd" name="hdd" value="0" />
+    <input type="hidden" id="id" name="id" value="0" />
+    <input type="hidden" id="img" name="img" value="0" />
+    <input type="hidden" id="file" name="file" value="0" />
+}
+   @* </body>
+    </html>*@
+<script>
+    $(document).ready(function(){
+        debugger;
+        //alert('ok');
+        $('#Ques').val('');
+        //$('#OpYes').val('');
+        //$('#OpNo').val('');
+        //$('#Ans').val('');
+        $('input:checkbox').prop('checked', false);
+        $('#Ques').focus();
+    });
+</script>
+<script>
+    function msgclear()
+    {
+        debugger;
+        $("#msg").hide();
+    }
+</script>
+   <script type="text/javascript">
+       $(document).ready(function(){
+           debugger;
+           //alert('ok');
+      
+           //$('#title').val('');
+           //$('#Desc').val('');
+           //$('#IsDisp').checked=false;
+       });
+       function FillEdit(obj) {
+           debugger;
+           //alert(obj);
+           $("#hdd").val(obj);
+           //$("#upload1").removeClass("error");
+           var $ele = $("#tblData tr td input[value=" + obj + "]");
+           if ($ele != null) {
+               $('#Ques').val($ele.attr("data-Ques"));
+               //$('#OpYes').val($ele.attr("data-OPYes"));
+               //$('#OpNo').val($ele.attr("data-OpNo"));
+               //$('#Ans').val($ele.attr("data-Ans"));
+               if (($ele.attr("data-disp")) == "True") {
+                   document.getElementById('IsDisp').checked = true;
+                   //$('#IsDisp').checked = true;
+               }
+               else { document.getElementById('IsDisp').checked = false; }
+               window.document.body.scrollTop = '10';
+           }
+
+       }
+    </script>
+<script type="text/javascript">
+    function Deleterecord(obj) {
+        var status = confirm('Are you sure to delete');
+        if (status) {
+            //alert(obj);
+            $("#id").val(obj);
+        }
+    }
+    </script>
+<script type="text/javascript">
+    function RemoveClass(obj) {
+        $(obj).removeClass("error");
+    }
+    function Validate() {
+        debugger;
+        if ((hdd).value == null || (hdd).value.length < 1 || (hdd).value == "0") {
+            if ($("#Ques").val().length < 1 || $("#OpYes").val().length < 1 || $("#OpNo").val().length < 1 || $("#Ans").val().length < 1 ) {
+
+                if ($("#Ques").val().length < 1) {
+                    $("#Ques").addClass("error");
+                }
+                else { $("#Ques").removeClass("error"); }
+                //if ($("#OpYes").val().length < 1) {
+                //    $("#OpYes").addClass("error");
+                //}
+                //else { $("#OpYes").removeClass("error"); }
+                //if ($("#OpNo").val().length < 1) {
+                //    $("#OpNo").addClass("error");
+                //}
+                //else { $("#OpNo").removeClass("error"); }
+                //if ($("#Ans").val().length < 1) {
+                //    $("#Ans").addClass("error");
+                //}
+                //else { $("#Ans").removeClass("error"); }
+                return false;
+            }
+            else {
+                return true;
+            }
+
+        }
+
+    }
+     </script>
+    @* <script type="text/javascript">
+         function Deleterecord(obj) {
+             var status = confirm('Are you sure to delete');
+             if (status) {
+                 $.ajax({
+                     type: "post",
+                     url: "/Admin/ArticleDelete",
+                     data: { "id": obj },
+                     success: (function (data) {
+
+                         $("#divThinktable").html(data);
+                     }),
+                     fail: (function (data) {
+                     })
+                 });
+             }
+         }
+    </script>*@
+<script>
+
+    // Custom labels for error display
+    Validation.labels = {
+        'contact_v1[email]': 'Custom label name from configuration'
+    };
+
+</script>

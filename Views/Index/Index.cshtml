@@ -1,0 +1,191 @@
+﻿@model GCNI.Models.GCNIModel
+
+@{
+    ViewBag.Title = "GCNI";
+    Layout = "~/Views/Shared/CommonMaster.cshtml";
+}
+
+
+    <section id="feature">
+        <div class="container">
+            <div class="row">
+               <div class="col-sm-6">
+               <div class="first-row">
+               <div class="public"><div>Publications</div></div>
+               <div class="borderline"></div>
+                   <ul style="list-style-type:none;margin-left:-33px;" id="DDDigital">
+                   @foreach(GCNI.Models.Publication obj in Model.objPublicationtML)
+                   {
+                       <a href="#" data-id="@Html.Raw("popup" + obj.id)" data-think1="@Html.Raw("Digital" + obj.id)" >
+                        <img src="@Url.Content(String.Format("~/Uploads/Publication_Thumbnail_Images/{0}",obj.ThumbnailURL))">
+                           </a>
+                   }
+                       </ul>
+               @*<img src="images/001.png">
+                <img src="images/02.jpg">
+                <img src="images/03.jpg">*@
+               <p class="text-right"> <a href="~/Index/Publications" class="danger">More Publication...</a></p>
+               
+               </div>
+              
+               <div class="secondrow">
+                <div class="public"><div>blogs</div></div>
+               <div class="borderline"></div>
+               <p>GFI to Launch Myanmar Report with Panel Including Dev Kar, Vikram Nehru, Aaretti Siitonen: There have been few studies on capital flight and illicit financial flows...<a href="https://gcnimindtearscom.wordpress.com/2015/12/">Read More...</a></p>
+                  
+                  <p>Three Reasons TTIP Needs Transparency: A gigantic trade deal uniting over 800 million consumers across the United States and the European Union, and yet all...<a href="https://gcnimindtearscom.wordpress.com/2015/12/">Read More...</a></p>
+                  
+               </div>
+               
+                <div class="first-row thirdrow" style="margin-top:20px;">
+                <div class="public"><div>news</div></div>
+               <div class="borderline"></div>
+                    @foreach(GCNI.Models.News obj in Model.objNewML)
+                    {
+                    <p><span class="red-txt">@Html.Raw(obj.City) , @Html.Raw(obj.NewsDate) : </span> @Html.Raw(obj.Title)<br />@Html.Raw(obj.Description)<a onClick="window.open('@Html.Raw(obj.NewsFullDetails)', '_blank')" href="#">Read More...</a></p>
+                        
+				  @*<p><span class="red-txt">Ottawa, Canada, 08/10/2015:</span> 6th Global Conference Of Parliamentarians Against Corruption<br /> GOPAC Members Call for Stronger Measures to Bring Perpetrators of Grand Corruption to Justice at International Anti-Corruption Conference...<a href="#">Read More...</a></p>*@
+                  
+                  @*<p><span class="red-txt">New Delhi, Canada, 17/09/2015:</span> Recovery of bribe money not enough to convict a babu: SC<br /> A government official cannot be convicted under corruption charges merely on the basis of recovery of bribe money and it is essential to prove that he had demanded money, the Supreme Court has ruled... <a href="#">Read More...</a></p>*@
+                    }
+
+                </div>
+                <div class="first-row thirdrow" style="margin-top:20px;">
+                <div class="public"><div>opinion poll</div></div>
+               <div class="borderline"></div>
+                      @foreach(GCNI.Models.OpinionPoll obj in Model.objOpinionPoll_ML)
+                    {
+				<p><b>Q:</b>@Html.Raw(obj.Question)<br/>
+				<span style="float: left;"><input type="radio" id="Yes" name="@obj.id" data-val="Yes" checked/><label>Yes</label> <input type="radio" data-val="No" id="No" name="@obj.id"/><label>No</label></span><input type="button" onclick="vote('@obj.id');" class="btn  btn-sm pull-right gbtn" value ="Vote" />@ViewBag.Message@*<a href="#">Join...</a>*@</p>   
+                      }               
+               </div>
+                
+                </div>
+                
+            
+               <div class="col-sm-6">
+                   <div  style="background-color: #D71E26;height:37px;"><div class="public" style="width:185px; margin-left:30px;"><div>Events</div></div></div>
+               <div class="borderline" style="background-color:#D71E26;"></div>
+				   <div id="dvMap" class="map" style="height:665px">
+					@*<img src="images/map.jpg">*@
+				   </div>
+                   @*<div id="dvMap" class="col-sm-6 map" style="width: 580px; height: 574px">
+              
+               </div>*@
+				   <div class="secondrow">
+					<div class="public"><div>articles</div></div>
+					<div class="borderline"></div>
+                       @foreach(GCNI.Models.Article obj in Model.objArticleML)
+                       {
+					<p><span class="red-txt">@Html.Raw(obj.Title)</span><br /> @Html.Raw(obj.Description)
+					<a href="~/Index/Articles">Read More...</a></p>
+                       }
+					@*<p><span class="red-txt">The Private Sector as culprit and victim of corruption in Africa:</span><br /> Corruption causes severe waste and misallocation of financial, human, and natural resources, thus retarding growth and social development. It suffocates private sector activity...
+					<a href="#">Read More...</a></p>*@
+					  
+				   </div>
+               </div>
+            </div><!--/.row-->    
+        </div><!--/.container-->
+         @{ int idigital2 = 1;
+                           foreach (GCNI.Models.Publication obj in Model.objPublicationtML)
+                           {
+                              
+                            <div style="width:100%; display:none;margin-left: 200px;margin-top: -20px;" align="center" id="@Html.Raw("popup" + obj.id)">
+                                
+                                <div style="position: fixed;left: 50%;top: 50%;transform: translate(-50%, -50%); height: 600px; width: 800px; z-index: 1000; background-color: #586778;border:solid;">
+                                    <a href="#" onclick=" $('#@Html.Raw("popup" + obj.id)').hide();  return false;"><span style="float: right; color: white; font-weight: normal; font-size: larger; margin-right: 5px;">X</span></a>
+                                    <div style="background-color: white; height: 560px; margin: 20px;">
+                                        <object data=@Url.Content("~/Uploads/Publication_Files/" + obj.FileURL) type="application/pdf" width="760" height="560">
+                                        alt : <a href=@Url.Content("~/Uploads/Publication_Files/" + obj.FileURL)>test.pdf</a>
+                                        </object>
+                                       @* <p>@obj.PopupBody </p>*@
+                                       @* <object data=@Url.Content(String.Format("~/Uploads/{0}",obj.PopupBody)) type="application/pdf" width="760" height="460">
+                                            alt : <a href=@Url.Content(String.Format("~/Uploads/{0}",obj.PopupBody))>test.pdf</a>
+                                        </object>*@
+                                    </div>
+                                </div>
+                            </div>
+                               
+                               idigital2++;
+                           }
+                        }
+    </section><!--/#feature-->
+
+  
+ <script type="text/javascript">
+     debugger;
+     function vote(obj) {
+         var inputElems = document.getElementsByName(obj)
+         for (var i = 0; i < inputElems.length; i++) {
+             if (inputElems[i].type == "radio" && inputElems[i].checked == true) {
+                 Ans = $(inputElems[i]).attr('data-val');
+             }
+         }
+            var id=obj;
+            var Ans = Ans
+         //alert(Ans);
+            $.ajax({
+                type: "post",
+                url: "/Index/Index",
+                data: { "id": obj ,"Ans":Ans },
+                success: (function (data) {
+                }),
+                fail: (function (data) {
+                })
+            });
+        }
+</script>
+<script>
+    $("#DDDigital a").click(function () {
+        debugger;
+        //alert("Hello");
+        $("#DDDigital li a").each(function (prop, val) {
+            // var el = $(this).attr("data-think1");
+            var el2 = $(this).attr("data-id");
+            // $("#" + el).hide(1000);
+            $("#" + el2).hide();
+            // $(this).attr("data-flag1", "false");
+        });
+        var el2 = $(this).attr("data-id");
+        $("#" + el2).show();
+        return false;
+    });
+    </script>
+    @*<footer id="footer" class="midnight-blue">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8">
+				<div class="social-sahre-links">
+					<i class="fa fa-facebook"></i>
+					<i class="fa fa-twitter"></i>
+					<i class="fa fa-youtube"></i>
+					<i class="fa fa-linkedin"></i>
+					<i class="fa fa-envelope"></i>
+				</div>
+				<div>Privacy Policy &nbsp;&nbsp;&nbsp;&nbsp;Copyright</div>
+				</div>
+                <div class="col-sm-4">
+				<div style="margin-bottom: 7px;">Subscribe to our newsletter</div>
+				<div>
+                    <input type="text" value="Email address" style="
+    width: 285px;
+    padding: 5px 10px;
+    font-weight: bold;
+    font-size: 13px;
+"/>
+					<button><span>Go</span></button>
+				</div>
+                </div>
+            </div>
+        </div>
+    </footer><!--/#footer-->
+
+    <script src="js/jquery_002.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery_003.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/wow.js"></script>
+
+</body></html>*@

@@ -1,0 +1,288 @@
+﻿@model GCNI.Models.GCNIModel
+
+@{
+    ViewBag.Title = "About_US_JourneyOfCOE";
+    Layout = "~/Views/Shared/AdminMaster.cshtml";
+}
+@*<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>PublicationManagement</title>
+
+<link type="text/css" rel="stylesheet" href="~/css/demo.css">
+<link type="text/css" rel="stylesheet" href="~/css/jquery-te-1.4.0.css">
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="~/js/jquery-te-1.4.0.min.js" charset="utf-8"></script>
+</head> 
+    <body>*@
+<link href="~/css/tableStyle.css" rel="stylesheet" />
+<style>
+     .tbtext {
+	border:2px solid #456879;
+	border-radius:10px;
+	height: 30px;
+	width: 500px;
+    padding: 7px
+}
+.tbeditor {
+	border:2px solid #456879;
+	border-radius:10px;
+	height: 100px;
+	width: 500px;
+    padding: 7px
+}
+
+</style>
+@*<div class="dropdown" style="position: absolute;top: -12px;right: 171px;">
+                 <input type="text" name="orderstatus" id="orderstatus" style="height:31px;width:200px;"/>
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Select Options
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu" id="ThinkDDL">
+      <li><a href="#" id="op1" data-op="Processing">Processing</a></li>
+      <li><a href="#" id="op2" data-op="shipped">shipped</a></li>
+      <li><a href="#" id="op3" data-op="Delivered">Delivered</a></li>
+    </ul>
+  </div>*@
+            @*<div class="container">
+  <div class="dropdown" style="width:265px;">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" style="width:265px;">Select About_Us_Category
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu" id="ThinkDDL">
+      <li><a href="#" data-op="About_Us Advisory Committee">About_Us Advisory Committee</a></li>
+      <li><a href="#" data-op="About_Us Team">About_Us Team</a></li>
+    </ul>
+  </div>
+</div>*@
+@using (Html.BeginForm("About_US_JourneyOfCOE", "Admin", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{ 
+@*<table border="1" bgcolor="red" width="100%">
+    <tr>
+        <td align="center"><a href="~/Admin/EventManagement">Event</a></td>
+        <td align="center"><a href="~/Admin/PublicationManagement">Publication</a></td>
+        <td align="center"><a href="~/Admin/NewsManagement">News</a></td>
+        <td align="center"><a href="~/Admin/ArticleManagement">Article</a></td>
+    </tr>
+    </table>
+*@<center><p>Journey Of CEGET Management</p></center>
+<center><table style="width: 80%;" border="1">
+    <tr>
+        <td colspan="2" align="center" height="30"><h2 id="msg">@ViewBag.Message</h2></td>
+    </tr>
+    <tr>
+        <td>Description First
+            <br/><span id="Imgsize">1000 Characters Maximum</span>
+        </td>
+        <td>@Html.TextAreaFor(M => M.objAbout_Us_JCOE_M.Description1, new { @id="Desc1",@class="jqte-test", @maxlength="1000", @onblur = "msgclear();" })
+            <br /><span id="overmsg1"></span>
+        </td>
+    </tr>
+    <tr>
+        <td>Description Second
+            <br/><span id="Imgsize">2000 Characters Maximum</span>
+        </td>
+        <td>@Html.TextAreaFor(M => M.objAbout_Us_JCOE_M.Description2, new { @id="Desc2",@class="jqte-test", @maxlength="1000", @onblur = "msgclear();" })
+            <br /><span id="overmsg2"></span>
+        </td>
+    </tr>
+    <tr>
+        <td>Upload Image<br />
+            <span id="Imgsize">Image Size 275px * 278px</span>
+        </td>
+        <td><input id="upload" name="upload1" type="file" onblur = "RemoveClass(this);" class="tdtext"/></td>
+    </tr>
+    @*<tr>
+        <td>Display On Home Page</td>
+        <td>@Html.CheckBoxFor(M => M.objPublicationtM.IsDisplayOnHome, new {@id="IsDisp"})</td>
+    </tr>*@
+    <tr >
+        <td align="Center" colspan="2"><input class="btn btn-primary" id="Submit" type="submit" value="Save" name="btntype" onclick="return Validate();" /></td>
+        @*<td align="Center"><input id="Delete" type="submit" value="Delete" name="btntype" onclick="return Validate();" /></td>*@
+    </tr>
+</table></center>
+    <br />
+    <center><table id="tblData" class="CSSTableGenerator">
+        <tr>
+            <td>Description First</td>
+            <td>Description Second</td>
+            <td>Image</td>
+            @*<td>Dispaly On Home</td>*@
+            <td width="170" align="center">Action</td>
+        </tr>
+        @foreach (GCNI.Models.About_Us_JourneyOfCOE obj in Model.objAbout_Us_JCOE_ML)
+               {
+                <tr>
+                    @*<td align="center">
+                        <input type="hidden" value='@obj.id' data-title='@obj.Title' data-des='@obj.Description' data-thumbnailURL='@obj.ThumbnailURL' data-fileURL="@obj.FileURL" data-disp="@obj.IsDisplayOnHome" />
+                       <span>@Html.Raw(obj.id)</span>
+                    </td>*@
+                    <td>
+                       <span>@Html.Raw(obj.Description1)</span>
+                    </td>
+                    <td>
+                       <span>@Html.Raw(obj.Description2)</span>
+                    </td>
+                    <td>
+                       <span><img src="@Url.Content(String.Format("~/Uploads/About_US_JCOE/{0}",obj.ImageURL))" alt="" width="100px" heigth="100px" /></span>
+                    </td>
+                     @*<td>
+                       <span>@Html.Raw(obj.IsDisplayOnHome)</span>
+                    </td>*@
+                    <td>
+                       <input type="hidden" value='@obj.id' data-des1='@obj.Description1' data-des2='@obj.Description2' data-ImageURL='@obj.ImageURL' @*data-disp="@obj.IsDisplayOnHome"*@ />
+                       <span><input id="Edit" class="testbutton1" type="Submit" value="Edit" name="btntype" onclick="FillEdit(@obj.id); return false;" />@*<a href="#" onclick="FillEdit(@obj.id); return false;">Edit</a>*@ / <input id="Delete" class="testbutton1" type="submit" value="Delete" name="btntype" onclick="Deleterecord(@obj.id);"/>@*<a href="#" onclick="Deleterecord(@obj.id); return false;">Delete</a></span>*@
+                    </td>
+                </tr>
+               }
+    </table></center>
+    <input type="hidden" id="hdd" name="hdd" value="0" />
+    <input type="hidden" id="id" name="id" value="0" />
+    <input type="hidden" id="img" name="img" value="0" />
+    <input type="hidden" id="file" name="file" value="0" />
+}
+   @* </body>
+    </html>*@
+<script>
+    function msgclear()
+    {
+        debugger;
+        $("#msg").hide();
+    }
+</script>
+   <script type="text/javascript">
+       $(document).ready ( function(){
+           debugger;
+           //alert('ok');
+           $('#Desc1').jqteVal('');
+           $('#Desc2').jqteVal('');
+           $('#Desc1').focus();
+           $("#Desc1").maxlength();
+           //$(".jqte_editor").jqte({focus: function(){ alert("The editor is focused"); }});
+       //$('input:checkbox').prop('checked', false);
+ });
+       function FillEdit(obj) {
+           debugger;
+           alert(obj);
+           $("#hdd").val(obj);
+           //$("#upload1").removeClass("error");
+           var $ele = $("#tblData tr td input[value=" + obj + "]");
+           if ($ele != null) {
+               $('#Desc1').jqteVal($ele.attr("data-des1"));
+               $('#Desc2').jqteVal($ele.attr("data-des2"));
+               $('#img').val($ele.attr("data-ImageURL"));
+               window.document.body.scrollTop = '10';
+               //$('#file').val($ele.attr("data-fileURL"));
+               //if (($ele.attr("data-disp")) == "True") {
+               //    document.getElementById('IsDisp').checked = true;
+               //    //$('#IsDisp').checked = true;
+               //}
+               //else { document.getElementById('IsDisp').checked = false; }
+           }
+
+       }
+    </script>
+<script type="text/javascript">
+    function Deleterecord(obj) {
+        var status = confirm('Are you sure to delete');
+        if (status) {
+            //alert(obj);
+            $("#id").val(obj);
+        }
+    }
+    </script>
+     @*<script type="text/javascript">
+         function Deleterecord(obj) {
+             var status = confirm('Are you sure to delete');
+             if (status) {
+                 $.ajax({
+                     type: "post",
+                     url: "/Admin/PublicationManagement",
+                     data: { "id": obj },
+                     success: (function (data) {
+
+                         $("#divThinktable").html(data);
+                     }),
+                     fail: (function (data) {
+                     })
+                 });
+             }
+         }
+    </script>*@
+<style type="text/css">
+    .error
+    {
+        border: solid!important;
+        border-color: red!important;
+    }
+</style>
+<script>
+    $("#ThinkDDL li a").click(function () {
+        debugger;
+        var el = $(this).attr("data-op");
+        //alert(el);
+        $("#Aboutcat").val(el);
+        //console.log('inside');
+        //if ($(this).attr("data-flag2") === "false") {
+        //    $("#ThinkDDL li a").each(function (prop, val) {
+        //        var el = $(this).attr("data-think2");
+        //        $("#" + el).hide(1000);
+        //        $(this).attr("data-flag2", "false");
+        //    });
+
+        //    var el = $(this).attr("data-think2");
+        //    $("#" + el).show(1000);
+        //    $(this).attr("data-flag2", "true");
+        //}
+        //return false;
+
+    });
+</script>
+     <script type="text/javascript">
+         function RemoveClass(obj) {
+             $(obj).removeClass("error");
+         }
+         function Validate() 
+         {
+             debugger;
+             if ((hdd).value == null || (hdd).value.length < 1 || (hdd).value == "0") 
+             {
+                 if($("#Desc1").val().length<1 || $("#Desc2").val().length<1 || $("#upload").val().length<1)
+                 {
+                     if($("#Desc1").val().length<1)
+                     {document.getElementById('overmsg1').innerHTML="<b>Description can Not be Empty...!</b>";}
+                     else{$("#overmsg1").hide();}
+                     if($("#Desc2").val().length<1)
+                     {document.getElementById('overmsg2').innerHTML="<b>Description can Not be Empty...!</b>";}
+                     else{$("#overmsg2").hide();}
+                     if ($("#upload").val().length<1)
+                     {$("#upload").addClass("error");}
+                     else{$("#upload").removeClass("error");}
+                     return false;
+                 }
+                 else if($("#upload").val().length<1 || $("#Desc1").val().length>1500 || $("#Desc2").val().length>2500)
+                 {
+                     if ($("#upload").val().length<1)
+                     {$("#upload").addClass("error");}
+                     else{$("#upload").removeClass("error");}
+                     if($("#Desc1").val().length>1500)
+                     {document.getElementById('overmsg1').innerHTML="Maximum 1000 Characters Should be Insert But You Have <b><u>"+$("#Desc1").val().length+"</u></b> Characters Plz Reduce <b><u>"+(($("#Desc1").val().length)-1000)+"</u></b> Characters";$("#overmsg1").show();}
+                     else{$("#overmsg1").hide();}
+                     if($("#Desc2").val().length>2500)
+                     {document.getElementById('overmsg2').innerHTML="Maximum 2000 Characters Should be Insert But You Have <b><u>"+$("#Desc2").val().length+"</u></b> Characters Plz Reduce <b><u>"+(($("#Desc2").val().length)-2000)+"</u></b> Characters";$("#overmsg2").show();}
+                     else{$("#overmsg2").hide();}
+                     return false;
+                 }
+                 else{return true;}
+             }
+             else{return true;}
+        }
+     </script>
+
+
+
+
+
+
+

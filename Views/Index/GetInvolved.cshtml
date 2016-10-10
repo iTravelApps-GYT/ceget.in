@@ -1,0 +1,110 @@
+﻿@model GCNI.Models.GCNIModel
+@{
+    ViewBag.Title = "GetInvolved";
+    Layout = "~/Views/Shared/AboutUsMaster.cshtml";
+}
+<section id="feature">
+    
+      <div class="row getIn" >
+      <div id="imgdiv" class="gImgDiv" >
+        <center><div class="row" >
+            <div class="col-lg-1"></div>
+            @foreach(GCNI.Models.GetInvolved obj in Model.objGetInvolved_ML)
+            {
+                if(obj.Catagory=="Upload Image")
+                {
+            <div class="col-lg-3">
+                <ul style="list-style-type:none">
+                    <li>
+                        <img src="@Url.Content(String.Format("~/Uploads/GetInvolved/{0}",obj.ImageURL))" alt="" height="220px" width="160ox" class="gImg1" />
+                    </li>
+                    <li>
+                    <span class="red-txt" style="margin-left:40px;">@Html.Raw(obj.ImageTitle)</span>
+                    </li>
+               </ul>
+            </div>
+            }
+            }
+            <div class="col-lg-1"></div>
+        </div></center>
+        
+        </div>
+        <div class="row gQuery" >
+        <ol style="list-style-type:none;">
+            <li>
+                <span class="red-txt">1 What You can do?</span><br />
+                <ul style="color:#1b75bc;; list-style-type:disc;">
+                    @{
+                        int i=1;
+                     foreach(GCNI.Models.GetInvolved obj in Model.objGetInvolved_ML)
+            {
+                         
+                         if (obj.Catagory == "Questions")
+                {
+                    <li style="list-style:none">@*<strong>Ques. @i</strong>*@ @Html.Raw(obj.Question)</li>
+                    i++;
+                }
+                
+            }
+                    }
+                </ul>
+            </li><br /><br>
+            <li>
+@using (Html.BeginForm("GetInvolved", "Index", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+                <span class="red-txt">2 Query/Feedback</span><br />
+                <textarea id="txtArea" class="form-control" rows="4"></textarea><br />
+                @*@Html.Raw(ViewBag.Save)*@
+                <br/>
+                 <input type="submit" class="btn  btn-sm pull-right gbtn" value="Submit" onclick="return myFunction();"  />
+                <input type="hidden" name="val" id="val" value="0" />
+}
+            </li>
+        </ol>
+        </div>
+      </div>
+    <div style="width:100%; display:none;margin-left: 200px;margin-top: -20px;" align="center" id="popuppdf">
+
+        <div style="position: fixed;left: 50%;top: 50%;transform: translate(-50%, -50%); height: 117px;color:black; width: 500px; z-index: 1000; background-color: #586778;border:solid;">
+            <a href="#" onclick="$('#popuppdf').hide(); return false;"><span style="float: right; color: white; font-weight: normal; font-size: larger; margin-right: 5px;">X</span></a>
+            <div style="background-color: white; height: 72px; margin: 20px;padding: 1px;">
+                <h1 style="color: blue;font-size:24px;">Thank You For Your Feedback</h1>
+            </div>
+        </div>
+    </div>
+    </section>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        debugger;
+        var myJsVariable = '@ViewBag.Save'
+        //alert(myJsVariable);
+        if (myJsVariable.length>0) {
+            $("#popuppdf").show();
+        }
+        else { $("#popuppdf").hide(); }
+    });
+</script>
+<script type="text/javascript">
+        function myFunction() {
+            var x = document.getElementById("txtArea").value;
+            if (x.length < 1)
+            {
+                return false;
+            }
+            else
+                {
+                $("#val").val(x);
+                return true;
+            }
+            //$.ajax({
+            //    type: "post",
+            //    url: "/Index/GetInvolved",
+            //    data: { "feedback": x },
+            //    success: (function (data) {
+            //    }),
+            //    fail: (function (data) {
+            //    })
+            //});
+        }
+</script>

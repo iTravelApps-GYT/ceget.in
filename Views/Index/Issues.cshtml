@@ -1,0 +1,211 @@
+﻿@model GCNI.Models.GCNIModel
+@{
+    ViewBag.Title = "Issues";
+    Layout = "~/Views/Shared/AboutUsMaster.cshtml";
+}
+<style>
+    #PDFImg {
+        margin-bottom: 0px;
+        margin-top: 50px;
+        height: 55px;
+        width: 50px;
+        margin-left: 92%;
+        margin-top: -25px;
+    }
+</style>
+<section id="feature">
+
+    <div class="row getIn" style="height:auto;">
+        <div class="Know" style="margin-left:4%;float:left;background-image: url(../images/public.png);"><div><a href="javascript:void(0);" onclick="javascript: $('#main1').show(); $('#main2').hide();">Procurement</a></div></div>
+        <div class="Know" style="margin-left:0%;float:left;background-image: url(../images/public.png);"><div><a href="javascript:void(0);" onclick="javascript: $('#main1').hide(); $('#main2').show();">Smart Cities</a></div></div>
+        <div id="main1">
+            @foreach (GCNI.Models.Issues obj in Model.objIssues_ML)
+            {
+                if (obj.Category == "PROCUREMENT")
+                {
+
+                    <div id="imgdiv" class="gImgDiv">
+                        <center>
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <ul style="list-style-type:none;margin-top: 80px;margin-left:-69px;">
+                                        <li>
+                                            <img src="@Url.Content(String.Format("~/Uploads/Activities/Issues/{0}",obj.Img1URL))" height="231px" width="233px" style="border:solid;border-width: 2px;" />
+                                        </li>
+                                        <li>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <ul style="list-style-type:none;margin-top: 80px;margin-left:-40px;">
+                                        <li>
+                                            <img src="@Url.Content(String.Format("~/Uploads/Activities/Issues/{0}",obj.Img2URL))" height="231px" width="233px" style="border:solid;border-width: 2px;"/>
+                                        </li>
+                                        <li>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <ul style="list-style-type:none;margin-top: 80px;margin-left:-20px;">
+                                        <li>
+                                            <img src="@Url.Content(String.Format("~/Uploads/Activities/Issues/{0}",obj.Img3URL))" height="231px" width="233px" style="border:solid;border-width: 2px;"/>
+                                        </li>
+                                        <li>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <ul style="list-style-type:none;margin-top: 80px;margin-left:0px;">
+                                        <li>
+                                            <img src="@Url.Content(String.Format("~/Uploads/Activities/Issues/{0}",obj.Img4URL))" height="231px" width="233px" style="border:solid;border-width: 2px;"/>
+                                        </li>
+                                        <li>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </center>
+
+                    </div>
+                    <div class="row gQuery">
+                        <ol style="list-style-type:none;">
+                            <li>
+                                <span style="color:#1b75bc;margin-left:-22px;"><strong>@Html.Raw(obj.Heading)</strong></span><br />
+                                <div class="borderline2"></div>
+                                <ul style="color:#1b75bc;list-style-type:none;">
+                                    <li style="margin-left: -92px;line-height: 20px;">@Html.Raw(obj.Description)</li>
+                                </ul>
+                            </li>
+                            <br />
+                            <br>
+                        </ol>
+                    </div>
+                    <div style="margin-left: 1080px;margin-bottom:22px;" id="DDDigital">
+                        <a href="#" data-id="@Html.Raw("popup" + obj.id)">
+                            <img src="~/css/images/ActivitiesIssues.jpg" />
+                        </a>
+                    </div>
+                }
+            }
+        </div>
+
+        <div id="main2" style="display:none;">
+                @foreach (GCNI.Models.Issues obj in Model.objIssues_ML)
+                {
+                    if (obj.Category == "SMART CITIES")
+                    {
+                        <div id="imgdiv" class="gImgDiv">
+                            <center>
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <ul style="list-style-type:none;margin-top: 80px;margin-left:-69px;">
+                                            <li>
+                                                <img src="@Url.Content(String.Format("~/Uploads/Activities/Issues/{0}",obj.Img1URL))" height="231px" width="233px" style="border:solid;border-width: 2px;" />
+                                            </li>
+                                            <li>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="col-lg-3">
+                                        <ul style="list-style-type:none;margin-top: 80px;margin-left:-40px;">
+                                            <li>
+                                                <img src="@Url.Content(String.Format("~/Uploads/Activities/Issues/{0}",obj.Img2URL))" height="231px" width="233px" style="border:solid;border-width: 2px;" />
+                                            </li>
+                                            <li>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="col-lg-3">
+                                        <ul style="list-style-type:none;margin-top: 80px;margin-left:-20px;">
+                                            <li>
+                                                <img src="@Url.Content(String.Format("~/Uploads/Activities/Issues/{0}",obj.Img3URL))" height="231px" width="233px" style="border:solid;border-width: 2px;" />
+                                            </li>
+                                            <li>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="col-lg-3">
+                                        <ul style="list-style-type:none;margin-top: 80px;margin-left:0px;">
+                                            <li>
+                                                <img src="@Url.Content(String.Format("~/Uploads/Activities/Issues/{0}",obj.Img4URL))" height="231px" width="233px" style="border:solid;border-width: 2px;" />
+                                            </li>
+                                            <li>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </center>
+
+                        </div>
+                        <div class="row gQuery">
+                            <ol style="list-style-type:none;">
+                                <li>
+                                    <span style="color:#1b75bc;margin-left:-22px;"><strong>@Html.Raw(obj.Heading)</strong></span><br />
+                                    <div class="borderline2"></div>
+                                    <ul style="color:#1b75bc;list-style-type:none;">
+                                        <li style="margin-left: -92px;line-height: 20px;">@Html.Raw(obj.Description)</li>
+                                    </ul>
+                                </li>
+                                <br />
+                                <br>
+                            </ol>
+                        </div>
+                        <div style="margin-left: 1080px;margin-bottom:22px;" id="DDDigital">
+                            <a href="#" data-id="@Html.Raw("popup" + obj.id)">
+                                <img src="~/css/images/ActivitiesIssues.jpg" />
+                            </a>
+                        </div>
+                    }
+                }
+        </div>
+    </div>
+
+
+
+    @{ int idigital2 = 1;
+        foreach (GCNI.Models.Issues obj in Model.objIssues_ML)
+        {
+            <div style="width:100%; display:none;margin-left: 200px;margin-top: -20px;" align="center" id="@Html.Raw("popup" + obj.id)">
+
+                <div style="position: fixed;left: 50%;top: 50%;transform: translate(-50%, -50%); height: 600px; width: 800px; z-index: 1000; background-color: #586778;border:solid;">
+                    <a href="#" onclick="$('#@Html.Raw("popup" + obj.id)').hide(); return false;"><span style="float: right; color: white; font-weight: normal; font-size: larger; margin-right: 5px;">X</span></a>
+                    <div style="background-color: white; height: 560px; margin: 20px;">
+                        <object data=@Url.Content("~/Uploads/Activities/Issues/" + obj.OutcumPdfURL) type="application/pdf" width="760" height="560">
+                            alt : <a href=@Url.Content("~/Uploads/Activities/Issues/" + obj.OutcumPdfURL)>test.pdf</a>
+                        </object>
+                        @* <p>@obj.PopupBody </p>*@
+                        @* <object data=@Url.Content(String.Format("~/Uploads/{0}",obj.PopupBody)) type="application/pdf" width="760" height="460">
+                                alt : <a href=@Url.Content(String.Format("~/Uploads/{0}",obj.PopupBody))>test.pdf</a>
+                            </object>*@
+                    </div>
+                </div>
+            </div>
+
+            idigital2++;
+        }
+    }
+</section>
+<script>
+        $("#DDDigital a").click(function () {
+            debugger;
+            //alert("Hello");
+            $("#DDDigital li a").each(function (prop, val) {
+                // var el = $(this).attr("data-think1");
+                var el2 = $(this).attr("data-id");
+                // $("#" + el).hide(1000);
+                $("#" + el2).hide();
+                // $(this).attr("data-flag1", "false");
+            });
+            var el2 = $(this).attr("data-id");
+            $("#" + el2).show();
+            return false;
+        });
+</script>
+      
+    @*</section>*@

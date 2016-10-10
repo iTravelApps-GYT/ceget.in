@@ -1,0 +1,153 @@
+﻿@model GCNI.Models.GCNIModel
+
+@{
+    ViewBag.Title = "MediaManagement";
+    Layout = "~/Views/Shared/AdminMaster.cshtml";
+}
+@*<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>PublicationManagement</title>
+
+<link type="text/css" rel="stylesheet" href="~/css/demo.css">
+<link type="text/css" rel="stylesheet" href="~/css/jquery-te-1.4.0.css">
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="~/js/jquery-te-1.4.0.min.js" charset="utf-8"></script>
+</head> 
+    <body>*@
+<style>
+     .tbtext {
+	border:2px solid #456879;
+	border-radius:10px;
+	height: 30px;
+	width: 500px;
+    padding: 7px
+}
+
+</style>
+@*<div class="dropdown" style="position: absolute;top: -12px;right: 171px;">
+                 <input type="text" name="orderstatus" id="orderstatus" style="height:31px;width:200px;"/>
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Select Options
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu" id="ThinkDDL">
+      <li><a href="#" id="op1" data-op="Processing">Processing</a></li>
+      <li><a href="#" id="op2" data-op="shipped">shipped</a></li>
+      <li><a href="#" id="op3" data-op="Delivered">Delivered</a></li>
+    </ul>
+  </div>*@
+           
+@using (Html.BeginForm("MediaManagement", "Admin", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{ 
+<center><p>Media Management</p></center>
+<center><table style="width: 80%;" border="1">
+    <tr>
+        <td colspan="2" align="center" height="30"><h2 id="msg">@ViewBag.Message</h2></td>
+    </tr>
+    <tr id="t1">
+        <td>Heading</td>
+        <td>@Html.TextBoxFor(M => M.objMedia_M.Heading, new { @id="Head", @Maxlength="200", @size="50",@class="tbtext", @onblur = "msgclear();"})</td>
+    </tr>
+    <tr id="t2">
+    <td>Description
+    <br /><span id="Imgsize">1000 Characters Maximum</span>
+    </td>
+    <td>
+    @Html.TextAreaFor(M => M.objMedia_M.Description, new { @id = "Desc", @class = "jqte-test", @Maxlength = "1000", @onblur = "msgclear();RemoveClass(this);" })
+    <br /><span id="overmsg"></span>
+    </td>
+    </tr>
+    <tr id="t3">
+        <td><span>Upload File</span></td>
+        <td><input id="upload" name="upload" type="file" onblur="RemoveClass(this);" class="tdtext" /></td>
+    </tr>
+    <tr >
+        <td align="Center" colspan="2"><input class="btn btn-primary" id="Submit" type="submit" value="Save" name="btntype" onclick="return Validate();" /></td>
+        @*<td align="Center"><input id="Delete" type="submit" value="Delete" name="btntype" onclick="return Validate();" /></td>*@
+    </tr>
+</table></center>
+    <br />
+    <center>
+    <table id="tblData1" class="CSSTableGenerator">
+        <tr>
+            <td>Heading</td>
+            <td>Description</td>
+            <td>File</td>
+            <td width="170" align="center">Action</td>
+        </tr>
+        @foreach (GCNI.Models.Media obj in Model.objMedia_ML)
+        {
+                <tr>
+                    
+                    <td>
+                       <span>@Html.Raw(obj.Heading)</span>
+                    </td>
+                    <td>
+                        <span>@Html.Raw(obj.Description)</span>
+                    </td>
+                    <td>
+                        <span>@Html.Raw(obj.FileURL)</span>
+                    </td>
+                    <td>
+                       <input type="hidden" value='@obj.id' data-Head='@obj.Heading' data-Desc='@obj.Description' data-FileURL='@obj.FileURL'/>
+                       <span><input id="Edit" class="testbutton1" type="Submit" value="Edit" name="btntype" onclick="FillEdit('tblData1',@obj.id); return false;" />@*<a href="#" onclick="FillEdit(@obj.id); return false;">Edit</a>*@ / <input id="Delete" class="testbutton1" type="submit" value="Delete" name="btntype" onclick="Deleterecord(@obj.id);"/>@*<a href="#" onclick="Deleterecord(@obj.id); return false;">Delete</a></span>*@
+                    </td>
+                </tr>
+        }
+    </table>
+    </center>
+    <input type="hidden" id="hdd" name="hdd" value="0" />
+    <input type="hidden" id="id" name="id" value="0" />
+    <input type="hidden" id="img" name="img" value="0" />
+    <input type="hidden" id="file" name="file" value="0" />
+}
+   @* </body>
+    </html>*@
+<script>
+    function msgclear()
+    {
+        debugger;
+        $("#msg").hide();
+    }
+</script>
+   <script type="text/javascript">
+       $(document).ready ( function(){
+           debugger;
+           //alert('ok');
+           $('#Desc').jqteVal('');
+           $('#Head').val('');
+           $("#FileURL").val('');
+       });
+       function FillEdit(tbl,obj) {
+           debugger;
+           //alert(obj);
+           $("#hdd").val(obj);
+           //$("#upload1").removeClass("error");
+           var $ele = $("#"+tbl+" tr td input[value=" + obj + "]");
+           if ($ele != null) {
+               $("#Head").val($ele.attr("data-Head"));
+               $("#Desc").jqteVal($ele.attr("data-Desc"));
+               $("#file").val($ele.attr("data-FileURL"));
+               window.document.body.scrollTop = '10';
+           }
+
+       }
+    </script>
+<script type="text/javascript">
+    function Deleterecord(obj) {
+        var status = confirm('Are you sure to delete');
+        if (status) {
+            //alert(obj);
+            $("#id").val(obj);
+        }
+    }
+    </script>
+<style type="text/css">
+    .error
+    {
+        border: solid!important;
+        border-color: red!important;
+    }
+</style>

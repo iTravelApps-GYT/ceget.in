@@ -1,0 +1,26 @@
+﻿@model GCNI.Models.GCNIModel
+@{
+    ViewBag.Title = "Tranings";
+    Layout = "~/Views/Shared/AboutUsMaster.cshtml";
+}
+<style>
+p{
+    line-height:18px;
+}
+    </style>
+<section id="feature">
+    
+      <div class="row getIn WebCnt" style="padding-top:4%; padding-right:4%; padding-left:2%; text-align:justify;height:450px;">
+       @foreach(GCNI.Models.Training obj in Model.objTraining_ML)
+       {
+          <p><strong>@Html.Raw(obj.Title)</strong></p>
+          <p style="width:1064px;">@Html.Raw(obj.Description)</p>
+		 <p class="pull-right" style="margin-right:3%"><font color="red">
+             Contact Us</font><a href="#"> If you are interested</a>
+           </p>
+           <p class="borderline  bline"></p>
+       }
+          
+      </div>
+      
+    </section>

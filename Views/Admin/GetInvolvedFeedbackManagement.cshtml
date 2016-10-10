@@ -1,0 +1,295 @@
+﻿@model GCNI.Models.GCNIModel
+
+@{
+    ViewBag.Title = "GetInvolvedFeedbackManagement";
+    Layout = "~/Views/Shared/AdminMaster.cshtml";
+}
+@*<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>PublicationManagement</title>
+
+<link type="text/css" rel="stylesheet" href="~/css/demo.css">
+<link type="text/css" rel="stylesheet" href="~/css/jquery-te-1.4.0.css">
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="~/js/jquery-te-1.4.0.min.js" charset="utf-8"></script>
+</head> 
+    <body>*@
+
+<link href="~/css/tableStyle.css" rel="stylesheet" />
+@using (Html.BeginForm("GetInvolvedFeedbackManagement", "Admin", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{ 
+<center><p>Feedback Management</p></center>
+<center><table style="width: 80%;" border="1">
+    <tr>
+        <td colspan="2" align="center" height="30"><h2 id="msg">@ViewBag.Message</h2></td>
+    </tr>
+    <tr>
+        <td>Feedback</td>
+        <td>@Html.TextBoxFor(M => M.objGetInvolvedFeedback_M.Feedback, new { @id="Feed", @class = "tbtext", @Maxlength ="50", @onblur = "msgclear();" })</td>
+    </tr>
+    <tr>
+        <td>Commint</td>
+        <td>@Html.TextBoxFor(M => M.objGetInvolvedFeedback_M.Commint, new { @id="Com",@class="tbtext", @Maxlength="200", @onblur = "msgclear();" })</td>
+    </tr>
+    <tr >
+        <td align="Center" colspan="2"><input class="btn btn-primary" id="Submit" type="submit" value="Save" name="btntype" onclick="return Validate();" /></td>
+        @*<td align="Center"><input id="Delete" type="submit" value="Delete" name="btntype" onclick="return Validate();" /></td>*@
+    </tr>
+</table></center>
+    <br />
+    <center>
+        <table id="tblData" class="CSSTableGenerator">
+            <tr bgcolor="lightgray">
+                <td colspan="6"><b>User's Feedback Table</b></td>
+            </tr>
+            <tr>
+                <td>Feedback</td>
+                <td>Commint</td>
+                <td width="170" align="center">Action</td>
+            </tr>
+            @foreach (GCNI.Models.GetInvoleved_Feedback obj in Model.objGetInvolvedFeedback_ML)
+            {
+                    <tr>
+                        @*<td align="center">
+                            <input type="hidden" value='@obj.id' data-title='@obj.Title' data-des='@obj.Description' data-thumbnailURL='@obj.ThumbnailURL' data-fileURL="@obj.FileURL" data-disp="@obj.IsDisplayOnHome" />
+                           <span>@Html.Raw(obj.id)</span>
+                        </td>*@
+                        <td>
+                            <span>@Html.Raw(obj.Feedback)</span>
+                        </td>
+                        <td>
+                            <span>@Html.Raw(obj.Commint)</span>
+                        </td>
+                        <td>
+                            <input type="hidden" value='@obj.id' data-Fb='@obj.Feedback' data-Co='@obj.Commint'/>
+                            <span><input id="Edit" class="testbutton1" type="Submit" value="Edit" name="btntype" onclick="FillEdit('tblData',@obj.id); return false;" />@*<a href="#" onclick="FillEdit(@obj.id); return false;">Edit</a>*@ / <input id="Delete" class="testbutton1" type="submit" value="Delete" name="btntype" onclick="Deleterecord(@obj.id);" />@*<a href="#" onclick="Deleterecord(@obj.id); return false;">Delete</a></span>*@
+                        </td>
+                    </tr>
+            }
+        </table>
+
+    </center>
+    <input type="hidden" id="hdd" name="hdd" value="0" />
+    <input type="hidden" id="id" name="id" value="0" />
+    <input type="hidden" id="img" name="img" value="0" />
+    <input type="hidden" id="file" name="file" value="0" />
+}
+   @* </body>
+    </html>*@
+<script>
+    function msgclear()
+    {
+        debugger;
+        $("#msg").hide();
+    }
+</script>
+   <script type="text/javascript">
+       $(document).ready ( function(){
+           debugger;
+           //alert('ok');
+           $('#Feed').val('');
+           $('#Com').val('');
+           var text_box1 = document.getElementById('Feed');
+           text_box1.setAttribute('readonly', 'readonly');
+       });
+       </script>
+<script>
+    function FillEdit(tbl,obj) {
+        debugger;
+        $("#hdd").val(obj);
+       //alert(obj);
+        var $ele = $("#"+tbl+" tr td input[value=" + obj + "]");
+        if ($ele != null) {
+            $('#Feed').val($ele.attr("data-Fb"));
+            $('#Com').val($ele.attr("data-Co"));
+            var text_box1 = document.getElementById('Feed');
+            text_box1.setAttribute('readonly', 'readonly');
+               window.document.body.scrollTop = '100';
+           }
+
+       }
+    </script>
+<script type="text/javascript">
+    function Deleterecord(obj) {
+        var status = confirm('Are you sure to delete');
+        if (status) {
+            //alert(obj);
+            $("#id").val(obj);
+        }
+    }
+    </script>
+<style type="text/css">
+    .error
+    {
+        border: solid!important;
+        border-color: red!important;
+    }
+</style>
+<script>
+    $("#ThinkDDL li a").click(function () {
+        debugger;
+        var el = $(this).attr("data-op");
+        $("#Catagory").val(el);
+    });
+</script>
+<script>
+    $("#ThinkDDL li a").click(function () {
+        debugger;
+        var el = $(this).attr("data-op");
+        //alert(el);
+        if(el=="Upload Image")
+        {
+            $("#ques").hide();
+            $("#cat").show();
+            $("#imgtitle").show();
+            $("#imgupload").show();
+        }
+        else
+        {
+            $("#ques").show();
+            $("#cat").show();
+            $("#imgtitle").hide();
+            $("#imgupload").hide();
+        }
+    });
+</script>
+     <script type="text/javascript">
+         function RemoveClass(obj) {
+             $(obj).removeClass("error");
+         }
+         function Validate() 
+         {
+             //alert($("#Catagory").val());
+             debugger;
+             if ((hdd).value == null || (hdd).value.length < 1 || (hdd).value == "0" && $("#Catagory").val()=="Upload Image") 
+             {
+                 if ($("#upload").val().length<1)
+                 {
+                     $("#upload").addClass("error");
+                     return false;
+                 }
+                 else
+                 {
+                     $("#upload").removeClass("error"); 
+                     return true;
+                 }
+                 return false;   
+             }
+             else
+             {
+                     return true;
+             }
+        }
+     </script>
+<script>
+    var nowTemp = new Date();
+    var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+    var files;
+    var storedFiles = [];
+    var upc = 0;
+
+   
+
+    $(function () {
+        debugger;
+        $(":file").attr('title', '  ');
+        var $loading = $('#loadingDiv').hide();
+
+        $("input[id^='fileToUpload']").change(function (e) {
+            doReCreate(e);
+        });
+
+        selDiv = $("#selectedFiles");
+    });
+
+
+    function doReCreate(e) {
+        debugger;
+        upc = upc + 1;
+        handleFileSelect(e);
+
+        $("input[id^='fileToUpload']").hide();
+
+        $('<input>').attr({
+            type: 'file',
+            multiple: 'multiple',
+            id: 'fileToUpload' + upc,
+            class: 'fUpload',
+            name: 'fileUpload',
+            style: 'float: left',
+            title: '  ',
+            onchange: "doReCreate(event)"
+
+        }).appendTo('#uploaders');
+    }
+
+
+    function handleFileSelect(e) {
+        debugger;
+        //selDiv.innerHTML = ""; storedFiles = []; 
+        selDiv = document.querySelector("#selectedFiles");
+
+        if (!e.target.files) return;
+
+        //selDiv.innerHTML = "";
+        files = e.target.files;
+
+        for (var i = 0; i < files.length; i++) {
+            //if (i == 0) { selDiv.innerHTML = ""; storedFiles = []; }
+            var f = files[i];
+            selDiv.innerHTML += "<div>" + f.name + "<a onclick='removeAtt(this)'> X </a></div>";
+            storedFiles.push(f.name);
+        }
+       @* $('#@Html.IdFor(i =>i.FilesToBeUploaded)').val(storedFiles);*@
+    }
+
+    function removeAtt(t) {
+        debugger;
+        var serEle = $(t).parent().text().slice(0, -3);
+        var index = storedFiles.indexOf(serEle);
+        if (index !== -1) {
+            storedFiles.splice(index, 1);
+        }
+        $(t).parent().remove();
+
+       @* $('#@Html.IdFor(i => i.FilesToBeUploaded)').val(storedFiles);*@
+
+    }
+</script>
+<script>
+    window.onload = function() { 
+        debugger;
+        var txts = document.getElementsByTagName('TEXTAREA'); 
+        //alert(txts);
+        for(var i = 0, l = txts.length; i < l; i++) {
+            if(/^[0-9]+$/.test(txts[i].getAttribute("maxlength"))) { 
+                var func = function() { 
+                    var len = parseInt(this.getAttribute("maxlength"), 10); 
+
+                    if(this.value.length > len) { 
+                        alert('Maximum length exceeded: ' + len); 
+                        this.value = this.value.substr(0, len); 
+                        return false; 
+                    } 
+                }
+
+                txts[i].onkeyup = func;
+                txts[i].onblur = func;
+            } 
+        };
+
+    }
+</script>
+<script>
+function changeText(){
+    var text_box = document.getElementById('Catagory');
+          
+        text_box.value = "This text box is read only.";
+        text_box.setAttribute('readonly', 'readonly');   
+   
+}
+</script>

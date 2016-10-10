@@ -1,0 +1,81 @@
+﻿@model GCNI.Models.GCNIModel
+@{
+    ViewBag.Title = "FAQS";
+    Layout = "~/Views/Shared/AboutUsMaster.cshtml";
+}
+<section id="feature">
+    
+      <div class="row getIn">
+       
+           <div class="row gQuery" >
+        <ul style="list-style-type:none; ">
+            @{
+                    int i = 1;
+                    foreach (GCNI.Models.FAQS obj in Model.objFAQS_ML)
+                    {
+            <li>
+                <span class="red-txt" style="line-height: 35px;"><a href="#" style="color:red;" id="@obj.id" onclick="return getdown(@obj.id);">Q.@i @Html.Raw(obj.Ques)</a></span><br />
+            </li>
+                    i++;
+                }
+            }
+            </ul>
+            <ul class="FAQsContent">
+                 @foreach(GCNI.Models.FAQS obj in Model.objFAQS_ML)
+            {
+                @*<li><p>@Html.Raw(obj.Head)</p></li>*@
+                <li><img src="../images/arrowIcon.png"  class="pull-right" width="35" height="35" onclick="return getup(@obj.id);"/><br />
+                    	<p id='des+@obj.id'>@Html.Raw(obj.Description)</p>   
+                </li><br /><br /><br />
+                 }
+            </ul>
+        </div>
+      </div>
+      
+    </section>
+<script>
+    function getdown(obj) {
+        if (obj == "3") {
+            window.scrollBy(obj, 200);
+        }
+        if (obj == "4") {
+            window.scrollBy(obj, 400);
+        }
+        if (obj == "5") {
+            window.scrollBy(obj, 600);
+        }
+        if (obj == "6") {
+            window.scrollBy(obj, 700);
+        }
+        if (obj == "7") {
+            window.scrollBy(obj, 800);
+        }
+        if (obj == "8") {
+            window.scrollBy(obj, 1000);
+        }
+        return false;
+    }
+</script>
+<script>
+    function getup(obj) {
+        if (obj == "3") {
+            window.scrollBy(obj, -200);
+        }
+        if (obj == "4") {
+            window.scrollBy(obj, -400);
+        }
+        if (obj == "5") {
+            window.scrollBy(obj, -600);
+        }
+        if (obj == "6") {
+            window.scrollBy(obj, -700);
+        }
+        if (obj == "7") {
+            window.scrollBy(obj, -800);
+        }
+        if (obj == "8") {
+            window.scrollBy(obj, -1000);
+        }
+        return false;
+    }
+</script>

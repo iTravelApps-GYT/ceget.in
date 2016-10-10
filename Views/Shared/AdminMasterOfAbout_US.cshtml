@@ -1,0 +1,165 @@
+﻿@model GCNI.Models.GCNIModel
+
+@{
+    ViewBag.Title = "AdminMasterOfAbout_US";
+    
+}
+<!DOCTYPE html>
+<html class="csstransforms no-csstransforms3d csstransitions" lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>GCNI</title>
+	
+	<!-- core CSS -->
+    <link href="~/css/tableStyle.css" rel="stylesheet" />
+    <link href="~/css/bootstrap.css" rel="stylesheet">
+    <link href="~/css/font-awesome.css" rel="stylesheet">
+    <link href="~/css/animate.css" rel="stylesheet">
+    <link href="~/css/prettyPhoto.css" rel="stylesheet">
+    <link href="~/css/main.css" rel="stylesheet">
+    <link href="~/css/responsive.css" rel="stylesheet">
+	<link href='http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+    <script src="~/Scripts/jquery-1.7.1.js"></script>
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->       
+    <!--<link rel="shortcut icon" href="http://shapebootstrap.net/demo/html/corlate/images/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://shapebootstrap.net/demo/html/corlate/images/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://shapebootstrap.net/demo/html/corlate/images/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://shapebootstrap.net/demo/html/corlate/images/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="http://shapebootstrap.net/demo/html/corlate/images/ico/apple-touch-icon-57-precomposed.png">-->
+</head><!--/head-->
+
+<body class="homepage" >
+
+    <header id="header">
+        <div class="top-bar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-xs-12">  
+                    </div>
+                    <div class="col-sm-6 col-xs-12">
+                    <div class="search">
+                                <form role="form">
+                                    <input class="search-form" autocomplete="off" placeholder="Search" type="text">
+                                    <i class="fa fa-search"></i>
+                                </form>
+					</div>
+					@*<div class="social">
+						<ul class="social-share">
+							<li><a href="#"><i class="fa fa-search"></i></a> |</li>                          
+							<li><a href="#"> Get Involved</a> |</li>
+							<li><a href="#">Media</a> |</li>
+							<li><a href="#"> Careers </a>|</li> 
+							<li><a href="#">FAQ</a>|</li>
+							<li><a href="#">Contact Us</a></li>
+						</ul>*@
+					</div>
+                    </div>
+                </div>
+            </div><!--/.container-->
+        </div><!--/.top-bar-->
+
+        <nav class="navbar navbar-inverse" role="banner">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="index.html"><img src="../images/logo.png" alt="logo"></a>
+                </div>
+				
+                <div class="logo_right">
+					<a class="navbar-brand" href="index.html"><img src="../images/logo1.png" alt="logo"></a>
+                </div>
+            </div><!--/.container-->
+        </nav><!--/nav-->
+		
+		<div class="main-nav collapse navbar-collapse">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="~/Admin/EventManagement">Home</a>|</li>
+				<li><a href="~/Admin/About_UsManagement1">About_US</a>|</li>
+				<li><a href="~/Admin/About_US_JourneyOfCOE">About_US JourneyOfCOE</a>|</li>
+				<li><a href="~/Admin/About_US_RoleCOE">About_US RoleOfCOE</a></li>
+				@*<li><a href="#">RESOURCES</a>|</li>
+				<li><a href="#">ACTIVITIES</a>|</li> 
+				<li><a href="#">OUR PARTNERS</a></li>     *@                   
+			</ul>
+		</div>
+		
+    </header><!--/header-->
+ 
+    <section id="main-slider" class="no-margin">
+        <div class="carousel slide">
+            <div class="carousel-inner">
+                <div class="item active" style="height: 85px;">
+                    <div class="container">
+                        <div class="row slide-margin">
+                           @* <div class="col-sm-12">
+                                <div class="slider-img">
+                                    <img src="../images/img2.png" class="img-responsive">
+                                </div>
+								<div style="color: rgb(255, 255, 255); font-weight: bold; font-family: Gotham; font-size: 18px; text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.6); margin-top: 135px;">
+									<div class="col-sm-4">Advisory commitee</div>
+									<div class="col-sm-8" style="text-align:right;"> Home > About Us</div>
+								</div>
+							
+                            </div>*@
+
+                        </div>
+                    </div>
+                </div><!--/.item-->
+            </div><!--/.carousel-inner-->
+        </div><!--/.carousel-->
+   </section><!--/#main-slider-->
+
+    <section id="feature">
+       @RenderBody()
+    </section><!--/#feature-->
+
+    
+
+    <footer id="footer" class="midnight-blue">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8">
+				<div class="social-sahre-links">
+					<i class="fa fa-facebook"></i>
+					<i class="fa fa-twitter"></i>
+					<i class="fa fa-youtube"></i>
+					<i class="fa fa-linkedin"></i>
+					<i class="fa fa-envelope"></i>
+				</div>
+				<div>Privacy Policy &nbsp;&nbsp;&nbsp;&nbsp;Copyright</div>
+				</div>
+                <div class="col-sm-4">
+				<div style="margin-bottom: 7px;">Subscribe to our newsletter</div>
+				<div>
+                    <input type="text" value="Email address" style="
+    width: 285px;
+    padding: 5px 10px;
+    font-weight: bold;
+    font-size: 13px;
+"/>
+					<button><span>Go</span></button>
+				</div>
+                </div>
+            </div>
+        </div>
+    </footer><!--/#footer-->
+
+    <script src="js/jquery_002.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery_003.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/wow.js"></script>
+
+</body></html>

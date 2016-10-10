@@ -1,0 +1,395 @@
+﻿@model GCNI.Models.GCNIModel
+
+@{
+    ViewBag.Title = "GetInvolvedManagement";
+    Layout = "~/Views/Shared/AdminMaster.cshtml";
+}
+@*<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>PublicationManagement</title>
+
+<link type="text/css" rel="stylesheet" href="~/css/demo.css">
+<link type="text/css" rel="stylesheet" href="~/css/jquery-te-1.4.0.css">
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="~/js/jquery-te-1.4.0.min.js" charset="utf-8"></script>
+</head> 
+    <body>*@
+
+<link href="~/css/tableStyle.css" rel="stylesheet" />
+<div class="container">
+  <div class="dropdown" style="width:265px;">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" style="width:180px;">Select Category
+    <span class="caret"></span></button>
+      
+    <ul class="dropdown-menu" id="ThinkDDL">
+        <li><a href="#" data-op="Upload Image">Upload Image</a></li>
+        <li><a href="#" data-op="Questions">Questions</a></li>
+    </ul>
+      
+  </div>
+</div>
+@using (Html.BeginForm("GetInvolvedManagement", "Admin", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{ 
+<center><p>Get Involved Management</p></center>
+<center><table style="width: 80%;" border="1">
+    <tr>
+        <td colspan="2" align="center" height="30"><h2 id="msg">@ViewBag.Message</h2></td>
+    </tr>
+    <tr id="cat">
+        <td>Catagory</td>
+        <td>@Html.TextBoxFor(M => M.objGetInvolved_M.Catagory, new { @id="Catagory",@class="tbtext2", @Maxlength="50", @onblur = "msgclear();" })</td>
+    </tr>
+     <tr id="imgtitle">
+        <td>Image Title</td>
+        <td>@Html.TextBoxFor(M => M.objGetInvolved_M.ImageTitle, new { @id="ImageTitle",@class="tbtext3", @Maxlength="100", @onblur = "msgclear();" })</td>
+    </tr>
+    <tr id="imgupload">
+        <td><span id="spPDF">Upload Image</span></td>
+        <td><input id="upload" name="upload" type="file" onblur = "RemoveClass(this);" class="tdtext"/></td>
+    </tr>
+    <tr id="ques">
+        <td>Question</td>
+        <td>@Html.TextBoxFor(M => M.objGetInvolved_M.Question, new { @id="Question",@class="tbtext", @Maxlength="200", @onblur = "msgclear();" })</td>
+    </tr>
+    <tr >
+        <td align="Center" colspan="2"><input class="btn btn-primary" id="Submit" type="submit" value="Save" name="btntype" onclick="return Validate();" /></td>
+        @*<td align="Center"><input id="Delete" type="submit" value="Delete" name="btntype" onclick="return Validate();" /></td>*@
+    </tr>
+</table></center>
+    <br />
+    <center>
+    <table id="tblData1" class="CSSTableGenerator">
+        <tr bgcolor="lightgray">
+            <td colspan="6"><b>Images Table</b></td>
+        </tr>
+        <tr>
+            <td>Catagory</td>
+            <td>Image Title</td>
+            <td>Uploaded Image</td>
+            <td width="170" align="center">Action</td>
+        </tr>
+        @foreach (GCNI.Models.GetInvolved obj in Model.objGetInvolved_ML)
+        {
+            if (obj.Catagory == "Upload Image")
+            {
+                <tr>
+                    @*<td align="center">
+                        <input type="hidden" value='@obj.id' data-title='@obj.Title' data-des='@obj.Description' data-thumbnailURL='@obj.ThumbnailURL' data-fileURL="@obj.FileURL" data-disp="@obj.IsDisplayOnHome" />
+                       <span>@Html.Raw(obj.id)</span>
+                    </td>*@
+                    <td>
+                       <span>@Html.Raw(obj.Catagory)</span>
+                    </td>
+                    <td>
+                       <span>@Html.Raw(obj.ImageTitle)</span>
+                    </td>
+                    <td>
+                        <span><img src="@Url.Content(String.Format("~/Uploads/GetInvolved/{0}", obj.ImageURL))" alt="" width="100px" heigth="100px" /></span>
+                    </td>
+                    <td>
+                       <input type="hidden" value='@obj.id' data-Catagory='@obj.Catagory' data-ImageTitle='@obj.ImageTitle' data-ImageURL='@obj.ImageURL' data-Question='@obj.Question'/>
+                       <span><input id="Edit" class="testbutton1" type="Submit" value="Edit" name="btntype" onclick="FillEdit('tblData1',@obj.id); return false;" />@*<a href="#" onclick="FillEdit(@obj.id); return false;">Edit</a>*@ / <input id="Delete" class="testbutton1" type="submit" value="Delete" name="btntype" onclick="Deleterecord(@obj.id);"/>@*<a href="#" onclick="Deleterecord(@obj.id); return false;">Delete</a></span>*@
+                    </td>
+                </tr>
+            }
+        }
+    </table><br />
+        <table id="tblData2" class="CSSTableGenerator">
+            <tr bgcolor="lightgray">
+                <td colspan="6"><b>Questions Table</b></td>
+            </tr>
+            <tr>
+                <td>Catagory</td>
+                <td>Question</td>
+                <td width="170" align="center">Action</td>
+            </tr>
+            @foreach (GCNI.Models.GetInvolved obj in Model.objGetInvolved_ML)
+            {
+                if (obj.Catagory == "Questions")
+                {
+                <tr>
+                    @*<td align="center">
+                        <input type="hidden" value='@obj.id' data-title='@obj.Title' data-des='@obj.Description' data-thumbnailURL='@obj.ThumbnailURL' data-fileURL="@obj.FileURL" data-disp="@obj.IsDisplayOnHome" />
+                       <span>@Html.Raw(obj.id)</span>
+                    </td>*@
+                    <td>
+                        <span>@Html.Raw(obj.Catagory)</span>
+                    </td>
+                    <td>
+                        <span>@Html.Raw(obj.Question)</span>
+                    </td>
+                    <td>
+                        <input type="hidden" value='@obj.id' data-Catagory='@obj.Catagory' data-ImageTitle='@obj.ImageTitle' data-ImageURL='@obj.ImageURL' data-Question='@obj.Question' />
+                        <span><input id="Edit" class="testbutton1" type="Submit" value="Edit" name="btntype" onclick="FillEdit('tblData2',@obj.id); return false;" />@*<a href="#" onclick="FillEdit(@obj.id); return false;">Edit</a>*@ / <input id="Delete" class="testbutton1" type="submit" value="Delete" name="btntype" onclick="Deleterecord(@obj.id);" />@*<a href="#" onclick="Deleterecord(@obj.id); return false;">Delete</a></span>*@
+                    </td>
+                </tr>
+                }
+            }
+        </table><br />
+       
+
+    </center>
+    <input type="hidden" id="hdd" name="hdd" value="0" />
+    <input type="hidden" id="id" name="id" value="0" />
+    <input type="hidden" id="img" name="img" value="0" />
+    <input type="hidden" id="file" name="file" value="0" />
+}
+   @* </body>
+    </html>*@
+<script>
+    function msgclear()
+    {
+        debugger;
+        $("#msg").hide();
+    }
+</script>
+   <script type="text/javascript">
+       $(document).ready ( function(){
+           debugger;
+           //alert('ok');
+      
+           //$('#Desig').val('');
+           $('#Catagory').val('');
+           $('#ImageTitle').val('');
+           $('#Question').val('');
+           $('#Catagory').focus();
+           var text_box1 = document.getElementById('Catagory');
+           text_box1.setAttribute('readonly', 'readonly');  
+           //$("#Aboutcat").val('');
+       //$('input:checkbox').prop('checked', false);
+       });
+       </script>
+<script>
+    function FillEdit(tbl,obj) {
+        debugger;
+        //alert(obj);
+        $("#hdd").val(obj);
+        //$("#upload1").removeClass("error");
+        var $ele = $("#"+tbl+" tr td input[value=" + obj + "]");
+        if ($ele != null) {
+               if($ele.attr("data-Catagory")=="Upload Image")
+               {
+                   $("#ques").hide();
+                   $("#cat").show();
+                   $("#imgtitle").show();
+                   $("#imgupload").show();
+               }
+               else
+               {
+                   $("#ques").show();
+                   $("#cat").show();
+                   $("#imgtitle").hide();
+                   $("#imgupload").hide();
+               }
+               //$('#Desig').val($ele.attr("data-Desig"));
+               $('#Catagory').val($ele.attr("data-Catagory"));
+               $('#ImageTitle').val($ele.attr("data-ImageTitle"));
+               $('#Question').val($ele.attr("data-Question"));
+               $('#img').val($ele.attr("data-ImageURL"));
+               window.document.body.scrollTop = '100';
+           }
+
+       }
+    </script>
+<script type="text/javascript">
+    function Deleterecord(obj) {
+        var status = confirm('Are you sure to delete');
+        if (status) {
+            //alert(obj);
+            $("#id").val(obj);
+        }
+    }
+    </script>
+     @*<script type="text/javascript">
+         function Deleterecord(obj) {
+             var status = confirm('Are you sure to delete');
+             if (status) {
+                 $.ajax({
+                     type: "post",
+                     url: "/Admin/PublicationManagement",
+                     data: { "id": obj },
+                     success: (function (data) {
+
+                         $("#divThinktable").html(data);
+                     }),
+                     fail: (function (data) {
+                     })
+                 });
+             }
+         }
+    </script>*@
+<style type="text/css">
+    .error
+    {
+        border: solid!important;
+        border-color: red!important;
+    }
+</style>
+<script>
+    $("#ThinkDDL li a").click(function () {
+        debugger;
+        var el = $(this).attr("data-op");
+        $("#Catagory").val(el);
+    });
+</script>
+<script>
+    $("#ThinkDDL li a").click(function () {
+        debugger;
+        var el = $(this).attr("data-op");
+        //alert(el);
+        if(el=="Upload Image")
+        {
+            $("#ques").hide();
+            $("#cat").show();
+            $("#imgtitle").show();
+            $("#imgupload").show();
+        }
+        else
+        {
+            $("#ques").show();
+            $("#cat").show();
+            $("#imgtitle").hide();
+            $("#imgupload").hide();
+        }
+    });
+</script>
+     <script type="text/javascript">
+         function RemoveClass(obj) {
+             $(obj).removeClass("error");
+         }
+         function Validate() 
+         {
+             //alert($("#Catagory").val());
+             debugger;
+             if ((hdd).value == null || (hdd).value.length < 1 || (hdd).value == "0" && $("#Catagory").val()=="Upload Image") 
+             {
+                 if ($("#upload").val().length<1)
+                 {
+                     $("#upload").addClass("error");
+                     return false;
+                 }
+                 else
+                 {
+                     $("#upload").removeClass("error"); 
+                     return true;
+                 }
+                 return false;   
+             }
+             else
+             {
+                     return true;
+             }
+        }
+     </script>
+<script>
+    var nowTemp = new Date();
+    var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+    var files;
+    var storedFiles = [];
+    var upc = 0;
+
+   
+
+    $(function () {
+        debugger;
+        $(":file").attr('title', '  ');
+        var $loading = $('#loadingDiv').hide();
+
+        $("input[id^='fileToUpload']").change(function (e) {
+            doReCreate(e);
+        });
+
+        selDiv = $("#selectedFiles");
+    });
+
+
+    function doReCreate(e) {
+        debugger;
+        upc = upc + 1;
+        handleFileSelect(e);
+
+        $("input[id^='fileToUpload']").hide();
+
+        $('<input>').attr({
+            type: 'file',
+            multiple: 'multiple',
+            id: 'fileToUpload' + upc,
+            class: 'fUpload',
+            name: 'fileUpload',
+            style: 'float: left',
+            title: '  ',
+            onchange: "doReCreate(event)"
+
+        }).appendTo('#uploaders');
+    }
+
+
+    function handleFileSelect(e) {
+        debugger;
+        //selDiv.innerHTML = ""; storedFiles = []; 
+        selDiv = document.querySelector("#selectedFiles");
+
+        if (!e.target.files) return;
+
+        //selDiv.innerHTML = "";
+        files = e.target.files;
+
+        for (var i = 0; i < files.length; i++) {
+            //if (i == 0) { selDiv.innerHTML = ""; storedFiles = []; }
+            var f = files[i];
+            selDiv.innerHTML += "<div>" + f.name + "<a onclick='removeAtt(this)'> X </a></div>";
+            storedFiles.push(f.name);
+        }
+       @* $('#@Html.IdFor(i =>i.FilesToBeUploaded)').val(storedFiles);*@
+    }
+
+    function removeAtt(t) {
+        debugger;
+        var serEle = $(t).parent().text().slice(0, -3);
+        var index = storedFiles.indexOf(serEle);
+        if (index !== -1) {
+            storedFiles.splice(index, 1);
+        }
+        $(t).parent().remove();
+
+       @* $('#@Html.IdFor(i => i.FilesToBeUploaded)').val(storedFiles);*@
+
+    }
+</script>
+<script>
+    window.onload = function() { 
+        debugger;
+        var txts = document.getElementsByTagName('TEXTAREA'); 
+        //alert(txts);
+        for(var i = 0, l = txts.length; i < l; i++) {
+            if(/^[0-9]+$/.test(txts[i].getAttribute("maxlength"))) { 
+                var func = function() { 
+                    var len = parseInt(this.getAttribute("maxlength"), 10); 
+
+                    if(this.value.length > len) { 
+                        alert('Maximum length exceeded: ' + len); 
+                        this.value = this.value.substr(0, len); 
+                        return false; 
+                    } 
+                }
+
+                txts[i].onkeyup = func;
+                txts[i].onblur = func;
+            } 
+        };
+
+    }
+</script>
+<script>
+function changeText(){
+    var text_box = document.getElementById('Catagory');
+          
+        text_box.value = "This text box is read only.";
+        text_box.setAttribute('readonly', 'readonly');   
+   
+}
+</script>

@@ -1,0 +1,56 @@
+﻿@model GCNI.Models.GCNIModel
+@{
+    ViewBag.Title = "OpinionPoll";
+    Layout = "~/Views/Shared/AboutUsMaster.cshtml";
+}
+<section id="feature">
+    
+       <div class="first-row thirdrow fContent getIn"  >
+                <div class="RCEO" style="height: 35px;width: 331px;background-size: 331px 35PX;"><div>Opinion Poll</div></div>
+              <div class="row" style="margin-top:5%">
+                <div class="col-lg-1"></div>
+               @* <div class="col-lg-1 upcoming">
+                   <center> <span class="red-txt">Date</span></center>
+                </div>*@
+             @*   <div class="col-lg-2"></div>
+                <div class="col-lg-6 upcoming" >
+                    <span class="red-txt">Upcoming Live News</span>
+                </div>
+                <div class="col-lg-2"></div>
+              </div>
+             <div class="row txtFormat VfRow" >
+             <span style=" color:#1b75bc; "><b>live Brodcast News from COE</b></span>
+             </div>*@
+             <div class="row txtFormat Vcontent" style="word-spacing: 0px;">
+                  @foreach (GCNI.Models.OpinionPoll obj in Model.objOpinionPoll_ML)
+               {
+                <ul style="list-style-type:none;">
+                    <li>
+                    @*<span class="col-lg-1" style="margin-left:-4%;width:300px;">@Html.Raw(obj.City)</span>*@
+                    <span class="col-lg-2"></span>
+                    <strong><span class="col-lg-6" style="width:100%;margin-left:-200px;"><u>Ques :</u> @Html.Raw(obj.Question)</span></strong>
+                    </li><br /><br />
+                    <li style="margin-left:1.5%;width:900px;margin-top:-30px;"><p><input type="radio" />@Html.Raw(obj.OptionYes)</p></li><li style="margin-left:1.5%;width:900px;margin-top:-30px;"><p><input type="radio" />@Html.Raw(obj.OptionNo)</p></li><br />
+                @*<li> <input type="button" class="btn  btn-sm pull-right Vbutn" value="View"  /></li>*@
+                <li class="borderline  bline" style="margin-left:-2.5%;margin-top:-29px;"></li>
+                </ul>
+                  }
+               @* <ul style="list-style-type:none;">
+                 <li>
+                    <span class="col-lg-1" style="margin-left:-4%">26/12/2015</span>
+                    <span class="col-lg-2"></span>
+                    <span class="col-lg-6">Predictive Analytics for Business Advantage</span>
+                    
+                    </li><br /><br />
+                    <li style="margin-left:-2.5%">11 AM IST</li>
+                    <li style="margin-left:-3.5%"><p> Do you consider that going for integrity due diligence is a smart step towards risk reduction on the investments of a company? Three Reasons TTIP Needs Transparency.
+                 A gigantic trade deal uniting over 800 million consumers across the United States and the European Union, and yet all. Do you consider that going for integrity due diligence is a smart step towards risk reduction on the investments of a company? Three Reasons TTIP Needs Transparency.
+                
+				</p>     </li><br />
+                <li> <input type="button" class="btn  btn-sm pull-right Vbutn" value="View"  /></li>
+                </ul>*@
+
+             </div>
+               </div>
+      
+    </section>

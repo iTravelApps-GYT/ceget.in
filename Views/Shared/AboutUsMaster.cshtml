@@ -1,0 +1,540 @@
+﻿@model GCNI.Models.GCNIModel
+
+@{
+    ViewBag.Title = "AboutUsMaster";
+}
+<!DOCTYPE html>
+<html class="csstransforms no-csstransforms3d csstransitions" lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>GCNI</title>
+	
+	<!-- core CSS -->
+    <link href="~/css/tableStyle.css" rel="stylesheet" />
+    <link href="~/css/bootstrap.css" rel="stylesheet">
+    <link href="~/css/font-awesome.css" rel="stylesheet">
+    <link href="~/css/animate.css" rel="stylesheet">
+    <link href="~/css/prettyPhoto.css" rel="stylesheet">
+    <link href="~/css/main.css" rel="stylesheet">
+    <link href="~/css/responsive.css" rel="stylesheet">
+	<link href='http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+    <script src="~/Scripts/jquery-1.7.1.js"></script>
+    <style type="text/css">
+    .error
+    {
+        border: solid!important;
+        border-color: red!important;
+    }
+     body { font-size:15px;
+        }  
+        #Lmenu, #Rmenu {color:white;
+        }
+</style>
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->       
+    <!--<link rel="shortcut icon" href="http://shapebootstrap.net/demo/html/corlate/images/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://shapebootstrap.net/demo/html/corlate/images/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://shapebootstrap.net/demo/html/corlate/images/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://shapebootstrap.net/demo/html/corlate/images/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="http://shapebootstrap.net/demo/html/corlate/images/ico/apple-touch-icon-57-precomposed.png">-->
+</head><!--/head-->
+
+<body class="homepage" id="bd">
+
+    <header id="header">
+        <div class="top-bar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-xs-12">  
+                    </div>
+                    <div class="col-sm-6 col-xs-12">
+                    @*<div class="search">
+                               <form role="form">
+        <input class="search-form" autocomplete="off" placeholder="Search" type="text">
+        <i class="fa fa-search"></i>
+    </form>
+                    </div>*@
+					<div class="social">
+						<ul class="social-share">
+                            <li style="width:300px;margin-top: 12px;display:none;" id="search">
+                                <script>
+  (function() {
+    var cx = '005855697794264765607:1orfyayp5sk';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+                                </script>
+                                <gcse:searchbox-only></gcse:searchbox-only>
+                                @*<script>
+            (function() {
+              var cx = '005855697794264765607:1orfyayp5sk';
+              var gcse = document.createElement('script');
+              gcse.type = 'text/javascript';
+              gcse.async = true;
+              gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+                  '//cse.google.com/cse.js?cx=' + cx;
+              var s = document.getElementsByTagName('script')[0];
+              s.parentNode.insertBefore(gcse, s);
+            })();
+                                      </script>
+                                      <gcse:searchbox-only></gcse:searchbox-only>*@
+
+                            </li>
+                            <li><a href="#" onclick="getsearch();" id="meg"><i class="fa fa-search"></i></a></li>
+                            <li><a href="~/Index/GetInvolved">| Get Involved</a> |</li>
+							<li><a href="~/Index/media">Media</a> |</li>
+							<li><a href="~/Index/Careers"> Careers </a>|</li> 
+							<li><a href="~/Index/FAQS">FAQ</a>|</li>
+							<li><a href="~/Index/ContactUS">Contact Us</a></li>
+						</ul>
+					</div>
+                    </div>
+                </div>
+            </div><!--/.container-->
+        </div><!--/.top-bar-->
+
+       <nav class="navbar navbar-inverse" role="banner">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#"><img src="@Url.Content("~/Uploads/HomeMaster/" + Model.objHomeMaster.Logo1)" alt="logo"></a>
+                </div>
+				
+                <div class="logo_right">
+					<a class="navbar-brand" href="#"><img src="@Url.Content("~/Uploads/HomeMaster/" + Model.objHomeMaster.Logo2)" alt="logo"></a>
+                </div>
+            </div><!--/.container-->
+        </nav><!--/nav-->
+        <div class="main-nav collapse navbar-collapse">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="~/Index">HOME</a>|</li>
+				<li class="Menu"><a href="#">GCNI</a>|
+                    <ul class="subMenu" style="list-style-type:none;">
+                        <li><a href="~/Index/GCNI_UNGC">UNGC</a></li>
+                      
+                         <li><a href="~/Index/GCNI_10Principles">10 Principles</a></li>
+                          <li><a href="~/Index/GCNI_Governing">Governing Council</a></li>
+                           <li><a href="~/Index/GCNI_Secretariat">Secretariat</a></li>
+                            @*<li><a href="#">GCNI Membership</a></li>*@
+                    </ul>
+                </li>
+				<li class="Menu"><a href="#">ABOUT US</a>|
+                    <ul class="subMenu" style="list-style-type:none;">
+                          <li><a href="~/Index/AboutUs_JCOE">Journey of CEGET</a></li>
+                          <li><a href="~/Index/About_UsCommittee">Advisory committee</a></li>
+                           <li><a href="~/Index/AboutUS_RCOE">Role of CEGET</a></li>
+                            <li><a href="~/Index/About_UsTeam">Team</a></li>
+                    </ul>
+                </li>
+				<li><a href="~/Index/Knowledge">KNOWLEDGE HUB</a>|</li>
+				<li class="Menu"><a href="#">RESOURCES</a>|
+                    <ul class="subMenu" style="list-style-type:none;">
+                                             
+                         <li><a href="~/Index/COEReports">CEGET Reports</a></li>
+                          <li><a href="~/Index/Tranings">Training</a></li>
+                          <li><a href="~/Index/ResourcesPastViewWebinars">Webinars</a></li>
+                            <li><a href="~/Index/Discussion">Discussion</a></li>
+                    </ul>
+                </li>
+				<li class="Menu"><a href="#">ACTIVITIES</a>|
+                    <ul class="subMenu" style="list-style-type:none;">
+                        <li><a href="~/Index/Initiatives">Initiatives</a></li>
+                        <li><a href="~/Index/Issues">Issues</a></li>
+                         
+                    </ul>
+                </li> 
+				<li><a href="~/Index/OurPartners">OUR PARTNERS</a></li>                        
+			</ul>
+		</div>
+		    </header><!--/header-->
+		<section id="main-slider" class="no-margin">
+        <div class="carousel slide">
+            <div class="carousel-inner">
+                <div class="item active" style="height: 175px;">
+                    <div class="container">
+                        <div class="row slide-margin">
+                            <div class="col-sm-12">
+                                <div class="slider-img">
+                                    <img src="@Url.Content("~/Uploads/HomeMaster/" + Model.objHomeMaster.SubBannerImage)" class="img-responsive">
+                                </div>
+								<div style="color: rgb(255, 255, 255); font-family: Californian FB; font-size: 19px; text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.6); margin-top: 135px;">
+									<div class="col-sm-4"><a href="#" id="lftLink"><span id="Lmenu">Advisory commitee</span></a></div>
+									<div class="col-sm-8" style="text-align:right;"><a href="#" id="RgtLink"><span id="Rmenu">Home > About Us</span></a></div>
+								</div>
+							
+                            </div>
+
+                        </div>
+                    </div>
+                </div><!--/.item-->	
+            </div><!--/.carousel-inner-->
+        </div><!--/.carousel-->
+    </section><!--/#main-slider-->
+		
+
+ 
+    
+
+    <section id="feature">
+       @RenderBody()
+    </section><!--/#feature-->
+
+    
+
+    <footer id="footer" class="midnight-blue">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="social-sahre-links">
+                        <a href="@Model.objHomeMaster.FBLink" target="_blank"><i class="fa fa-facebook"></i></a>
+                        <a href="@Model.objHomeMaster.TWLink" target="_blank"><i class="fa fa-twitter"></i></a>
+                        <a href="@Model.objHomeMaster.YouTubeLink" target="_blank"><i class="fa fa-youtube"></i></a>
+                        <a href="@Model.objHomeMaster.INLink" target="_blank"><i class="fa fa-linkedin"></i></a>
+                        <a href="@Model.objHomeMaster.MsgIconLink" target="_blank"><i class="fa fa-envelope"></i></a>
+                    </div>
+                    <div>Privacy Policy &nbsp;&nbsp;&nbsp;&nbsp;Copyright</div>
+                </div>
+                <div class="col-sm-4">
+                    <div style="margin-bottom: 7px;">Subscribe to our newsletter</div>
+                    <div>
+                        <input type="text" id="Mailid" placeholder="Email address" style="width: 285px;padding: 5px 10px;font-weight: bold;font-size: 13px;" />
+                        <button onclick="mail();"><span>Go</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer><!--/#footer-->
+
+    <script src="js/jquery_002.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery_003.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/wow.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+        debugger;
+        $("#search").hide();
+        $("#meg").show();
+    });
+    </script>
+    <script>
+        function getsearch()
+        {
+            $("#search").show();
+            $("#meg").hide();
+        }
+    </script>
+    <script>
+        function searchclose()
+        {
+            $("#search").hide();
+            $("#meg").show();
+        }
+    </script>
+    @*<script>
+        $(document).ready(function () {
+            debugger;
+            var Path = window.location.pathname;
+            if (Path == "/Index/About_UsCommittee")
+            {
+                $("#Lmenu").text("Advisory commitee");
+                $("#Rmenu").text("Home > About Us");
+                $("#RgtLink").attr("href", "http://localhost:31145/Index");
+                $("#lftLink").attr("href", "http://localhost:31145/Index/About_UsCommittee");
+            }
+            else if (Path == "/Index/AboutUs_JCOE") {
+                $("#Lmenu").text("Journey of COE");
+                $("#Rmenu").text("Home > About Us");
+                $("#RgtLink").attr("href", "http://localhost:31145/Index");
+                $("#lftLink").attr("href", "http://localhost:31145/Index/AboutUs_JCOE");
+            }
+            else if (Path == "/Index/AboutUS_RCOE") {
+                $("#Lmenu").text("Role of COE");
+                $("#Rmenu").text("Home > About Us");
+                $("#RgtLink").attr("href", "http://localhost:31145/Index");
+                $("#lftLink").attr("href", "http://localhost:31145/Index/AboutUS_RCOE");
+            }
+            else if (Path == "/Index/About_UsTeam") {
+                $("#Lmenu").text("Team");
+                $("#Rmenu").text("Home > About Us");
+                $("#RgtLink").attr("href", "http://localhost:31145/Index");
+                $("#lftLink").attr("href", "http://localhost:31145/Index/About_UsTeam");
+            }
+            else if (Path == "/Index/GCNI_UNGC") {
+                $("#Lmenu").text("UNGC");
+                $("#Rmenu").text("Home > GCNI");
+                $("#RgtLink").attr("href", "http://localhost:31145/Index");
+                $("#lftLink").attr("href", "http://localhost:31145/Index/GCNI_UNGC");
+            }
+            else if (Path == "/Index/GCNI_10Principles") {
+                $("#Lmenu").text("10Principles");
+                $("#Rmenu").text("Home > GCNI");
+                $("#RgtLink").attr("href", "http://localhost:31145/Index");
+                $("#lftLink").attr("href", "http://localhost:31145/Index/GCNI_10Principles");
+            }
+            else if (Path == "/Index/GCNI_Governing") {
+                $("#Lmenu").text("Governing Counciling");
+                $("#Rmenu").text("Home > GCNI");
+                $("#RgtLink").attr("href", "http://localhost:31145/Index");
+                $("#lftLink").attr("href", "http://localhost:31145/Index/GCNI_Governing");
+            }
+            else if (Path == "/Index/GCNI_Secretariat") {
+                $("#Lmenu").text("Secretariat");
+                $("#Rmenu").text("Home > GCNI");
+                $("#RgtLink").attr("href", "http://localhost:31145/Index");
+                $("#lftLink").attr("href", "http://localhost:31145/Index/GCNI_Secretariat");
+            }
+            
+            else if (Path == "/Index/Initiatives") {
+                $("#Lmenu").text("Initiatives");
+                $("#Rmenu").text("Home > Activities > Initiatives");
+                $("#RgtLink").attr("href", "http://localhost:31145/Index");
+                $("#lftLink").attr("href", "http://localhost:31145/Index/Initiatives");
+            }
+            else if (Path == "/Index/Issues") {
+                $("#Lmenu").text("Issues");
+                $("#Rmenu").text("Home > Activities > Issues");
+                $("#RgtLink").attr("href", "http://localhost:31145/Index");
+                $("#lftLink").attr("href", "http://localhost:31145/Index/Issues");
+            }
+            else if (Path == "/Index/OurPartners") {
+                $("#Lmenu").text("Our Partners");
+                $("#Rmenu").text("Home > Our Partners");
+                $("#RgtLink").attr("href", "http://localhost:31145/Index");
+                $("#lftLink").attr("href", "http://localhost:31145/Index/OurPartners");
+            }
+            else if (Path == "/Index/COEReports") {
+                $("#Lmenu").text("COE Reports");
+                $("#Rmenu").text("Home > Resources");
+                $("#RgtLink").attr("href", "http://localhost:31145/Index");
+                $("#lftLink").attr("href", "http://localhost:31145/Index/COEReports");
+            }
+            else if (Path == "/Index/ResourcesPastViewWebinars") {
+                $("#Lmenu").text("Webinars");
+                $("#Rmenu").text("Home > Resources > Webinars");
+                $("#RgtLink").attr("href", "http://localhost:31145/Index");
+                $("#lftLink").attr("href", "http://localhost:31145/Index/ResourcesPastViewWebinars");
+            }
+            else if (Path == "/Index/Discussion") {
+                $("#Lmenu").text("Discussion");
+                $("#Rmenu").text("Home > Resources > Discussion");
+                $("#RgtLink").attr("href", "http://localhost:31145/Index");
+                $("#lftLink").attr("href", "http://localhost:31145/Index/Discussion");
+            }
+            else if (Path == "/Index/GetInvolved") {
+                $("#Lmenu").text("Get Involved");
+                $("#Rmenu").text("Home > Get Involved");
+                $("#RgtLink").attr("href", "http://localhost:31145/Index");
+                $("#lftLink").attr("href", "http://localhost:31145/Index/GetInvolved");
+            }
+            else if (Path == "/Index/media") {
+                $("#Lmenu").text("Media");
+                $("#Rmenu").text("Home > Media Kit");
+                $("#RgtLink").attr("href", "http://localhost:31145/Index");
+                $("#lftLink").attr("href", "http://localhost:31145/Index/media");
+            }
+            else if (Path == "/Index/Carrers") {
+                $("#Lmenu").text("Careers");
+                $("#Rmenu").text("Home > Careers");
+                $("#RgtLink").attr("href", "http://localhost:31145/Index");
+                $("#lftLink").attr("href", "http://localhost:31145/Index/Carrers");
+            }
+            else if (Path == "/Index/FAQS") {
+                $("#Lmenu").text("FAQs");
+                $("#Rmenu").text("Home > FAQs");
+                $("#RgtLink").attr("href", "http://localhost:31145/Index");
+                $("#lftLink").attr("href", "http://localhost:31145/Index/FAQS");
+            }
+            else if (Path == "/Index/Tranings") {
+                $("#Lmenu").text("Tranings");
+                $("#Rmenu").text("Home > Tranings");
+                $("#RgtLink").attr("href", "http://localhost:31145/Index");
+                $("#lftLink").attr("href", "http://localhost:31145/Index/Tranings");
+            }
+            else if (Path == "/Index/ContactUS") {
+                $("#Lmenu").text("Request a call back");
+                $("#Rmenu").text("Home > Contact us");
+            }
+            else if (Path == "/Index/Articles") {
+                
+                $("#Lmenu").text("Articles");
+                $("#Lmenu").hide();
+                $("#Rmenu").hide();
+            }
+            else if (Path == "/Index/Publications") {
+
+                $("#Lmenu").text("Publications");
+                $("#Lmenu").hide();
+                $("#Rmenu").hide();
+            }
+            else if (Path == "/Index/News") {
+
+                $("#Lmenu").text("News");
+                $("#Lmenu").hide();
+                $("#Rmenu").hide();
+            }
+        });
+    </script>*@
+    <script>
+        $(document).ready(function () {
+            debugger;
+            var Path = window.location.pathname;
+            if (Path == "/Index/About_UsCommittee")
+            {
+                $("#Lmenu").text("Advisory committee");
+                $("#Rmenu").text("Home > About Us");
+                $("#RgtLink").attr("href", "http://gcni.mindtears.com/Index");
+                $("#lftLink").attr("href", "http://gcni.mindtears.com/Index/About_UsCommittee");
+            }
+            else if (Path == "/Index/AboutUs_JCOE") {
+                $("#Lmenu").text("Journey of CEGET");
+                $("#Rmenu").text("Home > About Us");
+                $("#RgtLink").attr("href", "http://gcni.mindtears.com/Index");
+                $("#lftLink").attr("href", "http://gcni.mindtears.com/Index/AboutUs_JCOE");
+            }
+            else if (Path == "/Index/AboutUS_RCOE") {
+                $("#Lmenu").text("Role of CEGET");
+                $("#Rmenu").text("Home > About Us");
+                $("#RgtLink").attr("href", "http://gcni.mindtears.com/Index");
+                $("#lftLink").attr("href", "http://gcni.mindtears.com/Index/AboutUS_RCOE");
+            }
+            else if (Path == "/Index/About_UsTeam") {
+                $("#Lmenu").text("Team");
+                $("#Rmenu").text("Home > About Us");
+                $("#RgtLink").attr("href", "http://gcni.mindtears.com/Index");
+                $("#lftLink").attr("href", "http://gcni.mindtears.com/Index/About_UsTeam");
+            }
+            else if (Path == "/Index/GCNI_UNGC") {
+                $("#Lmenu").text("UNGC");
+                $("#Rmenu").text("Home > GCNI");
+                $("#RgtLink").attr("href", "http://gcni.mindtears.com/Index");
+                $("#lftLink").attr("href", "http://gcni.mindtears.com/Index/GCNI_UNGC");
+            }
+            else if (Path == "/Index/GCNI_10Principles") {
+                $("#Lmenu").text("10 Principles");
+                $("#Rmenu").text("Home > GCNI");
+                $("#RgtLink").attr("href", "http://gcni.mindtears.com/Index");
+                $("#lftLink").attr("href", "http://gcni.mindtears.com/Index/GCNI_10Principles");
+            }
+            else if (Path == "/Index/GCNI_Governing") {
+                $("#Lmenu").text("Governing Council");
+                $("#Rmenu").text("Home > GCNI");
+                $("#RgtLink").attr("href", "http://gcni.mindtears.com/Index");
+                $("#lftLink").attr("href", "http://gcni.mindtears.com/Index/GCNI_Governing");
+            }
+            else if (Path == "/Index/GCNI_Secretariat") {
+                $("#Lmenu").text("Secretariat");
+                $("#Rmenu").text("Home > GCNI");
+                $("#RgtLink").attr("href", "http://gcni.mindtears.com/Index");
+                $("#lftLink").attr("href", "http://gcni.mindtears.com/Index/GCNI_Secretariat");
+            }
+
+            else if (Path == "/Index/Initiatives") {
+                $("#Lmenu").text("Initiatives");
+                $("#Rmenu").text("Home > Activities");
+                $("#RgtLink").attr("href", "http://gcni.mindtears.com/Index");
+                $("#lftLink").attr("href", "http://gcni.mindtears.com/Index/Initiatives");
+            }
+            else if (Path == "/Index/Issues") {
+                $("#Lmenu").text("Issues");
+                $("#Rmenu").text("Home > Activities");
+                $("#RgtLink").attr("href", "http://gcni.mindtears.com/Index");
+                $("#lftLink").attr("href", "http://gcni.mindtears.com/Index/Issues");
+            }
+            else if (Path == "/Index/OurPartners") {
+                $("#Lmenu").text("Our Partners");
+                $("#Rmenu").text("Home > Our Partners");
+                $("#RgtLink").attr("href", "http://gcni.mindtears.com/Index");
+                $("#lftLink").attr("href", "http://gcni.mindtears.com/Index/OurPartners");
+            }
+            else if (Path == "/Index/COEReports") {
+                $("#Lmenu").text("CEGET Reports");
+                $("#Rmenu").text("Home > Resources");
+                $("#RgtLink").attr("href", "http://gcni.mindtears.com/Index");
+                $("#lftLink").attr("href", "http://gcni.mindtears.com/Index/COEReports");
+            }
+            else if (Path == "/Index/ResourcesPastViewWebinars") {
+                $("#Lmenu").text("Webinars");
+                $("#Rmenu").text("Home > Resources");
+                $("#RgtLink").attr("href", "http://gcni.mindtears.com/Index");
+                $("#lftLink").attr("href", "http://gcni.mindtears.com/Index/ResourcesPastViewWebinars");
+            }
+            else if (Path == "/Index/Discussion") {
+                $("#Lmenu").text("Discussion");
+                $("#Rmenu").text("Home > Resources");
+                $("#RgtLink").attr("href", "http://gcni.mindtears.com/Index");
+                $("#lftLink").attr("href", "http://gcni.mindtears.com/Index/Discussion");
+            }
+            else if (Path == "/Index/GetInvolved") {
+                $("#Lmenu").text("Get Involved");
+                $("#Rmenu").text("Home > Get Involved");
+                $("#RgtLink").attr("href", "http://gcni.mindtears.com/Index");
+                $("#lftLink").attr("href", "http://gcni.mindtears.com/Index/GetInvolved");
+            }
+            else if (Path == "/Index/media") {
+                $("#Lmenu").text("Media");
+                $("#Rmenu").text("Home > Media Kit");
+                $("#RgtLink").attr("href", "http://gcni.mindtears.com/Index");
+                $("#lftLink").attr("href", "http://gcni.mindtears.com/Index/media");
+            }
+            else if (Path == "/Index/Carrers") {
+                $("#Lmenu").text("Careers");
+                $("#Rmenu").text("Home > Careers");
+                $("#RgtLink").attr("href", "http://gcni.mindtears.com/Index");
+                $("#lftLink").attr("href", "http://gcni.mindtears.com/Index/Carrers");
+            }
+            else if (Path == "/Index/FAQS") {
+                $("#Lmenu").text("FAQs");
+                $("#Rmenu").text("Home > FAQs");
+                $("#RgtLink").attr("href", "http://gcni.mindtears.com/Index");
+                $("#lftLink").attr("href", "http://gcni.mindtears.com/Index/FAQS");
+            }
+            else if (Path == "/Index/Tranings") {
+                $("#Lmenu").text("Training");
+                $("#Rmenu").text("Home > Training");
+                $("#RgtLink").attr("href", "http://gcni.mindtears.com/Index");
+                $("#lftLink").attr("href", "http://gcni.mindtears.com/Index/Tranings");
+            }
+            else if (Path == "/Index/ContactUS") {
+                $("#Lmenu").text("Request a call back");
+                $("#Rmenu").text("Home > Contact us");
+            }
+            else if (Path == "/Index/Articles") {
+
+                $("#Lmenu").text("Articles");
+                $("#Lmenu").hide();
+                $("#Rmenu").hide();
+            }
+            else if (Path == "/Index/Publications") {
+
+                $("#Lmenu").text("Publications");
+                $("#Lmenu").hide();
+                $("#Rmenu").hide();
+            }
+            else if (Path == "/Index/News") {
+
+                $("#Lmenu").text("News");
+                $("#Lmenu").hide();
+                $("#Rmenu").hide();
+            }
+        });
+    </script>
+    
+
+</body></html>

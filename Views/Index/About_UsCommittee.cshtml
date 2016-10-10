@@ -1,0 +1,84 @@
+﻿@model GCNI.Models.GCNIModel
+@{
+    ViewBag.Title = "About_UsCommittee";
+    Layout = "~/Views/Shared/AboutUsMaster.cshtml";
+}
+
+@*<section id="main-slider" class="no-margin">
+        <div class="carousel slide">
+            <div class="carousel-inner">
+                <div class="item active" style="height: 175px;">
+                    <div class="container">
+                        <div class="row slide-margin">
+                            <div class="col-sm-12">
+                                <div class="slider-img">
+                                    <img src="../images/img2.png" class="img-responsive">
+                                </div>
+								<div style="color: rgb(255, 255, 255); font-weight: bold; font-family: Gotham; font-size: 18px; text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.6); margin-top: 135px;">
+									<div class="col-sm-4">Advisory commitee</div>
+									<div class="col-sm-8" style="text-align:right;"> Home > About Us</div>
+								</div>
+							
+                            </div>
+
+                        </div>
+                    </div>
+                </div><!--/.item-->	
+            </div><!--/.carousel-inner-->
+        </div><!--/.carousel-->
+    </section><!--/#main-slider-->*@
+
+    <section id="feature">
+        <div class="container">
+            <div class="row">
+               <div class="col-sm-12">
+               <div class="first-row thirdrow body-wrap">
+                   @foreach (GCNI.Models.About_Us obj in Model.objAbout_UsML)
+                   {
+                       if (obj.AboutUS_Category == "About_Us Advisory Committee")
+                       {
+			   <div class=" body-container">
+					<div>
+                        <img src="@Url.Content(String.Format("~/Uploads/About_US/{0}",obj.ImageURL))"/></div>  
+					<div class="block-info">
+						<p class="title red-txt"><b>@Html.Raw(obj.Designation)</b></p>
+						<p>@Html.Raw(obj.Name)</p>
+						<p>@Html.Raw(obj.Description)</p>
+					</div>				
+               </div>
+                   }
+                   
+                   }
+			   <!--<div class=" body-container">
+					<div><img src="images/001.png"></div>  
+					<div class="block-info">
+						<p class="title red-txt"><b>President</b></p>
+						<p>Vijay Singh</p>
+						<p>Chairman & managing Director, Oil & Natural Gas Corporation</p>
+					</div>				
+               </div>
+			   <div class=" body-container">
+					<div><img src="images/001.png"></div>  
+					<div class="block-info">
+						<p class="title red-txt"><b>President</b></p>
+						<p>Vijay Singh</p>
+						<p>Chairman & managing Director, Oil & Natural Gas Corporation</p>
+					</div>				
+               </div>
+			   <div class=" body-container">
+					<div><img src="images/001.png"></div>  
+					<div class="block-info">
+						<p class="title red-txt"><b>President</b></p>
+						<p>Vijay Singh</p>
+						<p>Chairman & managing Director, Oil & Natural Gas Corporation</p>
+					</div>				
+               </div>-->
+			   </div>
+                </div>
+                
+            
+               
+            </div>   
+        </div>
+    </section>
+
