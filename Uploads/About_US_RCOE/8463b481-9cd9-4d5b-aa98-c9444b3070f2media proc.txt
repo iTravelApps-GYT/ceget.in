@@ -1,0 +1,39 @@
+USE [mindtears]
+GO
+/****** Object:  StoredProcedure [dbo].[spMedia]    Script Date: 02/03/2016 23:43:39 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<Bhupendra Kumar>
+-- Create date: <02 Feb, 2016>
+-- Description:	<For Media Management>
+-- =============================================
+ALTER PROCEDURE [dbo].[spMedia]
+@ID int=0,
+@Heading varchar(200)='',
+@Description varchar(1000)='',
+@FileURL varchar(250)='',
+@IsActive bit=1,
+@CreatedOn datetime='',
+@Qtype varchar(50)=''
+AS
+BEGIN
+	if(@Qtype='Insert')
+	Begin
+		Insert into Media(Heading,Description,FileURL)values(@Heading,@Description,@FileURL);
+	End
+	if(@Qtype='Select')
+	Begin
+		Select * from Media where IsActive=1;
+	End
+	if(@Qtype='Update')
+	Begin
+	update Media set Heading=@Heading,Description=@Description,FileURL=@FileURL where ID=@ID;
+	End
+	if(@Qtype='delete')
+	Begin
+		Update Media set IsActive=0 where ID=@ID;
+	End
+END
